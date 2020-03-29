@@ -3,4 +3,10 @@
   background-color: #282c34;
   height: 100vh;
   color: white;
+  display: flex;
+  flex-direction: column;
+
+  .map-container {
+    flex: 1;
+  }
 }
