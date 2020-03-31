@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import GoogleMapReact from "google-map-react";
 import googleMapConfig from "./shared/googleMap.config";
+import { getAllCountriesData } from "./shared/api/api";
 
-function App() {
+const App: React.FC<any> = () => {
+  useEffect(() => {
+    getAllCountriesData().then(res => {
+      debugger;
+    });
+  }, []);
   const mapConfig = {
     center: {
       lat: 30.3753,
@@ -12,6 +18,7 @@ function App() {
     },
     zoom: 6
   };
+
   return (
     <div className="App">
       <h2 className="title">Dashboard</h2>
@@ -24,5 +31,5 @@ function App() {
       </div>
     </div>
   );
-}
+};
 export default App;
