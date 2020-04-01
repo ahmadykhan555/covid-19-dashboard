@@ -62,8 +62,15 @@ const App: React.FC<any> = () => {
 
   return (
     <div className="App">
-      <h2 className="title">Dashboard</h2>
+      <div className="navigation">
+        <h3 className="title">COVID-19</h3>
+        <div className="nav-item selected">Map View</div>
+        <div className="nav-item">Trajectory</div>
+        <div className="nav-item">News</div>
+        <div className="nav-item">Zones</div>
+      </div>
       <div id="map-container"></div>
+      <div className="map-header">Location Name</div>
     </div>
   );
 };
