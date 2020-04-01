@@ -1,12 +1,16 @@
 .App {
-  text-align: center;
   background-image: linear-gradient(#282c34, lightgray);
   height: 100vh;
   color: white;
   display: flex;
   flex-direction: column;
 
-  .map-container {
+  .title {
+    text-align: left;
+    padding: 1rem;
+  }
+
+  #map-container {
     flex: 1;
   }
 }
