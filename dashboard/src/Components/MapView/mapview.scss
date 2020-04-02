@@ -1,0 +1,21 @@
+.map-view {
+
+  #map-container {
+    flex: 1;
+  }
+
+  .map-header {
+    position: absolute;
+    background: white;
+    color: black;
+    font-weight: bold;
+    padding: 1rem 1.5rem;
+    width: 320px;
+    text-align: center;
+    top: 70px;
+    left: 50%;
+    border-radius: 25px;
+    transform: translateX(-50%);
+  }
+  
+}
