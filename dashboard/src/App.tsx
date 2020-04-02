@@ -1,77 +1,28 @@
-import React, { useEffect } from "react";
-import "./App.scss";
+import React from "react";
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+
+import Navbar from './Components/navbar/navbar'
+import MapView from './Components/MapView/mapview'
+import Trajectory from './Components/Trajectory/trajectory'
+import News from './Components/News/news'
+import Zone from './Components/Zone/zone'
+
 import "bootstrap/dist/css/bootstrap.min.css";
-import { getAllCountriesData } from "./shared/covid-data-api/api";
-import { resolveLocationByIp } from "./shared/ip-resolver/api";
+import "./App.scss";
+
 const App: React.FC<any> = () => {
-  const defaultMapCenter = new google.maps.LatLng(30.3753, 69.3451);
-  let map: google.maps.Map;
-  let mapBounds: google.maps.LatLngBounds = new google.maps.LatLngBounds();
-
-  // hooks
-  useEffect(() => {
-    getAllCountriesData().then(res => {});
-    resolveLocationByIp().then((res: any) => {
-      if (res.data) {
-        map
-          ? updateMap(
-              new google.maps.LatLng(res.data.latitude, res.data.longitude)
-            )
-          : initMap();
-      }
-    });
-    initMap();
-  }, []);
-
-  // helpers
-  const initMap = () => {
-    const ele = document.getElementById("map-container");
-    if (ele) {
-      map = new google.maps.Map(ele, {
-        center: defaultMapCenter,
-        zoom: 7,
-        mapTypeId: google.maps.MapTypeId.HYBRID,
-        zoomControl: false,
-        fullscreenControl: false
-      });
-    }
-  };
-
-  const updateMap = (coordinates: google.maps.LatLng) => {
-    updateMapCenter(coordinates);
-    drawUserLocationCircle(coordinates);
-  };
-  const updateMapCenter = (coordinates: google.maps.LatLng) => {
-    map.setCenter(coordinates);
-  };
-
-  const drawUserLocationCircle = (center: google.maps.LatLng) => {
-    const userLocationCircle = new google.maps.Circle({
-      strokeColor: "#33FCA7",
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: "#A7FAD7",
-      fillOpacity: 0.5,
-      center: center,
-      map: map,
-      radius: 1000
-    });
-    mapBounds.union(userLocationCircle.getBounds());
-    map.fitBounds(mapBounds);
-  };
-
   return (
-    <div className="App">
-      <div className="navigation">
-        <h3 className="title">COVID-19</h3>
-        <div className="nav-item selected">Map View</div>
-        <div className="nav-item">Trajectory</div>
-        <div className="nav-item">News</div>
-        <div className="nav-item">Zones</div>
+    <BrowserRouter>
+      <div className="App">
+        <Navbar></Navbar>
+        <Switch>
+          <Route exact path='/' component = { MapView }/>
+          <Route exact path='/trajectory' component = { Trajectory }/>
+          <Route exact path='/trajectory' component = { News }/>
+          <Route exact path='/trajectory' component = { Zone }/>
+        </Switch>
       </div>
-      <div id="map-container"></div>
-      <div className="map-header">Location Name</div>
-    </div>
+  </BrowserRouter>
   );
 };
 export default App;
