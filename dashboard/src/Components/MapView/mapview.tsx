@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 
 import { getAllCountriesData } from "../../shared/covid-data-api/api";
 import { resolveLocationByIp } from "../../shared/ip-resolver/api";
-
-import "./node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./mapview.scss";
 
 const MapView: React.FC<any> = () => {
