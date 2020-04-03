@@ -1,4 +1,6 @@
 .map-view {
+  display: flex;
+  height: calc(100vh - 36px);
 
   #map-container {
     flex: 1;
@@ -17,5 +19,4 @@
     border-radius: 25px;
     transform: translateX(-50%);
   }
-  
 }
