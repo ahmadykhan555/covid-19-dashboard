@@ -3,8 +3,8 @@ import React, { useEffect } from "react";
 import { getAllCountriesData } from "../../shared/covid-data-api/api";
 import { resolveLocationByIp } from "../../shared/ip-resolver/api";
 
-import "bootstrap/dist/css/bootstrap.min.css";
-import './mapview.scss'
+import "./node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "./mapview.scss";
 
 const MapView: React.FC<any> = () => {
   const defaultMapCenter = new google.maps.LatLng(30.3753, 69.3451);
@@ -64,10 +64,10 @@ const MapView: React.FC<any> = () => {
   };
 
   return (
-      <div className="map-view">
-           <div id="map-container"></div>
-           <div className="map-header">Location Name</div>
-      </div>
+    <div className="map-view">
+      <div id="map-container"></div>
+      <div className="map-header">Location Name</div>
+    </div>
   );
 };
 export default MapView;
