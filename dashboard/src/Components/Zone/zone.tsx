@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./zone.scss";
+import "./Zone.scss";
 
 const Zone: React.FC<any> = () => {
   return <div className="zone"></div>;

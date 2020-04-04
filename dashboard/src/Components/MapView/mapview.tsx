@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 import { getAllCountriesData } from "../../shared/covid-data-api/api";
 import { resolveLocationByIp } from "../../shared/ip-resolver/api";
-import "./mapview.scss";
+import "./MapView.scss";
 
 const MapView: React.FC<any> = () => {
   const defaultMapCenter = new google.maps.LatLng(30.3753, 69.3451);
