@@ -56,6 +56,8 @@ const MapBoxComponent: React.FC<any> = () => {
           trackUserLocation: true
         })
       );
+
+      map.addControl(new mapboxgl.NavigationControl());
     });
   };
 
