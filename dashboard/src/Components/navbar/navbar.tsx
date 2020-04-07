@@ -5,6 +5,7 @@ import { NavLink, withRouter } from "react-router-dom";
 import "./NavBar.scss";
 
 const Navbar = () => {
+  let isAdmin: boolean = true;
   return (
     <div className="navbar">
       <div className="navigation">
@@ -12,18 +13,11 @@ const Navbar = () => {
         <NavLink exact to="/" activeClassName="selected">
           <div className="nav-item">Map View</div>
         </NavLink>
-        <NavLink to="/trajectory" activeClassName="selected">
-          <div className="nav-item">Trajectory</div>
-        </NavLink>
-        <NavLink to="/news" activeClassName="selected">
-          <div className="nav-item">News</div>
-        </NavLink>
-        <NavLink to="/zones" activeClassName="selected">
-          <div className="nav-item">Zones</div>
-        </NavLink>
-        <NavLink to="/admin" activeClassName="selected">
-          <div className="nav-item">Admin</div>
-        </NavLink>
+        {isAdmin && (
+          <NavLink to="/admin" activeClassName="selected">
+            <div className="nav-item">Admin</div>
+          </NavLink>
+        )}
       </div>
     </div>
   );
