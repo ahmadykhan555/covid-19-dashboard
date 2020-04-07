@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as mapboxgl from "mapbox-gl";
 import { environment } from "../../shared/environment/environment";
 import { MapStyles } from "./styles/styles";
@@ -10,6 +10,9 @@ import * as PolySindh from "../../geojson/sindh";
 import * as PolyAJK from "../../geojson/ajk";
 import * as PolyBalochistan from "../../geojson/balochistan";
 import * as PolyFata from "../../geojson/fata";
+import { Button } from "react-bootstrap";
+import { MdMyLocation } from "react-icons/all";
+import "./MapBox.scss";
 
 const provinces: Polygon[] = [
   { name: "punjab", geojson: PolyPunjab.default, color: "029B5B" },
@@ -22,22 +25,32 @@ const provinces: Polygon[] = [
   { name: "fata", geojson: PolyFata.default, color: "BFE858" }
 ];
 const MapBoxComponent: React.FC<any> = () => {
+  const [map, setMap] = useState<mapboxgl.Map>();
+  const [mapReady, setMapReady] = useState<boolean>(false);
+
   useEffect(() => {
     initMap();
-  });
+  }, []);
 
-  let map: mapboxgl.Map;
+  useEffect(() => {
+    drawProvincePolygons();
+  }, [map]);
+
   const initMap = () => {
-    map = new mapboxgl.Map({
+    let map = new mapboxgl.Map({
       accessToken: environment.mapBoxAccessToken,
       container: "map-gl-container",
       center: [69.3451, 30.3753],
       zoom: 5,
-      style: MapStyles.Dark
+      style: MapStyles.Dark,
+      boxZoom: true
     });
-
-    map.on("load", () => drawProvincePolygons());
+    map.on("load", () => {
+      setMap(map);
+      setMapReady(true);
+    });
   };
+
   const drawProvincePolygons = () => {
     provinces.forEach(province => {
       createPolygonLayer(province);
@@ -45,33 +58,62 @@ const MapBoxComponent: React.FC<any> = () => {
   };
 
   const createPolygonLayer = (config: Polygon) => {
-    map.addSource(config.name, {
-      type: "geojson",
-      data: config.geojson as any
-    });
-    map.addLayer({
-      id: config.name,
-      type: "fill",
-      source: config.name,
-      layout: {},
-      paint: {
-        "fill-color": `#${config.color}`,
-        "fill-opacity": 0.5
-      }
-    });
+    if (map) {
+      map.addSource(config.name, {
+        type: "geojson",
+        data: config.geojson as any
+      });
+      map.addLayer({
+        id: config.name,
+        type: "fill",
+        source: config.name,
+        layout: {},
+        paint: {
+          "fill-color": `#${config.color}`,
+          "fill-opacity": 0.5
+        }
+      });
+    }
   };
+
+  const locateUserHandler = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showUserLocationMarker);
+    }
+  };
+
+  const showUserLocationMarker = (data: NavigatorResponse) => {
+    if (map && mapReady && data.coords) {
+      const newCenter = new mapboxgl.LngLat(
+        data.coords.longitude,
+        data.coords.latitude
+      );
+      map.setCenter(newCenter);
+      map.setZoom(10);
+    }
+  };
+
   return (
-    <div
-      className="mapbox-gl-component-wrapper"
-      style={{ height: "calc(100vh - 52px)" }}
-    >
+    <div className="mapbox-gl-component-wrapper">
       <div id="map-gl-container" style={{ height: "100%" }}></div>
+      {mapReady && (
+        <div className="map-controls">
+          <Button variant="link" onClick={() => locateUserHandler()}>
+            <MdMyLocation />
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
+
 type Polygon = {
   name: string;
   geojson: Object;
   color: string;
+};
+
+type NavigatorResponse = {
+  coords: any;
 };
 export default MapBoxComponent;

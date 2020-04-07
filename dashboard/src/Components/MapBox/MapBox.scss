@@ -1,0 +1,15 @@
+.mapbox-gl-component-wrapper {
+  position: relative;
+  height: calc(100vh - 52px);
+
+  .map-controls {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    svg {
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+  }
+}
