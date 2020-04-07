@@ -21,6 +21,9 @@ const Navbar = () => {
         <NavLink to="/zones" activeClassName="selected">
           <div className="nav-item">Zones</div>
         </NavLink>
+        <NavLink to="/admin" activeClassName="selected">
+          <div className="nav-item">Admin</div>
+        </NavLink>
       </div>
     </div>
   );

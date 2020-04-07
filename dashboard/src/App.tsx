@@ -5,6 +5,7 @@ import Navbar from "./components/navbar/NavBar";
 import Trajectory from "./components/trajectory/Trajectory";
 import News from "./components/news/News";
 import Zone from "./components/zone/Zone";
+import Admin from "./components/admin/Admin";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
@@ -20,6 +21,7 @@ const App: React.FC<any> = () => {
           <Route exact path="/trajectory" component={Trajectory} />
           <Route exact path="/trajectory" component={News} />
           <Route exact path="/trajectory" component={Zone} />
+          <Route exact path="/admin" component={Admin} />
         </Switch>
       </div>
     </BrowserRouter>
