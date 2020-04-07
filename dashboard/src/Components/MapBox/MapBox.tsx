@@ -48,6 +48,14 @@ const MapBoxComponent: React.FC<any> = () => {
     map.on("load", () => {
       setMap(map);
       setMapReady(true);
+      map.addControl(
+        new mapboxgl.GeolocateControl({
+          positionOptions: {
+            enableHighAccuracy: true
+          },
+          trackUserLocation: true
+        })
+      );
     });
   };
 
@@ -76,33 +84,10 @@ const MapBoxComponent: React.FC<any> = () => {
     }
   };
 
-  const locateUserHandler = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showUserLocationMarker);
-    }
-  };
-
-  const showUserLocationMarker = (data: NavigatorResponse) => {
-    if (map && mapReady && data.coords) {
-      const newCenter = new mapboxgl.LngLat(
-        data.coords.longitude,
-        data.coords.latitude
-      );
-      map.setCenter(newCenter);
-      map.setZoom(10);
-    }
-  };
-
   return (
     <div className="mapbox-gl-component-wrapper">
       <div id="map-gl-container" style={{ height: "100%" }}></div>
-      {mapReady && (
-        <div className="map-controls">
-          <Button variant="link" onClick={() => locateUserHandler()}>
-            <MdMyLocation />
-          </Button>
-        </div>
-      )}
+      {mapReady && <div className="map-controls"></div>}
     </div>
   );
 };
