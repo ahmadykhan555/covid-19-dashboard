@@ -1,3 +1,3 @@
 # covid-19-dashboard
 
-<img width="1440" alt="Screenshot 2020-04-02 at 4 08 24 AM" src="https://user-images.githubusercontent.com/41294736/78194929-daebed80-7497-11ea-8855-cc3238ce7dcb.png">
+<img width="1440" alt="Screenshot 2020-04-07 at 8 03 41 PM" src="https://user-images.githubusercontent.com/41294736/78685814-b8305d80-790b-11ea-9cbd-e5bbba63db53.png">cb.png">
