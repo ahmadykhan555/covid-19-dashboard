@@ -17,8 +17,7 @@ const App: React.FC<any> = () => {
       <div className="App">
         <Navbar></Navbar>
         <Switch>
-          <Route exact path="/" component={MapView} />
-          <Route exact path="/gl" component={MapBoxComponent} />
+          <Route exact path="/" component={MapBoxComponent} />
           <Route exact path="/trajectory" component={Trajectory} />
           <Route exact path="/trajectory" component={News} />
           <Route exact path="/trajectory" component={Zone} />
