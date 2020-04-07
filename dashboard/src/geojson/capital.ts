@@ -1,9 +1,9 @@
-{
-  "type": "GeometryCollection",
-  "geometries": [
+export default {
+  type: "GeometryCollection",
+  geometries: [
     {
-      "type": "MultiPolygon",
-      "coordinates": [
+      type: "MultiPolygon",
+      coordinates: [
         [
           [
             [72.798023499999999, 33.659949300000001],
@@ -443,4 +443,4 @@
       ]
     }
   ]
-}
+};
