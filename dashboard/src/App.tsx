@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import Navbar from "./components/NavBar/NavBar";
-import Admin from "./components/Admin/Admin";
+import Navbar from "./components/navbar/navbar";
+import Admin from "./components/admin/Admin";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
