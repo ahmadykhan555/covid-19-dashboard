@@ -2,6 +2,7 @@ import React from "react";
 import "./Main.scss";
 import MapBoxComponent from "../MapBox/MapBox";
 import SwitcherComponent from "../../components/Switcher/Switcher";
+import Admin from "../Admin/Admin";
 const MainLayoutComponent: React.FC<any> = () => {
   return (
     <div className="main-layout-component">
@@ -12,7 +13,9 @@ const MainLayoutComponent: React.FC<any> = () => {
         <section className="map-container">
           <MapBoxComponent />
         </section>
-        <section className="section-bottom"></section>
+        <section className="section-bottom">
+          <Admin />
+        </section>
       </div>
     </div>
   );
