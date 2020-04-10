@@ -1,6 +1,6 @@
 # covid-19-dashboard
 
-<img width="1440" alt="Screenshot 2020-04-07 at 8 03 41 PM" src="https://user-images.githubusercontent.com/41294736/78685814-b8305d80-790b-11ea-9cbd-e5bbba63db53.png">cb.png">
+<img width="1440" alt="Screenshot 2020-04-08 at 3 08 01 AM" src="https://user-images.githubusercontent.com/41294736/78724202-5d682780-7946-11ea-950b-c4bf1e714dcc.png">
 
 # Third party resources in use: 
 React Icons Pack: https://react-icons.netlify.com/ <br>
