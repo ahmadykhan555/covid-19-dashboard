@@ -10,8 +10,6 @@ import * as PolySindh from "../../geojson/sindh";
 import * as PolyAJK from "../../geojson/ajk";
 import * as PolyBalochistan from "../../geojson/balochistan";
 import * as PolyFata from "../../geojson/fata";
-import { Button } from "react-bootstrap";
-import { MdMyLocation } from "react-icons/all";
 import "./MapBox.scss";
 
 const provinces: Polygon[] = [
