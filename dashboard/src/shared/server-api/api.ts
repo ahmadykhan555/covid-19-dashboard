@@ -6,3 +6,7 @@ const ENDPOINTS = {
 export const getAllProvinces = () => {
   return axios.get(`${BASEURL}${ENDPOINTS.AllProvinces}`);
 };
+
+export const sendProvinceData = (endpoint: string, params: any) => {
+  return axios.post(`${BASEURL}${endpoint}`, params);
+};
