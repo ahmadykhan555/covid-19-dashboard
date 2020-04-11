@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./Admin.scss";
 
@@ -9,6 +9,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { PROVINCES } from './provinces'
+import { sendProvinceData } from "../../shared/server-api/api";
 
 const Admin: React.FC<any> = () => {
   const buttonRef: any = React.createRef();
@@ -19,6 +20,12 @@ const Admin: React.FC<any> = () => {
   const [parsedObject, setParsedObject]: any = useState({});
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedProvince, setSelectedProvince] = useState("Select Province");
+
+  useEffect(() => {
+    if (Object.keys(parsedObject).length !== 0) {
+      sendProvinceData(selectedProvince, parsedObject).then(res => {});
+    }
+  });
 
   const handleDateChange = (date: any) => {
     setSelectedDate(date);
@@ -101,11 +108,9 @@ const Admin: React.FC<any> = () => {
           reports.push(createRow(fileData[i].data));
         }
       }
-      resultingObject['report'] = reports;
+      resultingObject['report'] = JSON.stringify(reports);
       resultingObject['date'] = new Date(formatDate(selectedDate)).getTime();
-      setParsedObject({...parsedObject, resultingObject});
-      console.log(parsedObject);
-
+      setParsedObject(resultingObject);
     }
 
   }
