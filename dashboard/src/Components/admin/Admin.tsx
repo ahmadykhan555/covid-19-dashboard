@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./Admin.scss";
 
 import { CSVReader } from "react-papaparse";
 import { Button, Alert, SplitButton, Dropdown } from "react-bootstrap";
+
+// import {LabeledValue} from './interface';
 
 const Admin: React.FC<any> = () => {
   const buttonRef: any = React.createRef();
@@ -12,6 +14,16 @@ const Admin: React.FC<any> = () => {
   const [alertHeading, setAlertHeading] = useState('File uploaded successfully!');
   const [fileData, setIsFileData]: any = useState([]);
   const [parsedObject, setParsedObject]: any = useState([]);
+
+  useEffect(() => {
+    // console.log(LabeledValue.label);
+    // let myObj = {size: 10, label: "Usama Bin Shahid"};
+    // printLabel(myObj);
+  }, []);
+
+  // const printLabel = (labeledObject: LabeledValue) => {
+  //   console.log(labeledObject.label);
+  // }
 
   const handleOnFileLoad = (data: any) => {
     setIsFileData(data);
