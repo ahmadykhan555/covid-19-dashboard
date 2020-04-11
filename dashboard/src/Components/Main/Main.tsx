@@ -2,7 +2,7 @@ import React from "react";
 import "./Main.scss";
 import MapBoxComponent from "../MapBox/MapBox";
 import SwitcherComponent from "../../components/Switcher/Switcher";
-import Admin from "../admin/Admin";
+import Admin from "../Admin/Admin";
 const MainLayoutComponent: React.FC<any> = () => {
   return (
     <div className="main-layout-component">
