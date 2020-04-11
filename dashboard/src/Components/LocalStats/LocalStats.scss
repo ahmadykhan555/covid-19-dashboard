@@ -1,0 +1,38 @@
+.local-stats-component-wrapper {
+    margin: 1rem 0;
+
+    .summary {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 0.5rem;
+        border-bottom: 0.35px solid #d3d3d359;
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .tile-with-badge {
+        text-align: center;
+        padding: 0.75rem;
+        border: 0.5px solid #d3d3d359;
+        border-radius: 4px;
+    }
+
+    .state-stats-wrapper {
+        padding-bottom: 1rem;
+        border-bottom: 0.35px solid #d3d3d359;
+
+        .state-name-label {
+            font-size: 1rem;
+            color: lightseagreen;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .state-detail-stats {
+            p {
+                font-size: 0.75rem
+            }
+        }
+    }
+}

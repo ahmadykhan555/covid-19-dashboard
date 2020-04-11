@@ -1,15 +1,11 @@
 .switcher-component {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 0.35px solid #d3d3d359;
 
-  .country-stats {
-    font-size: 2rem;
-  }
-
-  svg {
-    height: 1.5rem;
-    width: 1.5rem;
-    color: white;
+  label {
+    margin: 0;
   }
 }
