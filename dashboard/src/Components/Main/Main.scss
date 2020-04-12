@@ -16,7 +16,8 @@
     margin-right: 0;
     padding: 1rem;
     height: calc(100% - 2rem);
-    overflow: scroll;
+    overflow-y: auto;
+    // overflow: scroll;
   }
 
   .section-center {

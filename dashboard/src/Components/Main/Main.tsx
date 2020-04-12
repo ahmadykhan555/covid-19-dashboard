@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Main.scss";
 import MapBoxComponent from "../MapBox/MapBox";
 import SwitcherComponent from "../../components/Switcher/Switcher";
-import Admin from "../Admin/Admin";
+import Admin from "../admin/Admin";
 import LocalStatsComponent from "../LocalStats/LocalStats";
 import GlobalStatsComponent from "../GlobalStats/GlobalStats";
 const MainLayoutComponent: React.FC<any> = () => {
