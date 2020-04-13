@@ -27,7 +27,7 @@ const MapBoxComponent: React.FC<any> = () => {
   const [map, setMap] = useState<mapboxgl.Map>();
   const [mapReady, setMapReady] = useState<boolean>(false);
   const [context, setContext] = useState<any>();
-  var myref: any = React.createRef();
+  // var myref: any = React.createRef();
   var size = 200;
 
   useEffect(() => {
