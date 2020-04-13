@@ -113,7 +113,21 @@ const MapBoxComponent: React.FC<any> = () => {
     });
     map.on("load", () => {
       map.addImage('pulsing-dot', pulsingDot, { pixelRatio: 2 });
-      
+      map.addSource('points', {
+        'type': 'geojson',
+        'data': {
+          'type': 'FeatureCollection',
+          'features': [
+            {
+              'type': 'Feature',
+              'geometry': {
+                'type': 'Point',
+                'coordinates': [0, 0]
+              }
+            }
+          ]
+        }
+        });
       map.addLayer({
         'id': 'points',
         'type': 'symbol',
