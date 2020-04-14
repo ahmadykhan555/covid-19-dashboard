@@ -6,23 +6,41 @@ import ReactTooltip from "react-tooltip";
 
 interface GlobalStatsProps {
   mapCenterSetter: any;
+  lastUpdatedSetter: any;
 }
 
+const POLL_INTERVAL: number = 12000;
+
 const GlobalStatsComponent: React.FC<GlobalStatsProps> = ({
-  mapCenterSetter
+  mapCenterSetter,
+  lastUpdatedSetter
 }) => {
   const [covidData, setCovidData] = useState<any[]>([]);
+  let [pollCount, setpollCount] = useState<number>(0);
   useEffect(() => {
+    refreshData();
+  }, [pollCount]);
+  useEffect(() => {
+    initPolling();
+  }, []);
+
+  const refreshData = () => {
     getAllCountriesData().then(res => {
       if (res.data) {
         setCovidData(sortByCases(res.data));
       }
     });
-  }, []);
-
+  };
   const sortByCases = (data: any[]) => {
     const sortedData = data.sort((a, b) => b.cases - a.cases);
     return sortedData;
+  };
+
+  const initPolling = () => {
+    setInterval(() => {
+      setpollCount(++pollCount);
+      lastUpdatedSetter(new Date());
+    }, POLL_INTERVAL);
   };
 
   const convertToThousand = (stringifiedNumber: string) => {

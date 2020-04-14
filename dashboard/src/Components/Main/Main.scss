@@ -16,7 +16,13 @@
     margin-right: 0;
     padding: 1rem;
     height: calc(100% - 2rem);
-    // overflow: scroll;
+    position: relative;
+
+    .last-updated-label {
+      position: absolute;
+      bottom: 10px;
+      text-align: center;
+    }
   }
 
   .section-center {

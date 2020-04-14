@@ -174,6 +174,12 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
     }
   };
 
+  const changeMapType = (type: MapStyles) => {
+    if (map) {
+      map.setStyle(type);
+    }
+  };
+
   return (
     <div className="mapbox-gl-component-wrapper">
       <div id="map-gl-container" style={{ height: "100%" }}></div>
