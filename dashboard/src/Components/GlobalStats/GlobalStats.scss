@@ -1,4 +1,6 @@
 .global-stats-component {
+    overflow-y: scroll;
+    max-height: 73%;
 
     .country-stats-li {
         display: flex;

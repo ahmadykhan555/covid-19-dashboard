@@ -7,6 +7,7 @@ import * as mapboxgl from "mapbox-gl";
 import Admin from "../Admin/Admin";
 import LocalStatsComponent from "../LocalStats/LocalStats";
 import GlobalStatsComponent from "../GlobalStats/GlobalStats";
+import SummaryTiles from "../SummaryTiles/SummaryTiles";
 const MainLayoutComponent: React.FC<any> = () => {
   const [globalStats, setGlobalStats] = useState<boolean>(true);
   const [mapCenter, setMapCenter] = useState<mapboxgl.LngLat>(
@@ -28,6 +29,7 @@ const MainLayoutComponent: React.FC<any> = () => {
           flag={globalStats}
           stateHandler={setGlobalStats}
         />
+        <SummaryTiles />
         {globalStats ? (
           <GlobalStatsComponent mapCenterSetter={setMapCenter} />
         ) : (
