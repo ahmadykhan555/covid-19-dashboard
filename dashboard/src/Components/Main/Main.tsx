@@ -5,8 +5,12 @@ import SwitcherComponent from "../../components/Switcher/Switcher";
 import Admin from "../Admin/Admin";
 import LocalStatsComponent from "../LocalStats/LocalStats";
 import GlobalStatsComponent from "../GlobalStats/GlobalStats";
+import {
+  getAllCountriesData,
+  getDataForCountry
+} from "../../shared/covid-data-api/api";
 const MainLayoutComponent: React.FC<any> = () => {
-  const [globalStats, setGlobalStats] = useState<boolean>(false);
+  const [globalStats, setGlobalStats] = useState<boolean>(true);
 
   useEffect(() => {
     console.log("Flag value updated:  ", globalStats);
@@ -16,7 +20,7 @@ const MainLayoutComponent: React.FC<any> = () => {
     <div className="main-layout-component">
       <section className="section-left">
         <SwitcherComponent
-          switcherLabel="Show Global Stats"
+          switcherLabel="Global Stats"
           flag={globalStats}
           stateHandler={setGlobalStats}
         />
@@ -27,7 +31,7 @@ const MainLayoutComponent: React.FC<any> = () => {
           <MapBoxComponent />
         </section>
         <section className="section-bottom">
-          <Admin />
+          {/* <Admin /> */}
           {/* To Do Fix styles; make it more presentable @usama */}
         </section>
       </div>

@@ -39,7 +39,7 @@ const MapBoxComponent: React.FC<any> = () => {
       accessToken: environment.mapBoxAccessToken,
       container: "map-gl-container",
       center: [69.3451, 30.3753],
-      zoom: 5,
+      zoom: 4,
       style: MapStyles.Dark,
       boxZoom: true
     });
