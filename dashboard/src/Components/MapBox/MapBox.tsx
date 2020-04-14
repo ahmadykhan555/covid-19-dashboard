@@ -12,6 +12,10 @@ import * as PolyBalochistan from "../../geojson/balochistan";
 import * as PolyFata from "../../geojson/fata";
 import "./MapBox.scss";
 
+interface MapComponentProps {
+  center: mapboxgl.LngLat;
+}
+
 const provinces: Polygon[] = [
   { name: "punjab", geojson: PolyPunjab.default, color: "029B5B" },
   { name: "kpk", geojson: PolyKPK.default, color: "02A24B" },
@@ -22,13 +26,22 @@ const provinces: Polygon[] = [
   { name: "balochistan", geojson: PolyBalochistan.default, color: "A7E858" },
   { name: "fata", geojson: PolyFata.default, color: "BFE858" }
 ];
-const MapBoxComponent: React.FC<any> = () => {
+const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   const [map, setMap] = useState<mapboxgl.Map>();
   const [mapReady, setMapReady] = useState<boolean>(false);
 
   useEffect(() => {
     initMap();
   }, []);
+
+  useEffect(() => {
+    if (map) {
+      map.flyTo({
+        center: center,
+        essential: true
+      });
+    }
+  }, [center]);
 
   useEffect(() => {
     drawProvincePolygons();
@@ -38,7 +51,7 @@ const MapBoxComponent: React.FC<any> = () => {
     let map = new mapboxgl.Map({
       accessToken: environment.mapBoxAccessToken,
       container: "map-gl-container",
-      center: [69.3451, 30.3753],
+      center,
       zoom: 4,
       style: MapStyles.Dark,
       boxZoom: true

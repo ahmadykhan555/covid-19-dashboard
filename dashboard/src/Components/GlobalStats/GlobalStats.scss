@@ -6,6 +6,10 @@
         align-items: center;
         height: 35px;
         border-bottom: 0.35px solid #d3d3d336;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     .flag-container {
@@ -29,14 +33,14 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             margin: 0 0.5rem;
             align-items: center;
             height: 100%;
             justify-content: space-between;
 
             h4 {
-                font-size: 0.75rem;
+                font-size: 0.7rem;
                 font-weight: bold;
             }
 

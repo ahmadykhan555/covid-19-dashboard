@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { getAllCountriesData } from "../../shared/covid-data-api/api";
 import "./GlobalStats.scss";
+import * as mapboxgl from "mapbox-gl";
+import ReactTooltip from "react-tooltip";
 
-const GlobalStatsComponent: React.FC<any> = () => {
+interface GlobalStatsProps {
+  mapCenterSetter: any;
+}
+
+const GlobalStatsComponent: React.FC<GlobalStatsProps> = ({
+  mapCenterSetter
+}) => {
   const [covidData, setCovidData] = useState<any[]>([]);
   useEffect(() => {
     getAllCountriesData().then(res => {
@@ -21,20 +29,30 @@ const GlobalStatsComponent: React.FC<any> = () => {
     return (Number(stringifiedNumber) / 1000).toFixed(2) + "K";
   };
 
+  const didTapCountry = (info: any) => {
+    mapCenterSetter(new mapboxgl.LngLat(info.long, info.lat));
+  };
+
   const countryStatsListItem = (country: any, index: number) => {
     return (
-      <div className="country-stats-li" key={index}>
+      <div
+        className="country-stats-li"
+        key={index}
+        onClick={() => didTapCountry(country.countryInfo)}
+        data-for={`tooltip-${index}`}
+        data-tip={`Fly to ${country.country}`}
+      >
         <div className="flag-container">
           <img src={country.countryInfo.flag} alt="" />
         </div>
         <div className="stats stats-detail">
-          <div className="stats__deaths">
-            <label>Deaths</label>
-            <h4>{convertToThousand(country.deaths)}</h4>
-          </div>
           <div className="stats__infections">
             <label>Cases</label>
             <h4>{convertToThousand(country.cases)}</h4>
+          </div>
+          <div className="stats__deaths">
+            <label>Deaths</label>
+            <h4>{convertToThousand(country.deaths)}</h4>
           </div>
           <div className="stats__critical">
             <label>Critical</label>
@@ -45,6 +63,7 @@ const GlobalStatsComponent: React.FC<any> = () => {
             <h4>{convertToThousand(country.recovered)}</h4>
           </div>
         </div>
+        <ReactTooltip id={`tooltip-${index}`} />
       </div>
     );
   };
