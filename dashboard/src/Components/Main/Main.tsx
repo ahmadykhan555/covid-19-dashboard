@@ -4,7 +4,6 @@ import MapBoxComponent from "../MapBox/MapBox";
 import SwitcherComponent from "../../components/Switcher/Switcher";
 import * as mapboxgl from "mapbox-gl";
 
-import Admin from "../Admin/Admin";
 import LocalStatsComponent from "../LocalStats/LocalStats";
 import GlobalStatsComponent from "../GlobalStats/GlobalStats";
 import SummaryTiles from "../SummaryTiles/SummaryTiles";

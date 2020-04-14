@@ -14,7 +14,7 @@ import {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { sendProvinceData } from "../../shared/server-api/api";
-import { PROVINCES } from "./provinces";
+import { PROVINCES } from "../admin/provinces";
 
 const Admin: React.FC<any> = () => {
   const buttonRef: any = React.createRef();
