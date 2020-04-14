@@ -19,6 +19,7 @@ const GlobalStatsComponent: React.FC<GlobalStatsProps> = ({
   let [pollCount, setpollCount] = useState<number>(0);
   useEffect(() => {
     refreshData();
+    lastUpdatedSetter(covidData.length ? covidData[0].updated : new Date());
   }, [pollCount]);
   useEffect(() => {
     initPolling();
@@ -39,7 +40,6 @@ const GlobalStatsComponent: React.FC<GlobalStatsProps> = ({
   const initPolling = () => {
     setInterval(() => {
       setpollCount(++pollCount);
-      lastUpdatedSetter(new Date());
     }, POLL_INTERVAL);
   };
 
