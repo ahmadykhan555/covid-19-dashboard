@@ -174,7 +174,6 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
           return true;
         }
       };
-      
       const allPoints = covidData.map(country => ({
         type: 'Feature',
         geometry: {
@@ -182,7 +181,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
             coordinates: [country.countryInfo.long, country.countryInfo.lat]
         }
       }));
-
+      map.addImage("pulsing-dot", pulsingDot, { pixelRatio: 2 });
       map.addLayer({
         id: "points",
         type: "symbol",
