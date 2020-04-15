@@ -13,6 +13,8 @@ import * as PolyFata from "../../geojson/fata";
 import * as Circle from "./circle";
 import "./MapBox.scss";
 
+import { getAllCountriesData } from "../../shared/covid-data-api/api";
+
 interface MapComponentProps {
   center: mapboxgl.LngLat;
 }
@@ -28,12 +30,14 @@ const provinces: Polygon[] = [
   { name: "fata", geojson: PolyFata.default, color: "BFE858" }
 ];
 const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
+  const [covidData, setCovidData] = useState<any[]>([]);
   const [map, setMap] = useState<mapboxgl.Map>();
   const [mapReady, setMapReady] = useState<boolean>(false);
   // const [context, setContext] = useState<any>();
 
   useEffect(() => {
     initMap();
+    refreshData();
   }, []);
 
   useEffect(() => {
@@ -49,6 +53,18 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
     drawProvincePolygons();
     drawCircles();
   }, [map]);
+
+  const refreshData = () => {
+    getAllCountriesData().then(res => {
+      if (res.data) {
+        // var temp = Circle.default.features[0];
+        console.log(res.data);
+        
+        // Circle.default.features.push([]);
+        setCovidData(res.data);
+      }
+    });
+  };
 
   const initMap = () => {
     let map = new mapboxgl.Map({
@@ -158,15 +174,25 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
           return true;
         }
       };
-      map.addImage("pulsing-dot", pulsingDot, { pixelRatio: 2 });
-      map.addSource("points", {
-        type: "geojson",
-        data: Circle.default as any
-      });
+      
+      const allPoints = covidData.map(country => ({
+        type: 'Feature',
+        geometry: {
+            type: 'Point',
+            coordinates: [country.countryInfo.long, country.countryInfo.lat]
+        }
+      }));
+
       map.addLayer({
         id: "points",
         type: "symbol",
-        source: "points",
+        source: {
+          type: "geojson",
+          data: {
+            type: "FeatureCollection",
+            features: allPoints as any
+          }
+        },
         layout: {
           "icon-image": "pulsing-dot"
         }
