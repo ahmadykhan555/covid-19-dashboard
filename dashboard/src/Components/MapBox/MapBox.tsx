@@ -52,7 +52,6 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   useEffect(() => {
     drawProvincePolygons();
     drawCircle();
-    // drawCircles();
   }, [map]);
 
   const refreshData = () => {
@@ -271,7 +270,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
     }
   }
 
-  const drawCircles = () => {
+  const drawPulsingDot = () => {
     if (map) {
       var context: any;
       let size = 100;
@@ -330,45 +329,20 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
           return true;
         }
       };
-      // const allPoints = covidData.map(country => ({
-      //   type: 'Feature',
-      //   geometry: {
-      //       type: 'Point',
-      //       coordinates: [country.countryInfo.long, country.countryInfo.lat]
-      //   }
-      // }));
-      // map.addImage("pulsing-dot", pulsingDot, { pixelRatio: 2 });
-      // map.addSource("points", {
-      //   type: "geojson",
-      //   data: Circle.default as any
-      //   });
-      // map.addLayer({
-      //   id: "points",
-      //   type: "symbol",
-      //   source: "points",
-      //   paint: {
-      //     'circle-opacity': 0.75,
-      //     'circle-radius': [
-      //         'interpolate', ['linear'],
-      //         ['get', 'total_cases'],
-      //         1,
-      //         4,
-      //         1000,
-      //         8,
-      //         4000,
-      //         10,
-      //         8000,
-      //         14,
-      //         12000,
-      //         18,
-      //         100000,
-      //         40,
-      //         250000,
-      //         100
-      //     ],
-      //     'circle-color': '#EA240F'
-      // }
-      // });
+      map.addImage("pulsing-dot", pulsingDot, { pixelRatio: 2 });
+      Circle.default.features[0].geometry.coordinates = [map.getCenter().lng, map.getCenter().lat];
+      map.addSource("point", {
+        type: "geojson",
+        data: Circle.default as any
+        });
+      map.addLayer({
+        id: "points",
+        type: "symbol",
+        source: "point",
+        layout: {
+          "icon-image": "pulsing-dot"
+        }
+      });
     }
   };
 
