@@ -189,7 +189,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
               <html> 
                 <style type="text/css"> 
                   @import url('https://fonts.googleapis.com/css2?family=Lato&family=Roboto:ital,wght@0,400;0,500;1,300&display=swap'); 
-                  body { font-family: 'Roboto', sans-serif; font-family: 'Lato', sans-serif; color: black;} 
+                  .popup-body { font-family: 'Roboto', sans-serif; font-family: 'Lato', sans-serif; color: black;} 
                   .table-body {color:black;}
                   .header-title { font-family: 'Roboto', sans-serif; font-family: 'Lato', sans-serif; font-size: 15px; font-weight: bold; color: #000000; } 
                   .flex-container { height: 30px; display: flex; flex-wrap: nowrap; } 
@@ -202,7 +202,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
                   .statistics-label { font-family: 'Roboto', sans-serif; font-size: 12px; } 
                   .statistics-count { font-family: 'Roboto', sans-serif; font-size: 12px; } 
                 </style> 
-                <body> 
+                <body class="popup-body"> 
                   <table cellpadding=0 cellspacing=0 border="0" width="200" height="40">
                     <tr> 
                       <td align="center" "> 
