@@ -1,8 +1,8 @@
 import axios from "axios";
 const BASEURL = "https://corona.lmao.ninja/";
 const ENDPOINTS = {
-  AllCountries: "countries",
-  SelectedCountry: "countries"
+  AllCountries: "v2/countries",
+  SelectedCountry: "v2/countries"
 };
 export const getAllCountriesData = () => {
   return axios.get(`${BASEURL}${ENDPOINTS.AllCountries}`);
