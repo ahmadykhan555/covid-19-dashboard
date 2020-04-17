@@ -13,6 +13,8 @@ import * as PolyFata from "../../geojson/fata";
 import * as Circle from "./circle";
 import "./MapBox.scss";
 
+import { getAllCountriesData } from "../../shared/covid-data-api/api";
+
 interface MapComponentProps {
   center: mapboxgl.LngLat;
 }
@@ -28,12 +30,14 @@ const provinces: Polygon[] = [
   { name: "fata", geojson: PolyFata.default, color: "BFE858" }
 ];
 const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
+  const [covidData, setCovidData] = useState<any[]>([]);
   const [map, setMap] = useState<mapboxgl.Map>();
   const [mapReady, setMapReady] = useState<boolean>(false);
   // const [context, setContext] = useState<any>();
 
   useEffect(() => {
     initMap();
+    refreshData();
   }, []);
 
   useEffect(() => {
@@ -47,8 +51,16 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
 
   useEffect(() => {
     drawProvincePolygons();
-    drawCircles();
+    drawCircle();
   }, [map]);
+
+  const refreshData = () => {
+    getAllCountriesData().then((data: any) => {
+      if (data) {
+        setCovidData(data);
+      }
+    });
+  };
 
   const initMap = () => {
     let map = new mapboxgl.Map({
@@ -59,7 +71,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
       style: MapStyles.Dark,
       boxZoom: true
     });
-    map.on("load", () => {
+    map.once("load", () => {
       setMap(map);
       setMapReady(true);
       map.addControl(
@@ -99,7 +111,169 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
     }
   };
 
-  const drawCircles = () => {
+  const drawCircle = () => {
+    if (map) {
+      const allPoints = covidData.map(country => ({
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [country.countryInfo.long, country.countryInfo.lat]
+        },
+        properties: {
+          key: country.countryInfo._id,
+          name: country.country,
+          address: country.country,
+          confirmed: country.cases,
+          deaths: country.deaths,
+          recovered: country.recovered,
+          total_cases: country.cases
+        }
+      }));
+      map.addLayer({
+        id: "circles",
+        source: {
+          type: "geojson",
+          data: {
+            type: "FeatureCollection",
+            features: allPoints as any
+          }
+        },
+        type: "circle",
+        paint: {
+          "circle-opacity": 0.75,
+          "circle-radius": [
+            "interpolate",
+            ["linear"],
+            ["get", "total_cases"],
+            1,
+            4,
+            1000,
+            8,
+            4000,
+            10,
+            8000,
+            14,
+            12000,
+            18,
+            100000,
+            40,
+            250000,
+            100
+          ],
+          "circle-color": "#EA240F"
+        }
+      });
+      const popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+      });
+
+      let previous_id: any;
+
+      map.on("mousemove", "circles", e => {
+        if (e && e.features && e.features[0] && e.features[0].properties) {
+          const key = e.features[0].properties.key;
+          if (key !== previous_id) {
+            const {
+              name,
+              confirmed,
+              deaths,
+              recovered
+            } = e.features[0].properties;
+            map.getCanvas().style.cursor = "pointer";
+            var coordinates: any;
+            if (e.features[0].geometry.type === "Point") {
+              coordinates = e.features[0].geometry.coordinates.slice();
+            }
+            const HTML = `
+              <html> 
+                <style type="text/css"> 
+                  @import url('https://fonts.googleapis.com/css2?family=Lato&family=Roboto:ital,wght@0,400;0,500;1,300&display=swap'); 
+                  .popup-body { font-family: 'Roboto', sans-serif; font-family: 'Lato', sans-serif; color: black;} 
+                  .table-body {color:black;}
+                  .header-title { font-family: 'Roboto', sans-serif; font-family: 'Lato', sans-serif; font-size: 15px; font-weight: bold; color: #000000; } 
+                  .flex-container { height: 30px; display: flex; flex-wrap: nowrap; } 
+                  .dot-container { width: 20px; height: 30px; display: flex; justify-content: center; align-items: center; } 
+                  .title-container { width: 95px; height: 30px; display: flex; align-items: center;} 
+                  .statistics-container { width: 80px; height: 30px; display: flex; justify-content: flex-end; align-items: center; } 
+                  .confirmed-dot { width: 8px; height: 8px; border-radius: 50px; background-color: #DA1400; } 
+                  .deaths-dot { width: 8px; height: 8px; border-radius: 50px; background-color: #525252; } 
+                  .recovered-dot { width: 8px; height: 8px; border-radius: 50px; background-color: #3BD202; } 
+                  .statistics-label { font-family: 'Roboto', sans-serif; font-size: 12px; } 
+                  .statistics-count { font-family: 'Roboto', sans-serif; font-size: 12px; } 
+                </style> 
+                <body class="popup-body"> 
+                  <table cellpadding=0 cellspacing=0 border="0" width="200" height="40">
+                    <tr> 
+                      <td align="center" "> 
+                        <span class=" header-title ">${name}</span> 
+                      </td> 
+                    </tr> 
+                  </table> 
+                  <table cellpadding=0 cellspacing=0 border="0" width="200" height="90" class="table-body"> 
+                    <tr> 
+                      <td align="center" class="flex-container"> 
+                        <div class="dot-container">
+                          <div class="confirmed-dot"></div>
+                        </div> 
+                        <div class="title-container">
+                          <span class="statistics-label">Confirmed</span>
+                        </div> 
+                        <div class="statistics-container">
+                          <span class="statistics-count">${confirmed}</span>
+                        </div> 
+                      </td> 
+                    </tr> 
+                    <tr> 
+                      <td align="center" class="flex-container"> 
+                        <div class="dot-container">
+                          <div class="deaths-dot"></div>
+                        </div> 
+                        <div class="title-container">
+                          <span class="statistics-label">Deaths</span>
+                        </div> 
+                        <div class="statistics-container">
+                          <span class="statistics-count">${deaths}</span>
+                        </div> 
+                      </td> 
+                    </tr> 
+                    <tr> 
+                      <td align="center" class="flex-container"> 
+                        <div class="dot-container">
+                          <div class="recovered-dot"></div>
+                        </div> 
+                        <div class="title-container">
+                          <span class="statistics-label">Recovered</span>
+                        </div> 
+                        <div class="statistics-container">
+                          <span class="statistics-count">${recovered}</span>
+                        </div> 
+                      </td> 
+                    </tr> 
+                  </table> 
+                </body> 
+              </html>`;
+
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+              coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+            popup
+              .setLngLat(coordinates)
+              .setHTML(HTML)
+              .addTo(map);
+          }
+        }
+      });
+
+      map.on("mouseleave", "circles", function() {
+        previous_id = undefined;
+        map.getCanvas().style.cursor = "";
+        popup.remove();
+      });
+    }
+  };
+
+  const drawPulsingDot = () => {
     if (map) {
       var context: any;
       let size = 100;
@@ -159,24 +333,22 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
         }
       };
       map.addImage("pulsing-dot", pulsingDot, { pixelRatio: 2 });
-      map.addSource("points", {
+      Circle.default.features[0].geometry.coordinates = [
+        map.getCenter().lng,
+        map.getCenter().lat
+      ];
+      map.addSource("point", {
         type: "geojson",
         data: Circle.default as any
       });
       map.addLayer({
         id: "points",
         type: "symbol",
-        source: "points",
+        source: "point",
         layout: {
           "icon-image": "pulsing-dot"
         }
       });
-    }
-  };
-
-  const changeMapType = (type: MapStyles) => {
-    if (map) {
-      map.setStyle(type);
     }
   };
 

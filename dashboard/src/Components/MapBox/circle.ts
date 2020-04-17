@@ -5,7 +5,7 @@ export default {
       type: "Feature",
       geometry: {
         type: "Point",
-        coordinates: [0, 0]
+        coordinates: [-97, 37.99999999999997]
       }
     }
   ]
