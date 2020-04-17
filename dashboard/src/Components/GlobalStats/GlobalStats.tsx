@@ -25,15 +25,9 @@ const GlobalStatsComponent: React.FC<GlobalStatsProps> = ({
   }, []);
 
   const refreshData = () => {
-    getAllCountriesData().then(res => {
-      if (res.data) {
-        setCovidData(sortByCases(res.data));
-      }
+    getAllCountriesData().then((data: any) => {
+      setCovidData(data);
     });
-  };
-  const sortByCases = (data: any[]) => {
-    const sortedData = data.sort((a, b) => b.cases - a.cases);
-    return sortedData;
   };
 
   const initPolling = () => {

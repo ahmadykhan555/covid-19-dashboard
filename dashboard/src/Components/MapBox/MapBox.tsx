@@ -55,13 +55,9 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   }, [map]);
 
   const refreshData = () => {
-    getAllCountriesData().then(res => {
-      if (res.data) {
-        // var temp = Circle.default.features[0];
-        console.log(res.data);
-        
-        // Circle.default.features.push([]);
-        setCovidData(res.data);
+    getAllCountriesData().then((data: any) => {
+      if (data) {
+        setCovidData(data);
       }
     });
   };
@@ -117,14 +113,13 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
 
   const drawCircle = () => {
     if (map) {
-
       const allPoints = covidData.map(country => ({
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-            type: 'Point',
-            coordinates: [country.countryInfo.long, country.countryInfo.lat]
+          type: "Point",
+          coordinates: [country.countryInfo.long, country.countryInfo.lat]
         },
-        properties:{
+        properties: {
           key: country.countryInfo._id,
           name: country.country,
           address: country.country,
@@ -145,26 +140,27 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
         },
         type: "circle",
         paint: {
-          'circle-opacity': 0.75,
-          'circle-radius': [
-              'interpolate', ['linear'],
-              ['get', 'total_cases'],
-              1,
-              4,
-              1000,
-              8,
-              4000,
-              10,
-              8000,
-              14,
-              12000,
-              18,
-              100000,
-              40,
-              250000,
-              100
+          "circle-opacity": 0.75,
+          "circle-radius": [
+            "interpolate",
+            ["linear"],
+            ["get", "total_cases"],
+            1,
+            4,
+            1000,
+            8,
+            4000,
+            10,
+            8000,
+            14,
+            12000,
+            18,
+            100000,
+            40,
+            250000,
+            100
           ],
-          'circle-color': '#EA240F'
+          "circle-color": "#EA240F"
         }
       });
       const popup = new mapboxgl.Popup({
@@ -173,18 +169,23 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
       });
 
       let previous_id: any;
-      
-      map.on('mousemove', 'circles', (e) => {
+
+      map.on("mousemove", "circles", e => {
         if (e && e.features && e.features[0] && e.features[0].properties) {
           const key = e.features[0].properties.key;
           if (key !== previous_id) {
-              const { name, confirmed, deaths, recovered } = e.features[0].properties;
-              map.getCanvas().style.cursor = 'pointer';
-              var coordinates: any;
-              if (e.features[0].geometry.type === 'Point') {
-                coordinates = e.features[0].geometry.coordinates.slice();
-              }
-              const HTML = `
+            const {
+              name,
+              confirmed,
+              deaths,
+              recovered
+            } = e.features[0].properties;
+            map.getCanvas().style.cursor = "pointer";
+            var coordinates: any;
+            if (e.features[0].geometry.type === "Point") {
+              coordinates = e.features[0].geometry.coordinates.slice();
+            }
+            const HTML = `
               <html> 
                 <style type="text/css"> 
                   @import url('https://fonts.googleapis.com/css2?family=Lato&family=Roboto:ital,wght@0,400;0,500;1,300&display=swap'); 
@@ -253,22 +254,24 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
                 </body> 
               </html>`;
 
-              while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                  coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-              }
-              popup.setLngLat(coordinates).setHTML(HTML).addTo(map);
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+              coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+            popup
+              .setLngLat(coordinates)
+              .setHTML(HTML)
+              .addTo(map);
           }
         }
-      }); 
-
-      map.on('mouseleave', 'circles', function () {
-        previous_id = undefined;
-        map.getCanvas().style.cursor = '';
-        popup.remove();
       });
 
+      map.on("mouseleave", "circles", function() {
+        previous_id = undefined;
+        map.getCanvas().style.cursor = "";
+        popup.remove();
+      });
     }
-  }
+  };
 
   const drawPulsingDot = () => {
     if (map) {
@@ -330,11 +333,14 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
         }
       };
       map.addImage("pulsing-dot", pulsingDot, { pixelRatio: 2 });
-      Circle.default.features[0].geometry.coordinates = [map.getCenter().lng, map.getCenter().lat];
+      Circle.default.features[0].geometry.coordinates = [
+        map.getCenter().lng,
+        map.getCenter().lat
+      ];
       map.addSource("point", {
         type: "geojson",
         data: Circle.default as any
-        });
+      });
       map.addLayer({
         id: "points",
         type: "symbol",
@@ -343,12 +349,6 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
           "icon-image": "pulsing-dot"
         }
       });
-    }
-  };
-
-  const changeMapType = (type: MapStyles) => {
-    if (map) {
-      map.setStyle(type);
     }
   };
 
