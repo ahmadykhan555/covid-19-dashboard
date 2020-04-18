@@ -46,6 +46,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
         center: center,
         essential: true
       });
+      drawPulsingDot();
     }
   }, [center]);
 
@@ -332,10 +333,20 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
           return true;
         }
       };
-      map.addImage("pulsing-dot", pulsingDot, { pixelRatio: 2 });
+      if (!map.getLayer("points")) {
+        map.addImage("pulsing-dot", pulsingDot, { pixelRatio: 2 });
+      }
+      if (map.getLayer("points")) {
+        console.log("Layer Removed!");
+        map.removeLayer("points");
+      }
+      if (map.getSource("point")) {
+        console.log("Source Removed!");
+        map.removeSource("point");
+      }
       Circle.default.features[0].geometry.coordinates = [
-        map.getCenter().lng,
-        map.getCenter().lat
+        center.lng,
+        center.lat
       ];
       map.addSource("point", {
         type: "geojson",
