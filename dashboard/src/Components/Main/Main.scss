@@ -14,14 +14,14 @@
   .section-left {
     width: 340px;
     margin-right: 0;
-    padding: 1rem;
-    height: calc(100% - 2rem);
+    padding: 1rem 1rem 0;
     position: relative;
+    display: flex;
+    flex-direction: column;
 
     .last-updated-label {
-      position: absolute;
-      bottom: 10px;
-      text-align: center;
+      z-index: 2;
+      margin: auto;
     }
   }
 
