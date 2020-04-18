@@ -6,7 +6,7 @@ import * as mapboxgl from "mapbox-gl";
 
 import LocalStatsComponent from "../LocalStats/LocalStats";
 import GlobalStatsComponent from "../GlobalStats/GlobalStats";
-import SummaryTiles from "../SummaryTiles/SummaryTiles";
+import SummaryTiles from "../SummaryComponent/SummaryComponent";
 import moment from "moment";
 const MainLayoutComponent: React.FC<any> = () => {
   const [globalStats, setGlobalStats] = useState<boolean>(true);
@@ -25,11 +25,11 @@ const MainLayoutComponent: React.FC<any> = () => {
   return (
     <div className="main-layout-component">
       <section className="section-left">
-        <SwitcherComponent
+        {/* <SwitcherComponent
           switcherLabel="Global Stats"
           flag={globalStats}
           stateHandler={setGlobalStats}
-        />
+        /> */}
         <SummaryTiles />
         {globalStats ? (
           <GlobalStatsComponent
@@ -39,9 +39,6 @@ const MainLayoutComponent: React.FC<any> = () => {
         ) : (
           <LocalStatsComponent />
         )}
-        <div className="last-updated-label">
-          Last updated: {moment(lastUpdated).fromNow()}
-        </div>
       </section>
       <div className="section-center">
         <section className="map-container">

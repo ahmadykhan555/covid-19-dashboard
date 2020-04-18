@@ -48,7 +48,7 @@ const GlobalStatsComponent: React.FC<GlobalStatsProps> = ({
   const countryStatsListItem = (country: any, index: number) => {
     return (
       <div
-        className="country-stats-li"
+        className="country-stats-li card-item"
         key={index}
         onClick={() => didTapCountry(country.countryInfo)}
         data-for={`tooltip-${index}`}

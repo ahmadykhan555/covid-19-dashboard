@@ -1,12 +1,12 @@
 .global-stats-component {
     overflow-y: scroll;
-    max-height: 73%;
+    flex: 1;
 
     .country-stats-li {
         display: flex;
-        padding: 2.5rem 0;
+        padding: 1.5rem 1.5rem;
         align-items: center;
-        height: 35px;
+        height: 75px;
         border-bottom: 0.35px solid #d3d3d336;
 
         &:hover {

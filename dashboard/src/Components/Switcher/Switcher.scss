@@ -1,13 +1,9 @@
 .switcher-component {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding-bottom: 1rem;
-  border-bottom: 0.35px solid #d3d3d359;
 
   label {
     margin: 0;
-    font-weight: 900;
     text-transform: uppercase;
   }
 }
