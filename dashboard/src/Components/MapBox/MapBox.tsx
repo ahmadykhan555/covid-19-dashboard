@@ -46,6 +46,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
         center: center,
         essential: true
       });
+      drawPulsingDot();
     }
   }, [center]);
 
@@ -57,10 +58,6 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   const refreshData = () => {
     getAllCountriesData().then(res => {
       if (res.data) {
-        // var temp = Circle.default.features[0];
-        console.log(res.data);
-        
-        // Circle.default.features.push([]);
         setCovidData(res.data);
       }
     });
@@ -329,8 +326,18 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
           return true;
         }
       };
-      map.addImage("pulsing-dot", pulsingDot, { pixelRatio: 2 });
-      Circle.default.features[0].geometry.coordinates = [map.getCenter().lng, map.getCenter().lat];
+      if (!map.getLayer('points')) {
+        map.addImage("pulsing-dot", pulsingDot, { pixelRatio: 2 });
+      }
+      if (map.getLayer('points')) {
+        console.log("Layer Removed!");
+        map.removeLayer('points');
+      }
+      if (map.getSource('point')) {
+        console.log("Source Removed!");
+        map.removeSource('point')
+      }
+      Circle.default.features[0].geometry.coordinates = [center.lng, center.lat];
       map.addSource("point", {
         type: "geojson",
         data: Circle.default as any
