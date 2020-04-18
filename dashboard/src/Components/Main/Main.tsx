@@ -13,6 +13,8 @@ const MainLayoutComponent: React.FC<any> = () => {
   const [mapCenter, setMapCenter] = useState<mapboxgl.LngLat>(
     new mapboxgl.LngLat(0, 0)
   );
+
+  const [selectedCountry, setSelectedCountry] = useState<any>("");
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
 
   useEffect(() => {
@@ -29,19 +31,22 @@ const MainLayoutComponent: React.FC<any> = () => {
           switcherLabel={""}
           stateHandler={setGlobalStats}
           flag={globalStats}
-          entityName="Pakistan"
-          recovered={10}
-          deaths={10}
-          cases={200}
-          critical={150}
+          entityName={selectedCountry ? selectedCountry.country : "Pakistan"}
+          recovered={selectedCountry.recovered}
+          deaths={selectedCountry.deaths}
+          cases={selectedCountry.cases}
+          critical={selectedCountry.critical}
           flagSrc={
-            "https://raw.githubusercontent.com/NovelCOVID/API/master/assets/flags/us.png"
+            selectedCountry
+              ? selectedCountry.countryInfo.flag
+              : "https://raw.githubusercontent.com/NovelCOVID/API/master/assets/flags/pk.png"
           }
         />
         {globalStats ? (
           <GlobalStatsComponent
             mapCenterSetter={setMapCenter}
             lastUpdatedSetter={setLastUpdated}
+            selectedCountrySetter={setSelectedCountry}
           />
         ) : (
           <LocalStatsComponent />

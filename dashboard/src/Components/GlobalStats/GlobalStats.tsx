@@ -7,13 +7,15 @@ import ReactTooltip from "react-tooltip";
 interface GlobalStatsProps {
   mapCenterSetter: any;
   lastUpdatedSetter: any;
+  selectedCountrySetter: any;
 }
 
 const POLL_INTERVAL: number = 12000;
 
 const GlobalStatsComponent: React.FC<GlobalStatsProps> = ({
   mapCenterSetter,
-  lastUpdatedSetter
+  lastUpdatedSetter,
+  selectedCountrySetter
 }) => {
   const [covidData, setCovidData] = useState<any[]>([]);
   let [pollCount, setpollCount] = useState<number>(0);
@@ -41,8 +43,12 @@ const GlobalStatsComponent: React.FC<GlobalStatsProps> = ({
     return (Number(stringifiedNumber) / 1000).toFixed(2) + "K";
   };
 
-  const didTapCountry = (info: any) => {
-    mapCenterSetter(new mapboxgl.LngLat(info.long, info.lat));
+  const didTapCountry = (country: any) => {
+    debugger;
+    mapCenterSetter(
+      new mapboxgl.LngLat(country.countryInfo.long, country.countryInfo.lat)
+    );
+    selectedCountrySetter(country);
   };
 
   const countryStatsListItem = (country: any, index: number) => {
@@ -50,7 +56,7 @@ const GlobalStatsComponent: React.FC<GlobalStatsProps> = ({
       <div
         className="country-stats-li card-item"
         key={index}
-        onClick={() => didTapCountry(country.countryInfo)}
+        onClick={() => didTapCountry(country)}
         data-for={`tooltip-${index}`}
         data-tip={`Fly to ${country.country}`}
       >

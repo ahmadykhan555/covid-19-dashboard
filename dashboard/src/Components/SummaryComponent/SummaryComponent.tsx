@@ -53,7 +53,7 @@ const SummaryComponent: React.FC<SummaryProps> = ({
           <p className="numbers">{critical}</p>
         </div>
       </div>
-      <div className="summary__graph">Graph</div>
+      <div className="summary__graph"></div>
     </div>
   );
 };
