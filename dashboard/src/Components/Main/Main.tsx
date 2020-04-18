@@ -6,7 +6,7 @@ import * as mapboxgl from "mapbox-gl";
 
 import LocalStatsComponent from "../LocalStats/LocalStats";
 import GlobalStatsComponent from "../GlobalStats/GlobalStats";
-import SummaryTiles from "../SummaryComponent/SummaryComponent";
+import SummaryComponent from "../SummaryComponent/SummaryComponent";
 import moment from "moment";
 const MainLayoutComponent: React.FC<any> = () => {
   const [globalStats, setGlobalStats] = useState<boolean>(true);
@@ -25,12 +25,19 @@ const MainLayoutComponent: React.FC<any> = () => {
   return (
     <div className="main-layout-component">
       <section className="section-left">
-        {/* <SwitcherComponent
-          switcherLabel="Global Stats"
-          flag={globalStats}
+        <SummaryComponent
+          switcherLabel={""}
           stateHandler={setGlobalStats}
-        /> */}
-        <SummaryTiles />
+          flag={globalStats}
+          entityName="Pakistan"
+          recovered={10}
+          deaths={10}
+          cases={200}
+          critical={150}
+          flagSrc={
+            "https://raw.githubusercontent.com/NovelCOVID/API/master/assets/flags/us.png"
+          }
+        />
         {globalStats ? (
           <GlobalStatsComponent
             mapCenterSetter={setMapCenter}

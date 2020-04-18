@@ -2,10 +2,9 @@ import React from "react";
 import "./Switcher.scss";
 import Switch from "react-switch";
 
-interface SwitcherProps {
+export interface SwitcherProps {
   switcherLabel: string;
   flag: boolean;
-  onChangeHandler?: () => {};
   stateHandler: any;
 }
 

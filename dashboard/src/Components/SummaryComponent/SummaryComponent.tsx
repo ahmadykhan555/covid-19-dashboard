@@ -1,38 +1,56 @@
 import React from "react";
 import "./SummaryComponent.scss";
-import SwitcherComponent from "../Switcher/Switcher";
-const SummaryTiles: React.FC<any> = () => {
+import SwitcherComponent, { SwitcherProps } from "../Switcher/Switcher";
+interface SummaryProps extends SwitcherProps {
+  flagSrc: string;
+  entityName: string;
+  cases: number;
+  deaths: number;
+  recovered: number;
+  critical: number;
+}
+const SummaryComponent: React.FC<SummaryProps> = ({
+  flagSrc,
+  entityName,
+  cases,
+  deaths,
+  recovered,
+  critical,
+  flag,
+  stateHandler,
+  switcherLabel
+}) => {
   return (
     <div className="summary card-item">
       <div className="summary__header">
         <div className="flag-container">
-          <img src="https://raw.githubusercontent.com/NovelCOVID/API/master/assets/flags/us.png" />
+          <img src={flagSrc} />
         </div>
-        <h4 className="country-name">USA</h4>
+        <h4 className="entity-name">{entityName}</h4>
         <div className="switcher-container">
           <SwitcherComponent
-            switcherLabel=""
-            flag={true}
-            stateHandler={() => {}}
+            switcherLabel={switcherLabel}
+            flag={flag}
+            stateHandler={stateHandler}
           />
         </div>
       </div>
       <div className="summary__stats">
         <div className="stats-tile stats-tile--cases">
           <label>Cases</label>
-          <p className="numbers">20k</p>
+          <p className="numbers">{cases}</p>
         </div>
         <div className="stats-tile stats-tile--deaths">
           <label>Deaths</label>
-          <p className="numbers">20k</p>
+          <p className="numbers">{deaths}</p>
         </div>
         <div className="stats-tile stats-tile--recovered">
           <label>Recovered</label>
-          <p className="numbers">20k</p>
+          <p className="numbers">{recovered}</p>
         </div>
         <div className="stats-tile stats-tile--critical">
           <label>Critical</label>
-          <p className="numbers">20k</p>
+          <p className="numbers">{critical}</p>
         </div>
       </div>
       <div className="summary__graph">Graph</div>
@@ -40,4 +58,4 @@ const SummaryTiles: React.FC<any> = () => {
   );
 };
 
-export default SummaryTiles;
+export default SummaryComponent;
