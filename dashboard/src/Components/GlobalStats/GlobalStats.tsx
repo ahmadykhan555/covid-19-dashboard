@@ -33,9 +33,6 @@ const GlobalStatsComponent: React.FC<GlobalStatsProps> = ({
       setCovidData(data);
       if (data && data.length) {
         selectedCountrySetter(data[0]);
-        mapCenterSetter(
-          new mapboxgl.LngLat(data[0].countryInfo.long, data[0].countryInfo.lat)
-        );
       }
     });
   };

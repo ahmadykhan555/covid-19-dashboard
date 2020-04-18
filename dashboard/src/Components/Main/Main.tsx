@@ -17,7 +17,6 @@ const MainLayoutComponent: React.FC<any> = () => {
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
 
   useEffect(() => {
-    console.log("Flag value updated:  ", globalStats);
     globalStats
       ? setMapCenter(new mapboxgl.LngLat(121.0214, 14.5617))
       : setMapCenter(new mapboxgl.LngLat(69.3451, 30.3753));
