@@ -2,12 +2,24 @@ import axios from "axios";
 const BASEURL = "https://corona.lmao.ninja/";
 const ENDPOINTS = {
   AllCountries: "v2/countries",
-  SelectedCountry: "v2/countries"
+  SelectedCountry: "v2/countries",
+  AllStates: "v2/states"
 };
 export const getAllCountriesData = () => {
   return new Promise((resolve, reject) => {
     axios
       .get(`${BASEURL}${ENDPOINTS.AllCountries}`)
+      .then((res: any) => {
+        resolve(sortByCases(res.data));
+      })
+      .catch(err => reject(err));
+  });
+};
+
+export const getAllStatesData = () => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`${BASEURL}${ENDPOINTS.AllStates}`)
       .then((res: any) => {
         resolve(sortByCases(res.data));
       })
