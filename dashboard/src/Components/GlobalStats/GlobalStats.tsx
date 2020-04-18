@@ -3,6 +3,7 @@ import { getAllCountriesData } from "../../shared/covid-data-api/api";
 import "./GlobalStats.scss";
 import * as mapboxgl from "mapbox-gl";
 import ReactTooltip from "react-tooltip";
+import { convertToThousand } from "../../shared/data-utility/utility";
 
 interface GlobalStatsProps {
   mapCenterSetter: any;
@@ -30,6 +31,12 @@ const GlobalStatsComponent: React.FC<GlobalStatsProps> = ({
   const refreshData = () => {
     getAllCountriesData().then((data: any) => {
       setCovidData(data);
+      if (data && data.length) {
+        selectedCountrySetter(data[0]);
+        mapCenterSetter(
+          new mapboxgl.LngLat(data[0].countryInfo.long, data[0].countryInfo.lat)
+        );
+      }
     });
   };
 
@@ -39,12 +46,7 @@ const GlobalStatsComponent: React.FC<GlobalStatsProps> = ({
     }, POLL_INTERVAL);
   };
 
-  const convertToThousand = (stringifiedNumber: string) => {
-    return (Number(stringifiedNumber) / 1000).toFixed(2) + "K";
-  };
-
   const didTapCountry = (country: any) => {
-    debugger;
     mapCenterSetter(
       new mapboxgl.LngLat(country.countryInfo.long, country.countryInfo.lat)
     );

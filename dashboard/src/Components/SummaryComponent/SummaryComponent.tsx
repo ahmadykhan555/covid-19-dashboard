@@ -1,6 +1,7 @@
 import React from "react";
 import "./SummaryComponent.scss";
 import SwitcherComponent, { SwitcherProps } from "../Switcher/Switcher";
+import { convertToThousand } from "../../shared/data-utility/utility";
 interface SummaryProps extends SwitcherProps {
   flagSrc: string;
   entityName: string;
@@ -38,19 +39,19 @@ const SummaryComponent: React.FC<SummaryProps> = ({
       <div className="summary__stats">
         <div className="stats-tile stats-tile--cases">
           <label>Cases</label>
-          <p className="numbers">{cases}</p>
+          <p className="numbers">{convertToThousand(cases)}</p>
         </div>
         <div className="stats-tile stats-tile--deaths">
           <label>Deaths</label>
-          <p className="numbers">{deaths}</p>
+          <p className="numbers">{convertToThousand(deaths)}</p>
         </div>
         <div className="stats-tile stats-tile--recovered">
           <label>Recovered</label>
-          <p className="numbers">{recovered}</p>
+          <p className="numbers">{convertToThousand(recovered)}</p>
         </div>
         <div className="stats-tile stats-tile--critical">
           <label>Critical</label>
-          <p className="numbers">{critical}</p>
+          <p className="numbers">{convertToThousand(critical)}</p>
         </div>
       </div>
       <div className="summary__graph"></div>

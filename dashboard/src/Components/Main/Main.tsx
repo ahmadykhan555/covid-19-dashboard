@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Main.scss";
 import MapBoxComponent from "../MapBox/MapBox";
-import SwitcherComponent from "../../components/Switcher/Switcher";
 import * as mapboxgl from "mapbox-gl";
 
 import LocalStatsComponent from "../LocalStats/LocalStats";
@@ -31,16 +30,12 @@ const MainLayoutComponent: React.FC<any> = () => {
           switcherLabel={""}
           stateHandler={setGlobalStats}
           flag={globalStats}
-          entityName={selectedCountry ? selectedCountry.country : "Pakistan"}
+          entityName={selectedCountry ? selectedCountry.country : ""}
           recovered={selectedCountry.recovered}
           deaths={selectedCountry.deaths}
           cases={selectedCountry.cases}
           critical={selectedCountry.critical}
-          flagSrc={
-            selectedCountry
-              ? selectedCountry.countryInfo.flag
-              : "https://raw.githubusercontent.com/NovelCOVID/API/master/assets/flags/pk.png"
-          }
+          flagSrc={selectedCountry ? selectedCountry.countryInfo.flag : ""}
         />
         {globalStats ? (
           <GlobalStatsComponent
