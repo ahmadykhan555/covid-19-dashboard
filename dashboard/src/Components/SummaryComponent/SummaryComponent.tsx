@@ -11,6 +11,11 @@ interface SummaryProps extends SwitcherProps {
   critical: number;
 }
 
+interface Tile {
+  label: string;
+  numbers: number;
+}
+
 const SummaryComponent: React.FC<SummaryProps> = ({
   flagSrc,
   entityName,
@@ -22,6 +27,20 @@ const SummaryComponent: React.FC<SummaryProps> = ({
   stateHandler,
   switcherLabel
 }) => {
+  const tiles: Tile[] = [
+    { label: "cases", numbers: cases },
+    { label: "deaths", numbers: deaths },
+    { label: "critical", numbers: critical },
+    { label: "recovered", numbers: recovered }
+  ];
+  const renderTile = (tile: Tile) => {
+    return (
+      <div className={`stats-tile stats-tile--${tile.label}`}>
+        <label>{tile.label}</label>
+        <p className="numbers">{convertToThousand(tile.numbers)}</p>
+      </div>
+    );
+  };
   const renderDetail = () => {
     return (
       <>
@@ -39,22 +58,7 @@ const SummaryComponent: React.FC<SummaryProps> = ({
           </div>
         </div>
         <div className="summary__stats">
-          <div className="stats-tile stats-tile--cases">
-            <label>Cases</label>
-            <p className="numbers">{convertToThousand(cases)}</p>
-          </div>
-          <div className="stats-tile stats-tile--deaths">
-            <label>Deaths</label>
-            <p className="numbers">{convertToThousand(deaths)}</p>
-          </div>
-          <div className="stats-tile stats-tile--recovered">
-            <label>Recovered</label>
-            <p className="numbers">{convertToThousand(recovered)}</p>
-          </div>
-          <div className="stats-tile stats-tile--critical">
-            <label>Critical</label>
-            <p className="numbers">{convertToThousand(critical)}</p>
-          </div>
+          {tiles.map(tile => renderTile(tile))}
         </div>
         <div className="summary__graph"></div>
       </>

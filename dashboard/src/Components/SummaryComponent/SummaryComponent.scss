@@ -48,6 +48,10 @@
             align-items: center;
             font-weight: bolder;
 
+            label {
+                text-transform: capitalize;
+            }
+
             &--cases {
                 color: orange
             }
