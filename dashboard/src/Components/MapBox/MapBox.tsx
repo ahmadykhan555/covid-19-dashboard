@@ -13,7 +13,7 @@ import * as PolyFata from "../../geojson/fata";
 import * as Circle from "./circle";
 import "./MapBox.scss";
 
-import { getAllCountriesData } from "../../shared/covid-data-api/api";
+import { getAllCountriesData, getAllStatesData } from "../../shared/covid-data-api/api";
 
 interface MapComponentProps {
   center: mapboxgl.LngLat;
@@ -37,7 +37,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
 
   useEffect(() => {
     initMap();
-    refreshData();
+    refreshCountriesData();
   }, []);
 
   useEffect(() => {
@@ -55,13 +55,27 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
     drawCircle();
   }, [map]);
 
-  const refreshData = () => {
+  // useEffect(() => {
+  //   console.log("called");
+    
+  //   refreshStatesData();
+  // }, [covidData]);
+
+  const refreshCountriesData = () => {
     getAllCountriesData().then((data: any) => {
       if (data) {
         setCovidData(data);
       }
     });
   };
+
+  // const refreshStatesData = () => {
+  //   getAllStatesData().then((data: any) => {
+  //     if (data) {
+  //       console.log([...covidData, ...data]);
+  //     }
+  //   });
+  // }
 
   const initMap = () => {
     let map = new mapboxgl.Map({
