@@ -4,9 +4,9 @@ import MapBoxComponent from "../MapBox/MapBox";
 import * as mapboxgl from "mapbox-gl";
 
 import LocalStatsComponent from "../LocalStats/LocalStats";
-import GlobalStatsComponent from "../GlobalStats/GlobalStats";
 import SummaryComponent from "../SummaryComponent/SummaryComponent";
 import moment from "moment";
+import GlobalStatsComponent from "../GlobalStats/GlobalStats";
 const MainLayoutComponent: React.FC<any> = () => {
   const [globalStats, setGlobalStats] = useState<boolean>(true);
   const [mapCenter, setMapCenter] = useState<mapboxgl.LngLat>(
@@ -27,8 +27,8 @@ const MainLayoutComponent: React.FC<any> = () => {
       <section className="section-left">
         <SummaryComponent
           switcherLabel={""}
-          stateHandler={setGlobalStats}
-          flag={globalStats}
+          switcherStateHandler={setGlobalStats}
+          switcherFlag={globalStats}
           entityName={selectedCountry ? selectedCountry.country : ""}
           recovered={selectedCountry.recovered}
           deaths={selectedCountry.deaths}

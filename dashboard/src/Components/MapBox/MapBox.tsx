@@ -15,7 +15,10 @@ import "./MapBox.scss";
 
 import * as PolyWorld from "../Main/world";
 
-import { getAllCountriesData, getAllStatesData } from "../../shared/covid-data-api/api";
+import {
+  getAllCountriesData,
+  getAllStatesData
+} from "../../shared/covid-data-api/api";
 
 interface MapComponentProps {
   center: mapboxgl.LngLat;
@@ -32,7 +35,11 @@ const provinces: Polygon[] = [
   { name: "fata", geojson: PolyFata.default, color: "BFE858" }
 ];
 
-const world: Polygon = { name: "world", geojson: PolyWorld.default[0], color: "FF0000" }
+const world: Polygon = {
+  name: "world",
+  geojson: PolyWorld.default[0],
+  color: "FF0000"
+};
 
 const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   const [covidData, setCovidData] = useState<any[]>([]);
@@ -62,7 +69,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
 
   // useEffect(() => {
   //   console.log("called");
-    
+
   //   refreshStatesData();
   // }, [covidData]);
 
@@ -108,13 +115,16 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   };
 
   const drawProvincePolygons = () => {
-    provinces.forEach(province => {
-      createPolygonLayer(province);
-    });
+    // provinces.forEach(province => {
+    //   createPolygonLayer(province);
+    // });
 
     PolyWorld.default.forEach(country => {
       world.geojson = country;
-      let filteredClasses = covidData.filter(ctr => country.properties.name.toLowerCase() === (ctr.country.toLowerCase()));
+      let filteredClasses = covidData.filter(
+        ctr =>
+          country.properties.name.toLowerCase() === ctr.country.toLowerCase()
+      );
       if (!(filteredClasses === undefined || filteredClasses.length === 0)) {
         world.name = country.id;
         createPolygonLayer(world);

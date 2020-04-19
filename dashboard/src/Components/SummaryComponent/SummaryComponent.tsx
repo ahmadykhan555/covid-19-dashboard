@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./SummaryComponent.scss";
 import SwitcherComponent, { SwitcherProps } from "../Switcher/Switcher";
-import { convertToThousand } from "../../shared/data-utility/utility";
 import { Tile, TileComponent } from "../TileComponent/Tile";
+import { getGlobalStats } from "../../shared/covid-data-api/api";
 interface SummaryProps extends SwitcherProps {
   flagSrc: string;
   entityName: string;
@@ -19,44 +19,86 @@ const SummaryComponent: React.FC<SummaryProps> = ({
   deaths,
   recovered,
   critical,
-  flag,
-  stateHandler,
+  switcherFlag,
+  switcherStateHandler,
   switcherLabel
 }) => {
-  const tiles: Tile[] = [
-    { label: "cases", numbers: cases },
-    { label: "deaths", numbers: deaths },
-    { label: "critical", numbers: critical },
-    { label: "recovered", numbers: recovered }
-  ];
-  const renderDetail = () => {
+  const [tabs, setTabs] = useState<any[]>(["global"]);
+  const [activeTab, setActiveTab] = useState<string>("global");
+  const [globalTiles, setGlobalTiles] = useState<Tile[]>([]);
+  const [tiles, setTiles] = useState<Tile[]>([]);
+
+  const renderTab = (label: string) => {
     return (
-      <>
-        <div className="summary__header">
+      <div
+        onClick={() => setActiveTab(label)}
+        className={`tab ${
+          label === activeTab && tabs.length > 1 ? "active" : ""
+        }`}
+      >
+        {label !== "global" && (
           <div className="flag-container">
             <img src={flagSrc} />
           </div>
-          <h4 className="entity-name">{entityName}</h4>
-          <div className="switcher-container">
-            <SwitcherComponent
-              switcherLabel={switcherLabel}
-              flag={flag}
-              stateHandler={stateHandler}
-            />
-          </div>
-        </div>
+        )}
+        {label}
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    getGlobalStats().then(res => {
+      if (res.data) {
+        const { cases, deaths, critical, recovered } = res.data;
+        setGlobalTiles([
+          { label: "cases", numbers: cases },
+          { label: "deaths", numbers: deaths },
+          { label: "critical", numbers: critical },
+          { label: "recovered", numbers: recovered }
+        ]);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (entityName) {
+      setTabs(["global", entityName]);
+      setActiveTab(entityName);
+      setTiles([
+        { label: "cases", numbers: cases },
+        { label: "deaths", numbers: deaths },
+        { label: "critical", numbers: critical },
+        { label: "recovered", numbers: recovered }
+      ]);
+    }
+  }, [entityName]);
+
+  const renderDetail = () => {
+    return (
+      <>
+        <div className="tabs-container">{tabs.map(tab => renderTab(tab))}</div>
         <div className="summary__stats">
-          {tiles.map(tile => (
-            <TileComponent label={tile.label} numbers={tile.numbers} />
-          ))}
+          {activeTab === "global"
+            ? globalTiles.map((tile: Tile, index: number) => (
+                <TileComponent
+                  key={index}
+                  label={tile.label}
+                  numbers={tile.numbers}
+                />
+              ))
+            : tiles.map((tile: Tile, index: number) => (
+                <TileComponent
+                  key={index}
+                  label={tile.label}
+                  numbers={tile.numbers}
+                />
+              ))}
         </div>
         <div className="summary__graph"></div>
       </>
     );
   };
-  return (
-    <div className="summary card-item">{entityName && renderDetail()}</div>
-  );
+  return <div className="summary card-item">{renderDetail()}</div>;
 };
 
 export default SummaryComponent;
