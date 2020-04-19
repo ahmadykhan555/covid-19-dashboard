@@ -2,7 +2,8 @@ import axios from "axios";
 const BASEURL = "https://corona.lmao.ninja/";
 const ENDPOINTS = {
   AllCountries: "v2/countries",
-  SelectedCountry: "v2/countries"
+  SelectedCountry: "v2/countries",
+  GlobalStats: "v2/all"
 };
 export const getAllCountriesData = () => {
   return new Promise((resolve, reject) => {
@@ -17,6 +18,10 @@ export const getAllCountriesData = () => {
 
 export const getDataForCountry = (country: string) => {
   return axios.get(`${BASEURL}${ENDPOINTS.SelectedCountry}/${country}`);
+};
+
+export const getGlobalStats = () => {
+  return axios.get(`${BASEURL}${ENDPOINTS.GlobalStats}`);
 };
 
 // helpers
