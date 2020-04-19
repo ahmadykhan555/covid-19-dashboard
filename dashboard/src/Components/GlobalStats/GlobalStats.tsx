@@ -30,9 +30,6 @@ const GlobalStatsComponent: React.FC<GlobalStatsProps> = ({
   const refreshData = () => {
     getAllCountriesData().then((data: any) => {
       setCovidData(data);
-      if (data && data.length) {
-        selectedCountrySetter(data[0]);
-      }
     });
   };
 

@@ -15,7 +15,10 @@ import "./MapBox.scss";
 
 import * as PolyWorld from "../Main/world";
 
-import { getAllCountriesData, getAllStatesData } from "../../shared/covid-data-api/api";
+import {
+  getAllCountriesData,
+  getAllStatesData
+} from "../../shared/covid-data-api/api";
 
 interface MapComponentProps {
   center: mapboxgl.LngLat;
@@ -64,7 +67,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
 
   // useEffect(() => {
   //   console.log("called");
-    
+
   //   refreshStatesData();
   // }, [covidData]);
 

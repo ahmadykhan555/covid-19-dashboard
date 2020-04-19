@@ -4,21 +4,21 @@ import Switch from "react-switch";
 
 export interface SwitcherProps {
   switcherLabel: string;
-  flag: boolean;
-  stateHandler: any;
+  switcherFlag: boolean;
+  switcherStateHandler: any;
 }
 
 const SwitcherComponent: React.FC<SwitcherProps> = ({
   switcherLabel,
-  flag,
-  stateHandler
+  switcherFlag,
+  switcherStateHandler
 }) => {
   return (
     <div className="switcher-component">
       <label>{switcherLabel}</label>
       <Switch
-        onChange={() => stateHandler(!flag)}
-        checked={flag}
+        onChange={() => switcherStateHandler(!switcherFlag)}
+        checked={switcherFlag}
         onColor="#86d3ff"
         onHandleColor="#2693e6"
         handleDiameter={30}
