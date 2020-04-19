@@ -11,8 +11,7 @@ interface GlobalStatsProps {
   selectedCountrySetter: any;
 }
 
-const POLL_INTERVAL: number = 12000;
-
+const POLL_INTERVAL: number = 60 * 1000 * 3;
 const GlobalStatsComponent: React.FC<GlobalStatsProps> = ({
   mapCenterSetter,
   lastUpdatedSetter,

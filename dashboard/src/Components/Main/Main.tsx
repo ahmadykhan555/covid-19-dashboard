@@ -10,7 +10,7 @@ import moment from "moment";
 const MainLayoutComponent: React.FC<any> = () => {
   const [globalStats, setGlobalStats] = useState<boolean>(true);
   const [mapCenter, setMapCenter] = useState<mapboxgl.LngLat>(
-    new mapboxgl.LngLat(0, 0)
+    new mapboxgl.LngLat(-97, 38)
   );
 
   const [selectedCountry, setSelectedCountry] = useState<any>("");
@@ -18,7 +18,7 @@ const MainLayoutComponent: React.FC<any> = () => {
 
   useEffect(() => {
     globalStats
-      ? setMapCenter(new mapboxgl.LngLat(121.0214, 14.5617))
+      ? setMapCenter(new mapboxgl.LngLat(-97, 38))
       : setMapCenter(new mapboxgl.LngLat(69.3451, 30.3753));
   }, [globalStats]);
 
