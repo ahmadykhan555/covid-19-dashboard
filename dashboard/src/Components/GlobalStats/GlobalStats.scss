@@ -2,6 +2,8 @@
     overflow-y: scroll;
     flex: 1;
 
+    margin-top: 1rem;
+
     .country-stats-li {
         display: flex;
         padding: 1.5rem 1.5rem;
@@ -11,6 +13,10 @@
 
         &:hover {
             cursor: pointer;
+        }
+
+        &:first-child {
+            margin-top: 0;
         }
     }
 
