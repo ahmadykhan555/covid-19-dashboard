@@ -13,6 +13,8 @@ import * as PolyFata from "../../geojson/fata";
 import * as Circle from "./circle";
 import "./MapBox.scss";
 
+import * as PolyWorld from "../Main/world";
+
 import { getAllCountriesData, getAllStatesData } from "../../shared/covid-data-api/api";
 
 interface MapComponentProps {
@@ -29,6 +31,9 @@ const provinces: Polygon[] = [
   { name: "balochistan", geojson: PolyBalochistan.default, color: "A7E858" },
   { name: "fata", geojson: PolyFata.default, color: "BFE858" }
 ];
+
+const world: Polygon = { name: "world", geojson: PolyWorld.default[0], color: "FF0000" }
+
 const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   const [covidData, setCovidData] = useState<any[]>([]);
   const [map, setMap] = useState<mapboxgl.Map>();
@@ -52,7 +57,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
 
   useEffect(() => {
     drawProvincePolygons();
-    drawCircle();
+    // drawCircle();
   }, [map]);
 
   // useEffect(() => {
@@ -64,6 +69,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   const refreshCountriesData = () => {
     getAllCountriesData().then((data: any) => {
       if (data) {
+        console.log(data);
         setCovidData(data);
       }
     });
@@ -104,6 +110,15 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   const drawProvincePolygons = () => {
     provinces.forEach(province => {
       createPolygonLayer(province);
+    });
+
+    PolyWorld.default.forEach(country => {
+      world.geojson = country;
+      let filteredClasses = covidData.filter(ctr => country.properties.name.toLowerCase() === (ctr.country.toLowerCase()));
+      if (!(filteredClasses === undefined || filteredClasses.length === 0)) {
+        world.name = country.id;
+        createPolygonLayer(world);
+      }
     });
   };
 
