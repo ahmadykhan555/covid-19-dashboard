@@ -29,14 +29,6 @@ const SummaryComponent: React.FC<SummaryProps> = ({
     { label: "critical", numbers: critical },
     { label: "recovered", numbers: recovered }
   ];
-  const renderTile = (tile: Tile) => {
-    return (
-      <div className={`stats-tile stats-tile--${tile.label}`}>
-        <label>{tile.label}</label>
-        <p className="numbers">{convertToThousand(tile.numbers)}</p>
-      </div>
-    );
-  };
   const renderDetail = () => {
     return (
       <>
