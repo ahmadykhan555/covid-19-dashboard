@@ -1,0 +1,33 @@
+.stats-tile {
+    background: whitesmoke;
+    height: 65px;
+    width: 75px;
+    border-radius: 5px;
+    font-size: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 5px 7px -2px rgba(0, 0, 0, 0.64);
+    padding: 0.75rem 0;
+    align-items: center;
+    font-weight: bolder;
+
+    label {
+        text-transform: capitalize;
+    }
+
+    &--cases {
+        color: orange
+    }
+
+    &--deaths {
+        color: red
+    }
+
+    &--critical {
+        color: orangered
+    }
+
+    &--recovered {
+        color: green
+    }
+}

@@ -2,6 +2,7 @@ import React from "react";
 import "./SummaryComponent.scss";
 import SwitcherComponent, { SwitcherProps } from "../Switcher/Switcher";
 import { convertToThousand } from "../../shared/data-utility/utility";
+import { Tile, TileComponent } from "../TileComponent/Tile";
 interface SummaryProps extends SwitcherProps {
   flagSrc: string;
   entityName: string;
@@ -9,11 +10,6 @@ interface SummaryProps extends SwitcherProps {
   deaths: number;
   recovered: number;
   critical: number;
-}
-
-interface Tile {
-  label: string;
-  numbers: number;
 }
 
 const SummaryComponent: React.FC<SummaryProps> = ({
@@ -33,14 +29,6 @@ const SummaryComponent: React.FC<SummaryProps> = ({
     { label: "critical", numbers: critical },
     { label: "recovered", numbers: recovered }
   ];
-  const renderTile = (tile: Tile) => {
-    return (
-      <div className={`stats-tile stats-tile--${tile.label}`}>
-        <label>{tile.label}</label>
-        <p className="numbers">{convertToThousand(tile.numbers)}</p>
-      </div>
-    );
-  };
   const renderDetail = () => {
     return (
       <>
@@ -58,7 +46,9 @@ const SummaryComponent: React.FC<SummaryProps> = ({
           </div>
         </div>
         <div className="summary__stats">
-          {tiles.map(tile => renderTile(tile))}
+          {tiles.map(tile => (
+            <TileComponent label={tile.label} numbers={tile.numbers} />
+          ))}
         </div>
         <div className="summary__graph"></div>
       </>
