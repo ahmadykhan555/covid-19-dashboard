@@ -60,7 +60,7 @@ const SummaryComponent: React.FC<SummaryProps> = ({
         <div className="summary__stats">
           {tiles.map(tile => renderTile(tile))}
         </div>
-        <div className="summary__graph"></div>
+        <div className="summary__graph">{/* <BarGraphComponent /> */}</div>
       </>
     );
   };
