@@ -25,25 +25,56 @@ interface MapComponentProps {
 }
 
 const provinces: Polygon[] = [
-  { name: "punjab", geojson: PolyPunjab.default, color: "029B5B" },
-  { name: "kpk", geojson: PolyKPK.default, color: "02A24B" },
-  { name: "sindh", geojson: PolySindh.default, color: "58E87D" },
-  { name: "gilgit", geojson: PolyGB.default, color: "58E861" },
-  { name: "capital", geojson: PolyCapital.default, color: "7FE858" },
-  { name: "ajk", geojson: PolyAJK.default, color: "95E858" },
-  { name: "balochistan", geojson: PolyBalochistan.default, color: "A7E858" },
-  { name: "fata", geojson: PolyFata.default, color: "BFE858" }
+  {
+    name: "punjab",
+    geojson: PolyPunjab.default,
+    color: "#029B5B",
+    opacity: 0.5
+  },
+  { name: "kpk", geojson: PolyKPK.default, color: "#02A24B", opacity: 0.5 },
+  {
+    name: "sindh",
+    geojson: PolySindh.default,
+    color: "#58E87D",
+    opacity: 0.5
+  },
+  { name: "gilgit", geojson: PolyGB.default, color: "#58E861", opacity: 0.5 },
+  {
+    name: "capital",
+    geojson: PolyCapital.default,
+    color: "#7FE858",
+    opacity: 0.5
+  },
+  { name: "ajk", geojson: PolyAJK.default, color: "#95E858", opacity: 0.5 },
+  {
+    name: "balochistan",
+    geojson: PolyBalochistan.default,
+    color: "#A7E858",
+    opacity: 0.5
+  },
+  { name: "fata", geojson: PolyFata.default, color: "#BFE858", opacity: 0.5 }
 ];
 
-const colors: string[] = ['rgba(255, 0, 0', 'rgba(0, 255, 0', 'rgba(128, 128, 0']
-const world: Polygon = { name: "world", geojson: PolyWorld.default[0], color: "rgba(255, 0, 0, 0.9)" }
+const colors: string[] = ["#800000", "#FF0000", "#FFC000", "#004000"];
+
+enum ZoneColorMap {
+  HighZone = "red",
+  ModerateZone = "yellow",
+  LowZone = "orangered",
+  ZeroZone = "green"
+}
+const world: Polygon = {
+  name: "world",
+  geojson: PolyWorld.default[0],
+  color: "rgba(255, 0, 0, 0.9)",
+  opacity: 0.5
+};
 
 const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   const [covidData, setCovidData] = useState<any[]>([]);
   const [segmentedData, setSegmentedData] = useState<any[]>([[]]);
   const [map, setMap] = useState<mapboxgl.Map>();
   const [mapReady, setMapReady] = useState<boolean>(false);
-  // const [context, setContext] = useState<any>();
 
   useEffect(() => {
     initMap();
@@ -61,42 +92,54 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   }, [center]);
 
   useEffect(() => {
-    drawPolygons();
-    // drawCircle();
+    drawProvincialPolygons();
+    drawGlobalZones();
   }, [map]);
 
-  // useEffect(() => {
-  //   console.log("called");
+  useEffect(() => {
+    if (segmentedData.length) {
+    }
+  }, [segmentedData]);
 
-  //   refreshStatesData();
-  // }, [covidData]);
+  useEffect(() => {
+    refreshStatesData();
+  }, [covidData]);
 
   const refreshCountriesData = () => {
     getAllCountriesData().then((data: any) => {
       if (data) {
-        const topCountries = data.filter((ctr: { cases: number; }) => ctr.cases >= 100000);
-        const bottomCountries = data.filter((ctr: { cases: number; }) => ctr.cases <= 1000);
-        const middleCountries = data.filter((ctr: { cases: number; }) => (ctr.cases > 1000 && ctr.cases < 100000));
+        const topCountries: any[] = [];
+        const bottomCountries: any[] = [];
+        const middleCountries: any[] = [];
+        data.forEach((country: any) => {
+          if (country.cases >= 100000) {
+            topCountries.push(country);
+          } else if (country.cases < 100000 && country.cases > 1000) {
+            middleCountries.push(country);
+          } else {
+            bottomCountries.push(country);
+          }
+        });
         setCovidData(data);
         setSegmentedData([topCountries, bottomCountries, middleCountries]);
       }
     });
   };
 
-  // const refreshStatesData = () => {
-  //   getAllStatesData().then((data: any) => {
-  //     if (data) {
-  //       console.log([...covidData, ...data]);
-  //     }
-  //   });
-  // }
+  const refreshStatesData = () => {
+    getAllStatesData().then((data: any) => {
+      if (data) {
+        console.log([...covidData, ...data]);
+      }
+    });
+  };
 
   const initMap = () => {
     let map = new mapboxgl.Map({
       accessToken: environment.mapBoxAccessToken,
       container: "map-gl-container",
       center,
-      zoom: 4,
+      zoom: 2,
       style: MapStyles.Dark,
       boxZoom: true
     });
@@ -115,33 +158,31 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
     });
   };
 
-  const drawPolygons = () => {
-    provinces.forEach(province => {
-      createPolygonLayer(province);
-    });
+  const getPolygonForCountry = (countryName: string) => {
+    return PolyWorld.default.filter(
+      ctr => countryName.toLowerCase() === ctr.properties.name.toLowerCase()
+    );
+  };
 
+  const drawGlobalZones = () => {
     segmentedData.forEach((segment, index) => {
-      let alpha = 0.9;
-      console.log(segment);
       const color = colors[index];
-      const breakPoint = Math.floor((segment.length/5));
-      segment.forEach((country: { country: string; }, index: number)=> {
-        let filteredPolygon = PolyWorld.default.filter(ctr => country.country.toLowerCase() === ctr.properties.name.toLowerCase());
-        if (!(filteredPolygon === undefined || filteredPolygon.length === 0)) {
-          if ((index+1) !== 1 && ((index+1) % breakPoint === 0) && alpha > 0.5) {
-            console.log("index : ", index);
-            alpha = parseFloat((alpha - 0.1).toFixed(1));
-            world.color = "rgba(255, 0, 0, " + alpha.toString() + ")";
-          } else {
-            console.log("country : ", country.country);
-            world.color = color + ", " + alpha.toString() + ")";
-            console.log("world color : ", world.color);
-          }
-          world.geojson = filteredPolygon[0];
-          world.name = filteredPolygon[0].id;
+      segment.forEach((country: { country: string }) => {
+        const correspondingPolygon = getPolygonForCountry(country.country);
+        if (correspondingPolygon && correspondingPolygon.length) {
+          world.color = color;
+          world.geojson = correspondingPolygon[0];
+          world.name = correspondingPolygon[0].id;
+          debugger;
           createPolygonLayer(world);
         }
       });
+    });
+  };
+
+  const drawProvincialPolygons = () => {
+    provinces.forEach(province => {
+      createPolygonLayer(province);
     });
   };
 
@@ -158,7 +199,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
         layout: {},
         paint: {
           "fill-color": config.color,
-          "fill-opacity": 0.5
+          "fill-opacity": config.opacity
         }
       });
     }
@@ -372,16 +413,10 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
           context.lineWidth = 2 + 4 * (1 - t);
           context.fill();
           context.stroke();
-
-          // update this image's data with data from the canvas
           this.data = context.getImageData(0, 0, this.width, this.height).data;
-
-          // continuously repaint the map, resulting in the smooth animation of the dot
           if (map) {
             map.triggerRepaint();
           }
-
-          // return `true` to let the map know that the image was updated
           return true;
         }
       };
@@ -427,6 +462,7 @@ type Polygon = {
   name: string;
   geojson: Object;
   color: string;
+  opacity: number;
 };
 
 type NavigatorResponse = {
