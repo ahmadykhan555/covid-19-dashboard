@@ -12,6 +12,7 @@ import * as PolyBalochistan from "../../geojson/balochistan";
 import * as PolyFata from "../../geojson/fata";
 import * as Circle from "./circle";
 import "./MapBox.scss";
+import ReactTooltip from "react-tooltip";
 
 import * as PolyWorld from "../Main/world";
 
@@ -25,27 +26,55 @@ interface MapComponentProps {
 }
 
 const provinces: Polygon[] = [
-  { name: "punjab", geojson: PolyPunjab.default, color: "029B5B" },
-  { name: "kpk", geojson: PolyKPK.default, color: "02A24B" },
-  { name: "sindh", geojson: PolySindh.default, color: "58E87D" },
-  { name: "gilgit", geojson: PolyGB.default, color: "58E861" },
-  { name: "capital", geojson: PolyCapital.default, color: "7FE858" },
-  { name: "ajk", geojson: PolyAJK.default, color: "95E858" },
-  { name: "balochistan", geojson: PolyBalochistan.default, color: "A7E858" },
-  { name: "fata", geojson: PolyFata.default, color: "BFE858" }
+  {
+    name: "punjab",
+    geojson: PolyPunjab.default,
+    color: "#029B5B",
+    opacity: 0.5
+  },
+  { name: "kpk", geojson: PolyKPK.default, color: "#02A24B", opacity: 0.5 },
+  {
+    name: "sindh",
+    geojson: PolySindh.default,
+    color: "#58E87D",
+    opacity: 0.5
+  },
+  { name: "gilgit", geojson: PolyGB.default, color: "#58E861", opacity: 0.5 },
+  {
+    name: "capital",
+    geojson: PolyCapital.default,
+    color: "#7FE858",
+    opacity: 0.5
+  },
+  { name: "ajk", geojson: PolyAJK.default, color: "#95E858", opacity: 0.5 },
+  {
+    name: "balochistan",
+    geojson: PolyBalochistan.default,
+    color: "#A7E858",
+    opacity: 0.5
+  },
+  { name: "fata", geojson: PolyFata.default, color: "#BFE858", opacity: 0.5 }
 ];
+
+enum ZoneColorMap {
+  HighZone = "#800000",
+  ModerateZone = "#FF0000",
+  LowZone = "#FFC000",
+  ZeroZone = "#004000"
+}
 
 const world: Polygon = {
   name: "world",
   geojson: PolyWorld.default[0],
-  color: "FF0000"
+  color: "rgba(255, 0, 0, 0.9)",
+  opacity: 0.5
 };
 
 const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   const [covidData, setCovidData] = useState<any[]>([]);
+  const [segmentedData, setSegmentedData] = useState<any[]>([[]]);
   const [map, setMap] = useState<mapboxgl.Map>();
   const [mapReady, setMapReady] = useState<boolean>(false);
-  // const [context, setContext] = useState<any>();
 
   useEffect(() => {
     initMap();
@@ -63,39 +92,54 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   }, [center]);
 
   useEffect(() => {
-    drawProvincePolygons();
-    // drawCircle();
+    drawProvincialPolygons();
+    drawGlobalZones();
   }, [map]);
 
-  // useEffect(() => {
-  //   console.log("called");
+  useEffect(() => {
+    if (segmentedData.length) {
+    }
+  }, [segmentedData]);
 
-  //   refreshStatesData();
-  // }, [covidData]);
+  useEffect(() => {
+    refreshStatesData();
+  }, [covidData]);
 
   const refreshCountriesData = () => {
     getAllCountriesData().then((data: any) => {
       if (data) {
-        console.log(data);
+        const topCountries: any[] = [];
+        const bottomCountries: any[] = [];
+        const middleCountries: any[] = [];
+        data.forEach((country: any) => {
+          if (country.cases >= 100000) {
+            topCountries.push(country);
+          } else if (country.cases < 100000 && country.cases > 1000) {
+            middleCountries.push(country);
+          } else {
+            bottomCountries.push(country);
+          }
+        });
         setCovidData(data);
+        setSegmentedData([topCountries, bottomCountries, middleCountries]);
       }
     });
   };
 
-  // const refreshStatesData = () => {
-  //   getAllStatesData().then((data: any) => {
-  //     if (data) {
-  //       console.log([...covidData, ...data]);
-  //     }
-  //   });
-  // }
+  const refreshStatesData = () => {
+    getAllStatesData().then((data: any) => {
+      if (data) {
+        console.log([...covidData, ...data]);
+      }
+    });
+  };
 
   const initMap = () => {
     let map = new mapboxgl.Map({
       accessToken: environment.mapBoxAccessToken,
       container: "map-gl-container",
       center,
-      zoom: 4,
+      zoom: 2,
       style: MapStyles.Dark,
       boxZoom: true
     });
@@ -114,21 +158,44 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
     });
   };
 
-  const drawProvincePolygons = () => {
-    // provinces.forEach(province => {
-    //   createPolygonLayer(province);
-    // });
+  const drawGlobalZones = () => {
+    if (covidData.length) {
+      PolyWorld.default.forEach(countryPolygon => {
+        const correspondingData = covidData.find(
+          ctry =>
+            ctry.country.toLowerCase() ===
+            countryPolygon.properties.name.toLowerCase()
+        );
+        correspondingData
+          ? drawZone(correspondingData, countryPolygon)
+          : drawZone(
+              { country: countryPolygon.properties.name },
+              countryPolygon
+            );
+      });
+    }
+  };
 
-    PolyWorld.default.forEach(country => {
-      world.geojson = country;
-      let filteredClasses = covidData.filter(
-        ctr =>
-          country.properties.name.toLowerCase() === ctr.country.toLowerCase()
-      );
-      if (!(filteredClasses === undefined || filteredClasses.length === 0)) {
-        world.name = country.id;
-        createPolygonLayer(world);
-      }
+  const drawZone = (countryData: any, geojson: any) => {
+    let color = ZoneColorMap.ZeroZone;
+    if (countryData.cases <= 1000) {
+      color = ZoneColorMap.LowZone;
+    } else if (countryData.cases > 1000 && countryData.cases < 100000) {
+      color = ZoneColorMap.ModerateZone;
+    } else if (countryData.cases >= 100000) {
+      color = ZoneColorMap.HighZone;
+    }
+    createPolygonLayer({
+      name: countryData.country,
+      geojson,
+      color,
+      opacity: 0.5
+    });
+  };
+
+  const drawProvincialPolygons = () => {
+    provinces.forEach(province => {
+      createPolygonLayer(province);
     });
   };
 
@@ -144,8 +211,8 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
         source: config.name,
         layout: {},
         paint: {
-          "fill-color": `#${config.color}`,
-          "fill-opacity": 0.5
+          "fill-color": config.color,
+          "fill-opacity": config.opacity
         }
       });
     }
@@ -359,16 +426,10 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
           context.lineWidth = 2 + 4 * (1 - t);
           context.fill();
           context.stroke();
-
-          // update this image's data with data from the canvas
           this.data = context.getImageData(0, 0, this.width, this.height).data;
-
-          // continuously repaint the map, resulting in the smooth animation of the dot
           if (map) {
             map.triggerRepaint();
           }
-
-          // return `true` to let the map know that the image was updated
           return true;
         }
       };
@@ -405,7 +466,43 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   return (
     <div className="mapbox-gl-component-wrapper">
       <div id="map-gl-container" style={{ height: "100%" }}></div>
-      {mapReady && <div className="map-controls"></div>}
+      {mapReady && (
+        <div className="map-controls">
+          <div className="zones-legend">
+            <div className="cells-container">
+              <div
+                className="legend-cell legend-cell--high"
+                data-for="tooltip-zone-high"
+                data-tip="Infections over 100k"
+              >
+                <ReactTooltip id="tooltip-zone-high" />
+              </div>
+              <div
+                className="legend-cell legend-cell--moderate"
+                data-for="tooltip-zone-moderate"
+                data-tip="Infections under 100k"
+              >
+                <ReactTooltip id="tooltip-zone-moderate" />
+              </div>
+              <div
+                className="legend-cell legend-cell--low"
+                data-for="tooltip-zone-low"
+                data-tip="Infections under 10k"
+              >
+                <ReactTooltip id="tooltip-zone-low" />
+              </div>
+              <div
+                className="legend-cell legend-cell--zero"
+                data-for="tooltip-zone-zero"
+                data-tip="Infections under 1k"
+              >
+                <ReactTooltip id="tooltip-zone-zero" />
+              </div>
+            </div>
+            <label>Zones</label>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -414,6 +511,7 @@ type Polygon = {
   name: string;
   geojson: Object;
   color: string;
+  opacity: number;
 };
 
 type NavigatorResponse = {

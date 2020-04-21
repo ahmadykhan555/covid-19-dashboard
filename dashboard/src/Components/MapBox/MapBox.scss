@@ -4,16 +4,56 @@
 
   .map-controls {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0.625rem;
+    left: 0.625rem;
     width: 95%;
     height: 40px;
     display: flex;
 
-
     svg {
       height: 1.5rem;
       width: 1.5rem;
+    }
+
+    .zones-legend {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+
+      label {
+        font-weight: bold;
+        font-size: 0.75rem !important;
+      }
+
+      .cells-container {
+        display: flex;
+
+      }
+
+      .legend-cell {
+        height: 20px;
+        width: 30px;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        &--high {
+          background: #800000;
+        }
+
+        &--moderate {
+          background: #FF0000;
+        }
+
+        &--low {
+          background: #FFC000;
+        }
+
+        &--zero {
+          background: #004000;
+        }
+      }
     }
   }
 }
