@@ -12,6 +12,7 @@ import * as PolyBalochistan from "../../geojson/balochistan";
 import * as PolyFata from "../../geojson/fata";
 import * as Circle from "./circle";
 import "./MapBox.scss";
+import ReactTooltip from "react-tooltip";
 
 import * as PolyWorld from "../Main/world";
 
@@ -55,14 +56,13 @@ const provinces: Polygon[] = [
   { name: "fata", geojson: PolyFata.default, color: "#BFE858", opacity: 0.5 }
 ];
 
-const colors: string[] = ["#800000", "#FF0000", "#FFC000", "#004000"];
-
 enum ZoneColorMap {
-  HighZone = "red",
-  ModerateZone = "yellow",
-  LowZone = "orangered",
-  ZeroZone = "green"
+  HighZone = "#800000",
+  ModerateZone = "#FF0000",
+  LowZone = "#FFC000",
+  ZeroZone = "#004000"
 }
+
 const world: Polygon = {
   name: "world",
   geojson: PolyWorld.default[0],
@@ -158,25 +158,38 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
     });
   };
 
-  const getPolygonForCountry = (countryName: string) => {
-    return PolyWorld.default.filter(
-      ctr => countryName.toLowerCase() === ctr.properties.name.toLowerCase()
-    );
+  const drawGlobalZones = () => {
+    if (covidData.length) {
+      PolyWorld.default.forEach(countryPolygon => {
+        const correspondingData = covidData.find(
+          ctry =>
+            ctry.country.toLowerCase() ===
+            countryPolygon.properties.name.toLowerCase()
+        );
+        correspondingData
+          ? drawZone(correspondingData, countryPolygon)
+          : drawZone(
+              { country: countryPolygon.properties.name },
+              countryPolygon
+            );
+      });
+    }
   };
 
-  const drawGlobalZones = () => {
-    segmentedData.forEach((segment, index) => {
-      const color = colors[index];
-      segment.forEach((country: { country: string }) => {
-        const correspondingPolygon = getPolygonForCountry(country.country);
-        if (correspondingPolygon && correspondingPolygon.length) {
-          world.color = color;
-          world.geojson = correspondingPolygon[0];
-          world.name = correspondingPolygon[0].id;
-          debugger;
-          createPolygonLayer(world);
-        }
-      });
+  const drawZone = (countryData: any, geojson: any) => {
+    let color = ZoneColorMap.ZeroZone;
+    if (countryData.cases <= 1000) {
+      color = ZoneColorMap.LowZone;
+    } else if (countryData.cases > 1000 && countryData.cases < 100000) {
+      color = ZoneColorMap.ModerateZone;
+    } else if (countryData.cases >= 100000) {
+      color = ZoneColorMap.HighZone;
+    }
+    createPolygonLayer({
+      name: countryData.country,
+      geojson,
+      color,
+      opacity: 0.5
     });
   };
 
@@ -453,7 +466,43 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   return (
     <div className="mapbox-gl-component-wrapper">
       <div id="map-gl-container" style={{ height: "100%" }}></div>
-      {mapReady && <div className="map-controls"></div>}
+      {mapReady && (
+        <div className="map-controls">
+          <div className="zones-legend">
+            <div className="cells-container">
+              <div
+                className="legend-cell legend-cell--high"
+                data-for="tooltip-zone-high"
+                data-tip="Infections over 100k"
+              >
+                <ReactTooltip id="tooltip-zone-high" />
+              </div>
+              <div
+                className="legend-cell legend-cell--moderate"
+                data-for="tooltip-zone-moderate"
+                data-tip="Infections under 100k"
+              >
+                <ReactTooltip id="tooltip-zone-moderate" />
+              </div>
+              <div
+                className="legend-cell legend-cell--low"
+                data-for="tooltip-zone-low"
+                data-tip="Infections under 10k"
+              >
+                <ReactTooltip id="tooltip-zone-low" />
+              </div>
+              <div
+                className="legend-cell legend-cell--zero"
+                data-for="tooltip-zone-zero"
+                data-tip="Infections under 1k"
+              >
+                <ReactTooltip id="tooltip-zone-zero" />
+              </div>
+            </div>
+            <label>Zones</label>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
