@@ -92,7 +92,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   }, [center]);
 
   useEffect(() => {
-    drawProvincialPolygons();
+    // drawProvincialPolygons();
     drawGlobalZones();
   }, [map]);
 
@@ -178,9 +178,9 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
 
   const drawZone = (countryData: any, geojson: any) => {
     let color = ZoneColorMap.ZeroZone;
-    if (countryData.cases <= 1000) {
+    if (countryData.cases <= 10000) {
       color = ZoneColorMap.LowZone;
-    } else if (countryData.cases > 1000 && countryData.cases < 100000) {
+    } else if (countryData.cases > 10000 && countryData.cases < 100000) {
       color = ZoneColorMap.ModerateZone;
     } else if (countryData.cases >= 100000) {
       color = ZoneColorMap.HighZone;
