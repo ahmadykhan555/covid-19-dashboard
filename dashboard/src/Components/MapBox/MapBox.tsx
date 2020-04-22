@@ -72,7 +72,6 @@ const world: Polygon = {
 
 const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   const [covidData, setCovidData] = useState<any[]>([]);
-  const [segmentedData, setSegmentedData] = useState<any[]>([[]]);
   const [map, setMap] = useState<mapboxgl.Map>();
   const [mapReady, setMapReady] = useState<boolean>(false);
   const [zonesReady, setZonesReady] = useState<boolean>(false);
@@ -94,35 +93,19 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
 
   useEffect(() => {
     // drawProvincialPolygons();
+  }, [map]);
+
+  useEffect(() => {
     !zonesReady && drawGlobalZones();
-  }, [map, covidData]);
-
-  useEffect(() => {
-    if (segmentedData.length) {
-    }
-  }, [segmentedData]);
-
-  useEffect(() => {
     refreshStatesData();
   }, [covidData]);
 
   const refreshCountriesData = () => {
+    console.time("api");
     getAllCountriesData().then((data: any) => {
+      console.timeEnd("api");
       if (data) {
-        const topCountries: any[] = [];
-        const bottomCountries: any[] = [];
-        const middleCountries: any[] = [];
-        data.forEach((country: any) => {
-          if (country.cases >= 100000) {
-            topCountries.push(country);
-          } else if (country.cases < 100000 && country.cases > 1000) {
-            middleCountries.push(country);
-          } else {
-            bottomCountries.push(country);
-          }
-        });
         setCovidData(data);
-        setSegmentedData([topCountries, bottomCountries, middleCountries]);
       }
     });
   };
@@ -161,6 +144,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
 
   const drawGlobalZones = () => {
     if (covidData.length) {
+      console.time("Rendering Zones");
       PolyWorld.default.forEach(countryPolygon => {
         const correspondingData = covidData.find(
           ctry =>
@@ -174,6 +158,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
               countryPolygon
             );
       });
+      console.timeEnd("Rendering Zones");
       setZonesReady(true);
     }
   };
