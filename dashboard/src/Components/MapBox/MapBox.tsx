@@ -75,6 +75,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   const [segmentedData, setSegmentedData] = useState<any[]>([[]]);
   const [map, setMap] = useState<mapboxgl.Map>();
   const [mapReady, setMapReady] = useState<boolean>(false);
+  const [zonesReady, setZonesReady] = useState<boolean>(false);
 
   useEffect(() => {
     initMap();
@@ -93,8 +94,8 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
 
   useEffect(() => {
     // drawProvincialPolygons();
-    drawGlobalZones();
-  }, [map]);
+    !zonesReady && drawGlobalZones();
+  }, [map, covidData]);
 
   useEffect(() => {
     if (segmentedData.length) {
@@ -173,6 +174,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
               countryPolygon
             );
       });
+      setZonesReady(true);
     }
   };
 
