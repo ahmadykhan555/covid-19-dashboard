@@ -2,7 +2,7 @@ export const convertToThousand = (stringifiedNumber: any) => {
   if (stringifiedNumber >= 1000 && stringifiedNumber < 1000000) {
     return (Number(stringifiedNumber) / 1000).toFixed(2) + "K";
   } else if (stringifiedNumber >= 1000000) {
-    return (Number(stringifiedNumber) / 1000000).toFixed(2) + "m";
+    return (Number(stringifiedNumber) / 1000000).toFixed(2) + "M";
   } else {
     return stringifiedNumber;
   }
