@@ -30,6 +30,7 @@ const MainLayoutComponent: React.FC<any> = () => {
           switcherStateHandler={setGlobalStats}
           switcherFlag={globalStats}
           entityName={selectedCountry ? selectedCountry.country : ""}
+          ISOName={selectedCountry ? selectedCountry.countryInfo.iso3 : ""}
           recovered={selectedCountry.recovered}
           deaths={selectedCountry.deaths}
           cases={selectedCountry.cases}

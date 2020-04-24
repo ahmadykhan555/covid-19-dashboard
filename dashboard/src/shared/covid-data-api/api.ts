@@ -6,7 +6,8 @@ const ENDPOINTS = {
   SelectedCountry: "countries",
   AllStates: "states",
   GlobalStats: "all",
-  HistoricGlobal: "historical/all?lastdays=90"
+  HistoricGlobal: "historical/all?lastdays=90",
+  HistoricalForCountry: "historical/%iso%?lastdays=90"
 };
 
 export const getAllCountriesData = () => {
@@ -44,6 +45,19 @@ export const getGlobalHistoricData = () => {
     axios.get(`${BASEURL}${ENDPOINTS.HistoricGlobal}`).then(res => {
       resolve(clusterHistoricData(res.data));
     });
+  });
+};
+
+export const getHistoricDataForCountry = (iso3Name: string) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(
+        `${BASEURL}${ENDPOINTS.HistoricalForCountry.replace("%iso%", iso3Name)}`
+      )
+      .then((res: any) => {
+        // console.log("country data: ", res.data.timeline);
+        resolve(clusterHistoricData(res.data.timeline));
+      });
   });
 };
 

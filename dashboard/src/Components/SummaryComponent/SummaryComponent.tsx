@@ -4,7 +4,8 @@ import { SwitcherProps } from "../Switcher/Switcher";
 import { Tile, TileComponent } from "../TileComponent/Tile";
 import {
   getGlobalStats,
-  getGlobalHistoricData
+  getGlobalHistoricData,
+  getHistoricDataForCountry
 } from "../../shared/covid-data-api/api";
 import LineGraphComponent from "../LineGraph/LineGraph";
 import { Datum } from "@nivo/line";
@@ -12,6 +13,7 @@ import { monthString, CovidMetrics } from "../../shared/data-utility/utility";
 interface SummaryProps extends SwitcherProps {
   flagSrc: string;
   entityName: string;
+  ISOName: string;
   cases: number;
   deaths: number;
   recovered: number;
@@ -24,13 +26,15 @@ const SummaryComponent: React.FC<SummaryProps> = ({
   cases,
   deaths,
   recovered,
-  critical
+  critical,
+  ISOName
 }) => {
   const [tabs, setTabs] = useState<any[]>(["global"]);
   const [activeTab, setActiveTab] = useState<string>("global");
   const [globalTiles, setGlobalTiles] = useState<Tile[]>([]);
   const [tiles, setTiles] = useState<Tile[]>([]);
   const [historicCluster, setHistoricCluster] = useState<any[]>([]);
+  const [globalHistoricCluster, setGlobalHistoricCluster] = useState<any[]>([]);
   const [selectedTile, setSelectedTile] = useState<number>(2);
   const [graphData, setGraphData] = useState<Datum[]>([]);
   const [graphFor, setGraphFor] = useState<string>("cases");
@@ -66,7 +70,7 @@ const SummaryComponent: React.FC<SummaryProps> = ({
       }
     });
     getGlobalHistoricData().then((res: any) => {
-      console.log("cluster", res);
+      setGlobalHistoricCluster(res);
       setHistoricCluster(res);
     });
   }, []);
@@ -81,6 +85,9 @@ const SummaryComponent: React.FC<SummaryProps> = ({
         { label: CovidMetrics.Critical, numbers: critical },
         { label: CovidMetrics.Recovered, numbers: recovered }
       ]);
+      getHistoricDataForCountry(ISOName).then((res: any) =>
+        setHistoricCluster(res)
+      );
     }
   }, [entityName]);
 
@@ -101,6 +108,10 @@ const SummaryComponent: React.FC<SummaryProps> = ({
     setGraphData(data);
     setGraphFor(key);
   }, [historicCluster, selectedTile]);
+
+  useEffect(() => {
+    globalHistoricCluster && setHistoricCluster(globalHistoricCluster);
+  }, [activeTab]);
 
   const renderDetail = () => {
     return (
@@ -124,6 +135,10 @@ const SummaryComponent: React.FC<SummaryProps> = ({
                   key={index}
                   label={tile.label}
                   numbers={tile.numbers}
+                  clickHanlder={() => {
+                    setSelectedTile(index);
+                  }}
+                  isSelected={index === selectedTile}
                 />
               ))}
         </div>
@@ -131,7 +146,7 @@ const SummaryComponent: React.FC<SummaryProps> = ({
           <div className="summary__graph">
             <LineGraphComponent data={graphData} lineFor={graphFor} />
           </div>
-        )}
+        )}{" "}
       </>
     );
   };
