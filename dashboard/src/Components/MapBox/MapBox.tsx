@@ -280,74 +280,74 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
               coordinates = e.features[0].geometry.coordinates.slice();
             }
             const HTML = "";
-            // const HTML = `
-            //   <html>
-            //     <style type="text/css">
-            //       @import url('https://fonts.googleapis.com/css2?family=Lato&family=Roboto:ital,wght@0,400;0,500;1,300&display=swap');
-            //       .popup-body { font-family: 'Roboto', sans-serif; font-family: 'Lato', sans-serif; color: black;}
-            //       .table-body {color:black;}
-            //       .header-title { font-family: 'Roboto', sans-serif; font-family: 'Lato', sans-serif; font-size: 15px; font-weight: bold; color: #000000; }
-            //       .flex-container { height: 30px; display: flex; flex-wrap: nowrap; }
-            //       .dot-container { width: 20px; height: 30px; display: flex; justify-content: center; align-items: center; }
-            //       .title-container { width: 95px; height: 30px; display: flex; align-items: center;}
-            //       .statistics-container { width: 80px; height: 30px; display: flex; justify-content: flex-end; align-items: center; }
-            //       .confirmed-dot { width: 8px; height: 8px; border-radius: 50px; background-color: #DA1400; }
-            //       .deaths-dot { width: 8px; height: 8px; border-radius: 50px; background-color: #525252; }
-            //       .recovered-dot { width: 8px; height: 8px; border-radius: 50px; background-color: #3BD202; }
-            //       .statistics-label { font-family: 'Roboto', sans-serif; font-size: 12px; }
-            //       .statistics-count { font-family: 'Roboto', sans-serif; font-size: 12px; }
-            //     </style>
-            //     <body class="popup-body">
-            //       <table cellpadding=0 cellspacing=0 border="0" width="200" height="40">
-            //         <tr>
-            //           <td align="center" ">
-            //             <span class=" header-title ">${name}</span>
-            //           </td>
-            //         </tr>
-            //       </table>
-            //       <table cellpadding=0 cellspacing=0 border="0" width="200" height="90" class="table-body">
-            //         <tr>
-            //           <td align="center" class="flex-container">
-            //             <div class="dot-container">
-            //               <div class="confirmed-dot"></div>
-            //             </div>
-            //             <div class="title-container">
-            //               <span class="statistics-label">Confirmed</span>
-            //             </div>
-            //             <div class="statistics-container">
-            //               <span class="statistics-count">${confirmed}</span>
-            //             </div>
-            //           </td>
-            //         </tr>
-            //         <tr>
-            //           <td align="center" class="flex-container">
-            //             <div class="dot-container">
-            //               <div class="deaths-dot"></div>
-            //             </div>
-            //             <div class="title-container">
-            //               <span class="statistics-label">Deaths</span>
-            //             </div>
-            //             <div class="statistics-container">
-            //               <span class="statistics-count">${deaths}</span>
-            //             </div>
-            //           </td>
-            //         </tr>
-            //         <tr>
-            //           <td align="center" class="flex-container">
-            //             <div class="dot-container">
-            //               <div class="recovered-dot"></div>
-            //             </div>
-            //             <div class="title-container">
-            //               <span class="statistics-label">Recovered</span>
-            //             </div>
-            //             <div class="statistics-container">
-            //               <span class="statistics-count">${recovered}</span>
-            //             </div>
-            //           </td>
-            //         </tr>
-            //       </table>
-            //     </body>
-            //   </html>`;
+            const HTML = `
+              <html>
+                <style type="text/css">
+                  @import url('https://fonts.googleapis.com/css2?family=Lato&family=Roboto:ital,wght@0,400;0,500;1,300&display=swap');
+                  .popup-body { font-family: 'Roboto', sans-serif; font-family: 'Lato', sans-serif; color: black;}
+                  .table-body {color:black;}
+                  .header-title { font-family: 'Roboto', sans-serif; font-family: 'Lato', sans-serif; font-size: 15px; font-weight: bold; color: #000000; }
+                  .flex-container { height: 30px; display: flex; flex-wrap: nowrap; }
+                  .dot-container { width: 20px; height: 30px; display: flex; justify-content: center; align-items: center; }
+                  .title-container { width: 95px; height: 30px; display: flex; align-items: center;}
+                  .statistics-container { width: 80px; height: 30px; display: flex; justify-content: flex-end; align-items: center; }
+                  .confirmed-dot { width: 8px; height: 8px; border-radius: 50px; background-color: #DA1400; }
+                  .deaths-dot { width: 8px; height: 8px; border-radius: 50px; background-color: #525252; }
+                  .recovered-dot { width: 8px; height: 8px; border-radius: 50px; background-color: #3BD202; }
+                  .statistics-label { font-family: 'Roboto', sans-serif; font-size: 12px; }
+                  .statistics-count { font-family: 'Roboto', sans-serif; font-size: 12px; }
+                </style>
+                <body class="popup-body">
+                  <table cellpadding=0 cellspacing=0 border="0" width="200" height="40">
+                    <tr>
+                      <td align="center" ">
+                        <span class=" header-title ">${name}</span>
+                      </td>
+                    </tr>
+                  </table>
+                  <table cellpadding=0 cellspacing=0 border="0" width="200" height="90" class="table-body">
+                    <tr>
+                      <td align="center" class="flex-container">
+                        <div class="dot-container">
+                          <div class="confirmed-dot"></div>
+                        </div>
+                        <div class="title-container">
+                          <span class="statistics-label">Confirmed</span>
+                        </div>
+                        <div class="statistics-container">
+                          <span class="statistics-count">${confirmed}</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" class="flex-container">
+                        <div class="dot-container">
+                          <div class="deaths-dot"></div>
+                        </div>
+                        <div class="title-container">
+                          <span class="statistics-label">Deaths</span>
+                        </div>
+                        <div class="statistics-container">
+                          <span class="statistics-count">${deaths}</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" class="flex-container">
+                        <div class="dot-container">
+                          <div class="recovered-dot"></div>
+                        </div>
+                        <div class="title-container">
+                          <span class="statistics-label">Recovered</span>
+                        </div>
+                        <div class="statistics-container">
+                          <span class="statistics-count">${recovered}</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </body>
+              </html>`;
 
             while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
               coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
