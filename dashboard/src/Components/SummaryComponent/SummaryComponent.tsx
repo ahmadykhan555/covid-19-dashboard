@@ -24,10 +24,7 @@ const SummaryComponent: React.FC<SummaryProps> = ({
   cases,
   deaths,
   recovered,
-  critical,
-  switcherFlag,
-  switcherStateHandler,
-  switcherLabel
+  critical
 }) => {
   const [tabs, setTabs] = useState<any[]>(["global"]);
   const [activeTab, setActiveTab] = useState<string>("global");
