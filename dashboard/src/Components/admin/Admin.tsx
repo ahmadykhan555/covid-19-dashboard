@@ -76,7 +76,7 @@ const Admin: React.FC<any> = () => {
   };
 
   const handleOnError = (err: any, file: any, inputElem: any, reason: any) => {
-    console.log(err);
+    // console.log(err);
   };
 
   const message = alert ? (

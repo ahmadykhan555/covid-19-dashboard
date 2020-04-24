@@ -1,6 +1,6 @@
 .summary {
     padding: 1rem;
-    height: 350px;
+    height: 400px;
     display: flex;
     flex-direction: column;
 
@@ -52,13 +52,15 @@
     }
 
     &__stats {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         margin: 1rem 0;
-        grid-gap: 0.5rem;
+
     }
 
     &__graph {
         flex: 1;
+        color: black !important
     }
 }

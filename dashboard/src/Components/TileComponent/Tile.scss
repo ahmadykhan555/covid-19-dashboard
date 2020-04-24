@@ -1,7 +1,7 @@
 .stats-tile {
-    background: whitesmoke;
-    height: 65px;
-    width: 75px;
+    background: white;
+    height: 60px;
+    width: 70px;
     border-radius: 5px;
     font-size: 0.75rem;
     display: flex;
@@ -11,6 +11,20 @@
     align-items: center;
     font-weight: bolder;
     justify-content: center;
+
+    &.selected-tile {
+        height: 65px !important;
+        width: 75px !important;
+        background: rgba(211, 211, 211, 0.95);
+    }
+
+    &.disable-tile {
+        cursor: not-allowed;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
 
     label {
         text-transform: capitalize;
