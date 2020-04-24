@@ -24,6 +24,9 @@
 
     &:hover {
         cursor: pointer;
+        transition: 0.25s ease-in-out;
+        height: 65px !important;
+        width: 75px !important;
     }
 
     label {

@@ -123,7 +123,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
       accessToken: environment.mapBoxAccessToken,
       container: "map-gl-container",
       center,
-      zoom: 2,
+      zoom: 1.5,
       style: MapStyles.Dark,
       boxZoom: true
     });
