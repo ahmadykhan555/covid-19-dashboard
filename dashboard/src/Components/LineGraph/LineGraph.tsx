@@ -1,5 +1,6 @@
 import React from "react";
 import { ResponsiveLine, Datum } from "@nivo/line";
+import { CovidMetrics } from "../../shared/data-utility/utility";
 interface LineGraphProps {
   lineFor?: string;
   data?: Datum[];
@@ -7,13 +8,13 @@ interface LineGraphProps {
 const LineGraphComponent: React.FC<LineGraphProps> = ({ lineFor, data }) => {
   const lineColor = (): string => {
     let color = "";
-    if (lineFor == "cases") {
+    if (lineFor == CovidMetrics.Cases) {
       color = "orange";
-    } else if (lineFor == "critical") {
+    } else if (lineFor == CovidMetrics.Critical) {
       color = "orangered";
-    } else if (lineFor == "deaths") {
+    } else if (lineFor == CovidMetrics.Deaths) {
       color = "red";
-    } else if (lineFor == "recovered") {
+    } else if (lineFor == CovidMetrics.Recovered) {
       color = "green";
     }
     return color;
@@ -27,8 +28,7 @@ const LineGraphComponent: React.FC<LineGraphProps> = ({ lineFor, data }) => {
         colors={lineColor}
         data={[
           {
-            id: "cases",
-            color: "green",
+            id: "data",
             data: data || []
           }
         ]}
@@ -61,7 +61,6 @@ const LineGraphComponent: React.FC<LineGraphProps> = ({ lineFor, data }) => {
         }}
         enableGridX={false}
         enableGridY={false}
-        // colors={{ scheme: "red_yellow_green" }}
         pointSize={5}
         pointColor={{ theme: "background" }}
         pointBorderWidth={2}

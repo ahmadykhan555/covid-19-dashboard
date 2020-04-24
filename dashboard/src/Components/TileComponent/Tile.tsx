@@ -1,8 +1,11 @@
 import React from "react";
 import "./Tile.scss";
-import { convertToThousand } from "../../shared/data-utility/utility";
+import {
+  convertToThousand,
+  CovidMetrics
+} from "../../shared/data-utility/utility";
 export interface Tile {
-  label: "cases" | "deaths" | "critical" | "recovered";
+  label: CovidMetrics;
   numbers: number;
   clickHanlder?: () => void;
   isSelected?: boolean;

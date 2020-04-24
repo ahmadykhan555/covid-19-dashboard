@@ -36,3 +36,10 @@ export const monthString = (month: number): string => {
       return "";
   }
 };
+
+export enum CovidMetrics {
+  Cases = "cases",
+  Deaths = "deaths",
+  Recovered = "recovered",
+  Critical = "critical"
+}

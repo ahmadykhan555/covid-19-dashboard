@@ -9,7 +9,7 @@ import {
 import LineGraphComponent from "../LineGraph/LineGraph";
 import moment from "moment";
 import { Datum } from "@nivo/line";
-import { monthString } from "../../shared/data-utility/utility";
+import { monthString, CovidMetrics } from "../../shared/data-utility/utility";
 interface SummaryProps extends SwitcherProps {
   flagSrc: string;
   entityName: string;
@@ -62,10 +62,10 @@ const SummaryComponent: React.FC<SummaryProps> = ({
       if (res.data) {
         const { cases, deaths, critical, recovered } = res.data;
         setGlobalTiles([
-          { label: "cases", numbers: cases },
-          { label: "deaths", numbers: deaths },
-          { label: "critical", numbers: critical },
-          { label: "recovered", numbers: recovered }
+          { label: CovidMetrics.Cases, numbers: cases },
+          { label: CovidMetrics.Deaths, numbers: deaths },
+          { label: CovidMetrics.Critical, numbers: critical },
+          { label: CovidMetrics.Recovered, numbers: recovered }
         ]);
       }
     });
@@ -80,22 +80,22 @@ const SummaryComponent: React.FC<SummaryProps> = ({
       setTabs(["global", entityName]);
       setActiveTab(entityName);
       setTiles([
-        { label: "cases", numbers: cases },
-        { label: "deaths", numbers: deaths },
-        { label: "critical", numbers: critical },
-        { label: "recovered", numbers: recovered }
+        { label: CovidMetrics.Cases, numbers: cases },
+        { label: CovidMetrics.Deaths, numbers: deaths },
+        { label: CovidMetrics.Critical, numbers: critical },
+        { label: CovidMetrics.Recovered, numbers: recovered }
       ]);
     }
   }, [entityName]);
 
   useEffect(() => {
-    let key = "cases";
+    let key: CovidMetrics = CovidMetrics.Cases;
     if (selectedTile === 0) {
-      key = "cases";
+      key = CovidMetrics.Cases;
     } else if (selectedTile === 1) {
-      key = "deaths";
+      key = CovidMetrics.Deaths;
     } else if (selectedTile === 2) {
-      key = "recovered";
+      key = CovidMetrics.Recovered;
     }
     const data: Datum[] = [];
     const cases = (historicCluster as any)[key];

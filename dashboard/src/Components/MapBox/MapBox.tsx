@@ -279,7 +279,6 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
             if (e.features[0].geometry.type === "Point") {
               coordinates = e.features[0].geometry.coordinates.slice();
             }
-            const HTML = "";
             const HTML = `
               <html>
                 <style type="text/css">
