@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./SummaryComponent.scss";
-import SwitcherComponent, { SwitcherProps } from "../Switcher/Switcher";
+import { SwitcherProps } from "../Switcher/Switcher";
 import { Tile, TileComponent } from "../TileComponent/Tile";
 import {
   getGlobalStats,
   getGlobalHistoricData
 } from "../../shared/covid-data-api/api";
 import LineGraphComponent from "../LineGraph/LineGraph";
-import moment from "moment";
 import { Datum } from "@nivo/line";
 import { monthString, CovidMetrics } from "../../shared/data-utility/utility";
 interface SummaryProps extends SwitcherProps {
