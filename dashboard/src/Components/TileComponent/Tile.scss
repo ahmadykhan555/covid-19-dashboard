@@ -19,7 +19,7 @@
     }
 
     &.disable-tile {
-        cursor: not-allowed;
+        cursor: not-allowed !important;
     }
 
     &:hover {

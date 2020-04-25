@@ -36,7 +36,7 @@ const SummaryComponent: React.FC<SummaryProps> = ({
   const [tiles, setTiles] = useState<Tile[]>([]);
   const [historicCluster, setHistoricCluster] = useState<any[]>([]);
   const [globalHistoricCluster, setGlobalHistoricCluster] = useState<any[]>([]);
-  const [selectedTile, setSelectedTile] = useState<number>(2);
+  const [selectedTile, setSelectedTile] = useState<number>(0);
   const [graphData, setGraphData] = useState<Datum[]>([]);
   const [graphFor, setGraphFor] = useState<string>("cases");
 
@@ -98,7 +98,7 @@ const SummaryComponent: React.FC<SummaryProps> = ({
       key = CovidMetrics.Cases;
     } else if (selectedTile === 1) {
       key = CovidMetrics.Deaths;
-    } else if (selectedTile === 2) {
+    } else if (selectedTile === 3) {
       key = CovidMetrics.Recovered;
     }
     const data: Datum[] = [];
@@ -132,6 +132,7 @@ const SummaryComponent: React.FC<SummaryProps> = ({
                     setSelectedTile(index);
                   }}
                   isSelected={index === selectedTile}
+                  disable={index === 2}
                 />
               ))
             : tiles.map((tile: Tile, index: number) => (
@@ -143,6 +144,7 @@ const SummaryComponent: React.FC<SummaryProps> = ({
                     setSelectedTile(index);
                   }}
                   isSelected={index === selectedTile}
+                  disable={index === 2}
                 />
               ))}
         </div>

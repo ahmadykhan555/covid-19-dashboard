@@ -18,11 +18,16 @@ export const TileComponent: React.FC<Tile> = ({
   isSelected,
   disable
 }) => {
+  const handleClick = () => {
+    if (clickHanlder && !disable) {
+      clickHanlder();
+    }
+  };
   return (
     <div
       className={`stats-tile stats-tile--${label} ${isSelected &&
         "selected-tile"} ${disable && "disable-tile"}`}
-      onClick={clickHanlder}
+      onClick={handleClick}
     >
       <label>{label}</label>
       <p className="numbers">{convertToThousand(numbers)}</p>
