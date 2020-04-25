@@ -458,18 +458,11 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
           <div className="zones-legend">
             <div className="cells-container">
               <div
-                className="legend-cell legend-cell--high"
-                data-for="tooltip-zone-high"
-                data-tip="Infections over 100k"
+                className="legend-cell legend-cell--zero"
+                data-for="tooltip-zone-zero"
+                data-tip="Infections under 1k"
               >
-                <ReactTooltip id="tooltip-zone-high" />
-              </div>
-              <div
-                className="legend-cell legend-cell--moderate"
-                data-for="tooltip-zone-moderate"
-                data-tip="Infections under 100k"
-              >
-                <ReactTooltip id="tooltip-zone-moderate" />
+                <ReactTooltip id="tooltip-zone-zero" />
               </div>
               <div
                 className="legend-cell legend-cell--low"
@@ -479,11 +472,18 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
                 <ReactTooltip id="tooltip-zone-low" />
               </div>
               <div
-                className="legend-cell legend-cell--zero"
-                data-for="tooltip-zone-zero"
-                data-tip="Infections under 1k"
+                className="legend-cell legend-cell--moderate"
+                data-for="tooltip-zone-moderate"
+                data-tip="Infections under 100k"
               >
-                <ReactTooltip id="tooltip-zone-zero" />
+                <ReactTooltip id="tooltip-zone-moderate" />
+              </div>
+              <div
+                className="legend-cell legend-cell--high"
+                data-for="tooltip-zone-high"
+                data-tip="Infections over 100k"
+              >
+                <ReactTooltip id="tooltip-zone-high" />
               </div>
             </div>
             <label>Zones</label>
