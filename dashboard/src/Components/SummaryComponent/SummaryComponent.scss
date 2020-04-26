@@ -61,6 +61,18 @@
 
     &__graph {
         flex: 1;
-        color: black !important
+        color: black !important;
+        position: relative;
+
+        .expand-view {
+            color: white;
+            position: absolute;
+            top: 0;
+            right: 0;
+
+            svg {
+                font-size: 1.2rem;
+            }
+        }
     }
 }

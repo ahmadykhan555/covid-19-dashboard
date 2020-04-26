@@ -9,6 +9,7 @@ import {
 } from "../../shared/covid-data-api/api";
 import LineGraphComponent from "../LineGraph/LineGraph";
 import BarGraphComponent from "../BarGraph/BarGraph";
+import { TiArrowMaximise } from "react-icons/all";
 import { Datum } from "@nivo/line";
 import { monthString, CovidMetrics } from "../../shared/data-utility/utility";
 interface SummaryProps extends SwitcherProps {
@@ -108,7 +109,7 @@ const SummaryComponent: React.FC<SummaryProps> = ({
     }
     console.log(data);
     console.log(graphFor);
-    
+
     setGraphData(data);
     setGraphFor(key);
   }, [historicCluster, selectedTile]);
@@ -150,6 +151,9 @@ const SummaryComponent: React.FC<SummaryProps> = ({
         </div>
         {historicCluster && (
           <div className="summary__graph">
+            <div className="expand-view">
+              <TiArrowMaximise />
+            </div>
             <BarGraphComponent />
             {/* <LineGraphComponent data={graphData} lineFor={graphFor} /> */}
           </div>
