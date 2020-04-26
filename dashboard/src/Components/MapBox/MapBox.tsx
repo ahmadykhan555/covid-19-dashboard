@@ -57,10 +57,10 @@ const provinces: Polygon[] = [
 ];
 
 enum ZoneColorMap {
-  HighZone = "#800000",
-  ModerateZone = "#FF0000",
-  LowZone = "#FFC000",
-  ZeroZone = "#004000"
+  HighZone = "rgba(128, 0, 0 , 0.8)",
+  ModerateZone = "rgba(128, 0, 0 , 0.7)",
+  LowZone = "rgba(128, 0, 0 , 0.65)",
+  ZeroZone = "rgba(128, 0, 0 , 0.45)"
 }
 
 const world: Polygon = {
@@ -113,7 +113,6 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   const refreshStatesData = () => {
     getAllStatesData().then((data: any) => {
       if (data) {
-        // console.log([...covidData, ...data]);
       }
     });
   };
@@ -124,7 +123,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
       container: "map-gl-container",
       center,
       zoom: 1.5,
-      style: MapStyles.Dark,
+      style: MapStyles.Light,
       boxZoom: true
     });
     map.once("load", () => {
@@ -176,7 +175,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
       name: countryData.country,
       geojson,
       color,
-      opacity: 0.5
+      opacity: 1
     });
   };
 
@@ -456,37 +455,8 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
       {mapReady && (
         <div className="map-controls">
           <div className="zones-legend">
-            <div className="cells-container">
-              <div
-                className="legend-cell legend-cell--zero"
-                data-for="tooltip-zone-zero"
-                data-tip="Infections under 1k"
-              >
-                <ReactTooltip id="tooltip-zone-zero" />
-              </div>
-              <div
-                className="legend-cell legend-cell--low"
-                data-for="tooltip-zone-low"
-                data-tip="Infections under 10k"
-              >
-                <ReactTooltip id="tooltip-zone-low" />
-              </div>
-              <div
-                className="legend-cell legend-cell--moderate"
-                data-for="tooltip-zone-moderate"
-                data-tip="Infections under 100k"
-              >
-                <ReactTooltip id="tooltip-zone-moderate" />
-              </div>
-              <div
-                className="legend-cell legend-cell--high"
-                data-for="tooltip-zone-high"
-                data-tip="Infections over 100k"
-              >
-                <ReactTooltip id="tooltip-zone-high" />
-              </div>
-            </div>
             <label>Zones</label>
+            <div className="legend-block"></div>
           </div>
         </div>
       )}
