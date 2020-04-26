@@ -34,7 +34,7 @@ const BarGraphComponent: any = () => {
             casesColor: "hsl(86, 70%, 50%)"
           }
         ]}
-        padding={0.7}
+        padding={0.45}
         keys={["cases"]}
         indexBy="month"
         margin={{ top: 10, right: 10, bottom: 25, left: 60 }}
