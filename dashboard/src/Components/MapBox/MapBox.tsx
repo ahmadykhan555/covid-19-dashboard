@@ -58,9 +58,9 @@ const provinces: Polygon[] = [
 
 enum ZoneColorMap {
   HighZone = "rgba(128, 0, 0 , 0.8)",
-  ModerateZone = "rgba(128, 0, 0 , 0.7)",
-  LowZone = "rgba(128, 0, 0 , 0.65)",
-  ZeroZone = "rgba(128, 0, 0 , 0.45)"
+  ModerateZone = "rgba(128, 0, 0 , 0.6)",
+  LowZone = "rgba(128, 0, 0 , 0.4)",
+  ZeroZone = "rgba(128, 0, 0 , 0.2)"
 }
 
 const world: Polygon = {
@@ -93,6 +93,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
 
   useEffect(() => {
     // drawProvincialPolygons();
+    map && !zonesReady && drawGlobalZones();
   }, [map]);
 
   useEffect(() => {
@@ -111,10 +112,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   };
 
   const refreshStatesData = () => {
-    getAllStatesData().then((data: any) => {
-      if (data) {
-      }
-    });
+    getAllStatesData().then((data: any) => {});
   };
 
   const initMap = () => {
