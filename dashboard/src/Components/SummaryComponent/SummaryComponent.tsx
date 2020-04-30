@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./SummaryComponent.scss";
 import { SwitcherProps } from "../Switcher/Switcher";
 import { Tile, TileComponent } from "../TileComponent/Tile";
+import ReactTooltip from "react-tooltip";
 import {
   getGlobalStats,
   getGlobalHistoricData,
@@ -12,6 +13,8 @@ import BarGraphComponent from "../BarGraph/BarGraph";
 import { TiArrowMaximise } from "react-icons/all";
 import { Datum } from "@nivo/line";
 import { monthString, CovidMetrics } from "../../shared/data-utility/utility";
+import { Modal } from "react-bootstrap";
+import GraphicalDetailViewComponent from "../GraphicalDetailView/GraphicalDetailView";
 interface SummaryProps extends SwitcherProps {
   flagSrc: string;
   entityName: string;
@@ -40,6 +43,7 @@ const SummaryComponent: React.FC<SummaryProps> = ({
   const [selectedTile, setSelectedTile] = useState<number>(0);
   const [graphData, setGraphData] = useState<Datum[]>([]);
   const [graphFor, setGraphFor] = useState<string>("cases");
+  const [maximizeGraphView, setMaximizeGraphView] = useState<boolean>(false);
 
   const renderTab = (label: string) => {
     return (
@@ -118,6 +122,19 @@ const SummaryComponent: React.FC<SummaryProps> = ({
     globalHistoricCluster && setHistoricCluster(globalHistoricCluster);
   }, [activeTab]);
 
+  const didTapMaximizeGraphView = () => {
+    setMaximizeGraphView(true);
+  };
+
+  const renderMaximizeCtrl = () => {
+    return (
+      <div className="maximize-view" onClick={didTapMaximizeGraphView}>
+        <TiArrowMaximise data-for="maximize-ctrl" data-tip="Maximize" />
+        <ReactTooltip id="maximize-ctrl" />
+      </div>
+    );
+  };
+
   const renderDetail = () => {
     return (
       <>
@@ -151,13 +168,17 @@ const SummaryComponent: React.FC<SummaryProps> = ({
         </div>
         {historicCluster && (
           <div className="summary__graph">
-            <div className="expand-view">
-              <TiArrowMaximise />
-            </div>
-            <BarGraphComponent />
-            {/* <LineGraphComponent data={graphData} lineFor={graphFor} /> */}
+            {renderMaximizeCtrl()}
+            {/* <BarGraphComponent /> */}
+            <LineGraphComponent data={graphData} lineFor={graphFor} />
           </div>
-        )}{" "}
+        )}
+        <GraphicalDetailViewComponent
+          showModal={maximizeGraphView}
+          onHideHandler={() => setMaximizeGraphView(false)}
+          data={graphData}
+          graphFor={graphFor}
+        />
       </>
     );
   };

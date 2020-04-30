@@ -64,15 +64,21 @@
         color: black !important;
         position: relative;
 
-        .expand-view {
+        .maximize-view {
             color: white;
             position: absolute;
             top: 0;
             right: 0;
+
+            &:hover {
+                cursor: pointer;
+            }
 
             svg {
                 font-size: 1.2rem;
             }
         }
     }
+
+
 }

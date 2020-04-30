@@ -6,7 +6,7 @@
   position: relative;
 
   .card-item {
-    background: lighten(black, 12%);
+    background: #2c3e50;
     box-shadow: 0 5px 7px -2px rgba(0, 0, 0, 0.64);
     border-radius: 4px;
     margin: 1rem;
@@ -21,15 +21,11 @@
   }
 
   .section-left {
-    position: absolute;
+    // position: absolute;
     width: 390px;
-    margin-right: 0;
     display: flex;
     flex-direction: column;
     padding-bottom: 1rem;
-    top: 0;
-    left: 0;
-    z-index: 9999;
     max-height: 100%;
 
     .last-updated-label {
@@ -45,7 +41,10 @@
     display: flex;
     flex-direction: column;
     border-radius: 4px;
-    width: 100%;
+    margin: 1rem;
+    margin-left: 0;
+
+    // width: 100%;
 
     .map-container {
       flex: 1;
