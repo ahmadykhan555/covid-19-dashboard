@@ -15,6 +15,7 @@ import { Datum } from "@nivo/line";
 import { monthString, CovidMetrics } from "../../shared/data-utility/utility";
 import { Modal } from "react-bootstrap";
 import GraphicalDetailViewComponent from "../GraphicalDetailView/GraphicalDetailView";
+import PieChartComponent from "../PieChart/PieChart";
 interface SummaryProps extends SwitcherProps {
   flagSrc: string;
   entityName: string;
@@ -108,8 +109,26 @@ const SummaryComponent: React.FC<SummaryProps> = ({
     }
     let data = {
       barData: [] as any,
-      lineData: [] as any
+      lineData: [] as any,
+      pieData: [] as any
     };
+    if (activeTab === "global") {
+      globalTiles.forEach(tile =>
+        data.pieData.push({
+          id: tile.label,
+          label: tile.label,
+          value: tile.numbers
+        })
+      );
+    } else {
+      tiles.forEach((tile: Tile, index: number) =>
+        data.pieData.push({
+          id: tile.label,
+          label: tile.label,
+          value: tile.numbers
+        })
+      );
+    }
     const cases = (historicCluster as any)[key];
     for (let month in cases) {
       let monthStr: string = monthString(Number(month));
@@ -176,8 +195,7 @@ const SummaryComponent: React.FC<SummaryProps> = ({
         {historicCluster && (
           <div className="summary__graph">
             {renderMaximizeCtrl()}
-            <BarGraphComponent data={graphData.barData} />
-            {/* <LineGraphComponent data={graphData.lineData} lineFor={graphFor} /> */}
+            <LineGraphComponent data={graphData.lineData} lineFor={graphFor} />
           </div>
         )}
         <GraphicalDetailViewComponent

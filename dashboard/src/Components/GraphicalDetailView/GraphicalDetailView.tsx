@@ -3,6 +3,7 @@ import { Modal } from "react-bootstrap";
 import BarGraphComponent from "../BarGraph/BarGraph";
 import LineGraphComponent from "../LineGraph/LineGraph";
 import "./GraphicalDetailView.scss";
+import PieChartComponent from "../PieChart/PieChart";
 interface GraphicalDetailViewProps {
   showModal: boolean;
   onHideHandler: any;
@@ -26,7 +27,7 @@ const GraphicalDetailViewComponent: React.FC<GraphicalDetailViewProps> = ({
             <BarGraphComponent data={data.barData} />
           </div>
           <div className="slot-2 slot">
-            <BarGraphComponent data={data.barData} />
+            <PieChartComponent data={data.pieData} />
           </div>
           <div className="slot-3 slot">
             <LineGraphComponent data={data.lineData} lineFor={graphFor} />
