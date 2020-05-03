@@ -23,7 +23,6 @@ const BarGraphComponent: React.FC<BarGraphProps> = ({ data }) => {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "country",
           legendPosition: "middle",
           legendOffset: 32
         }}
@@ -31,7 +30,6 @@ const BarGraphComponent: React.FC<BarGraphProps> = ({ data }) => {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "food",
           legendPosition: "middle",
           legendOffset: -40
         }}
