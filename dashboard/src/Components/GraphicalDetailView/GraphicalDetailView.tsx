@@ -23,13 +23,13 @@ const GraphicalDetailViewComponent: React.FC<GraphicalDetailViewProps> = ({
       <Modal.Body>
         <div className="modal-body-cs">
           <div className="slot-1 slot">
-            <BarGraphComponent />
+            <BarGraphComponent data={data.barData} />
           </div>
           <div className="slot-2 slot">
-            <BarGraphComponent />
+            <BarGraphComponent data={data.barData} />
           </div>
           <div className="slot-3 slot">
-            <LineGraphComponent data={data} lineFor={graphFor} />
+            <LineGraphComponent data={data.lineData} lineFor={graphFor} />
           </div>
         </div>
       </Modal.Body>

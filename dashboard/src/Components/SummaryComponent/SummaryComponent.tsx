@@ -41,7 +41,7 @@ const SummaryComponent: React.FC<SummaryProps> = ({
   const [historicCluster, setHistoricCluster] = useState<any[]>([]);
   const [globalHistoricCluster, setGlobalHistoricCluster] = useState<any[]>([]);
   const [selectedTile, setSelectedTile] = useState<number>(0);
-  const [graphData, setGraphData] = useState<Datum[]>([]);
+  const [graphData, setGraphData] = useState<any>({});
   const [graphFor, setGraphFor] = useState<string>("cases");
   const [maximizeGraphView, setMaximizeGraphView] = useState<boolean>(false);
 
@@ -106,13 +106,20 @@ const SummaryComponent: React.FC<SummaryProps> = ({
     } else if (selectedTile === 3) {
       key = CovidMetrics.Recovered;
     }
-    const data: Datum[] = [];
+    let data = {
+      barData: [] as any,
+      lineData: [] as any
+    };
     const cases = (historicCluster as any)[key];
     for (let month in cases) {
-      data.push({ x: monthString(Number(month)), y: cases[month].pop() });
+      let monthStr: string = monthString(Number(month));
+      let maxCount = cases[month].pop();
+      data.lineData.push({
+        x: monthStr,
+        y: maxCount
+      });
+      data.barData.push({ month: monthStr, cases: maxCount });
     }
-    console.log(data);
-    console.log(graphFor);
 
     setGraphData(data);
     setGraphFor(key);
@@ -169,8 +176,8 @@ const SummaryComponent: React.FC<SummaryProps> = ({
         {historicCluster && (
           <div className="summary__graph">
             {renderMaximizeCtrl()}
-            {/* <BarGraphComponent /> */}
-            <LineGraphComponent data={graphData} lineFor={graphFor} />
+            <BarGraphComponent data={graphData.barData} />
+            {/* <LineGraphComponent data={graphData.lineData} lineFor={graphFor} /> */}
           </div>
         )}
         <GraphicalDetailViewComponent

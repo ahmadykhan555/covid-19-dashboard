@@ -5,7 +5,7 @@
   .map-controls {
     position: absolute;
     top: 0.625rem;
-    left: calc(380px + 1rem);
+    left: 0.625rem;
     width: 95%;
     height: 40px;
     display: flex;
@@ -28,7 +28,11 @@
       .legend-block {
         width: 150px;
         height: 20px;
-        background-image: linear-gradient(to right, rgba(128, 0, 0, 0.45), rgba(128, 0, 0, 0.65), rgba(128, 0, 0, 0.7), rgba(128, 0, 0, 0.8))
+        background-image: linear-gradient(to right,
+            rgba(192, 57, 43, 0.4), rgba(192, 57, 43, 0.55),
+            rgba(192, 57, 43, 0.65),
+            rgba(192, 57, 43, 0.9),
+          )
       }
     }
   }

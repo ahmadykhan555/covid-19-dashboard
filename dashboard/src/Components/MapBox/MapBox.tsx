@@ -58,9 +58,9 @@ const provinces: Polygon[] = [
 
 enum ZoneColorMap {
   HighZone = "#c0392b",
-  ModerateZone = "#d35400",
-  LowZone = "#f1c40f",
-  ZeroZone = "#f39c12"
+  ModerateZone = "#e74c3c",
+  LowZone = "#d35400",
+  ZeroZone = "#e67e22"
 }
 
 const world: Polygon = {
@@ -173,7 +173,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
       name: countryData.country,
       geojson,
       color,
-      opacity: 0.65
+      opacity: 0.75
     });
   };
 

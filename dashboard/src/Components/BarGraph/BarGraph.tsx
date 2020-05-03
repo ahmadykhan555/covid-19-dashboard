@@ -1,10 +1,9 @@
 import React from "react";
 import { ResponsiveBar, Data } from "@nivo/bar";
 interface BarGraphProps {
-  lineFor?: string;
-  data?: Data[];
+  data: any[];
 }
-const BarGraphComponent: any = () => {
+const BarGraphComponent: React.FC<BarGraphProps> = ({ data }) => {
   return (
     <div
       className="line-graph-component"
@@ -12,28 +11,7 @@ const BarGraphComponent: any = () => {
     >
       <ResponsiveBar
         colors={{ scheme: "nivo" }}
-        data={[
-          {
-            month: "Jan",
-            cases: 75,
-            casesColor: "hsl(210, 70%, 50%)"
-          },
-          {
-            month: "Feb",
-            cases: 186,
-            casesColor: "hsl(222, 70%, 50%)"
-          },
-          {
-            month: "March",
-            cases: 93,
-            casesColor: "hsl(338, 70%, 50%)"
-          },
-          {
-            month: "April",
-            cases: 134,
-            casesColor: "hsl(86, 70%, 50%)"
-          }
-        ]}
+        data={data}
         padding={0.45}
         keys={["cases"]}
         indexBy="month"
