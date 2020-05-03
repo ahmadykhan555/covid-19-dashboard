@@ -6,14 +6,12 @@ interface PieChartProps {
 const PieChartComponent: React.FC<PieChartProps> = ({ data }) => {
   console.log("pie data", data);
   const getColors = (pie: any) => {
-    //   const id = pie.id;
     const colors: any = {
       cases: "rgba(255,0,0,1)",
       deaths: "rgba(255,0,0,0.8)",
       critical: "rgba(255,0,0,0.7)",
       recovered: "rgba(255,0,0,0.6)"
     };
-    debugger;
     return colors[pie.id];
   };
   return (
