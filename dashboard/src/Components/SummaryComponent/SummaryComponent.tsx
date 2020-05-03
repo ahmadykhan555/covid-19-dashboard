@@ -112,23 +112,6 @@ const SummaryComponent: React.FC<SummaryProps> = ({
       lineData: [] as any,
       pieData: [] as any
     };
-    if (activeTab === "global") {
-      globalTiles.forEach(tile =>
-        data.pieData.push({
-          id: tile.label,
-          label: tile.label,
-          value: tile.numbers
-        })
-      );
-    } else {
-      tiles.forEach((tile: Tile, index: number) =>
-        data.pieData.push({
-          id: tile.label,
-          label: tile.label,
-          value: tile.numbers
-        })
-      );
-    }
     const cases = (historicCluster as any)[key];
     for (let month in cases) {
       let monthStr: string = monthString(Number(month));
@@ -138,6 +121,23 @@ const SummaryComponent: React.FC<SummaryProps> = ({
         y: maxCount
       });
       data.barData.push({ month: monthStr, cases: maxCount });
+    }
+    if (activeTab != "global") {
+      tiles.forEach((tile: Tile, index: number) =>
+        data.pieData.push({
+          id: tile.label,
+          label: tile.label,
+          value: tile.numbers
+        })
+      );
+    } else {
+      globalTiles.forEach(tile =>
+        data.pieData.push({
+          id: tile.label,
+          label: tile.label,
+          value: tile.numbers
+        })
+      );
     }
 
     setGraphData(data);
