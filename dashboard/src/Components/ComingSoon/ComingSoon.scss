@@ -1,0 +1,75 @@
+.comming-soon-page {
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+
+    .coming-soon-section {
+        padding: 1rem;
+        flex: 1;
+
+        &:first-child {
+            background: red;
+            background-position: center;
+            background-size: contain;
+        }
+
+        &:last-child {
+            background: white;
+        }
+    }
+
+    .right-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .img-header {
+            height: 60px;
+            width: 60px;
+            margin: 8rem 0;
+        }
+
+        .content-wrapper {
+            margin: auto;
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+
+            .stay-tuned {
+                font-family: monospace;
+                font-size: 1.2rem !important;
+                text-transform: uppercase;
+            }
+
+            .launching-soon {
+                font-size: 3rem !important;
+                font-weight: 900;
+                margin: 0.5rem 0 !important;
+            }
+
+            .subscription-form {
+                margin-top: 3rem;
+                width: 100%;
+
+                .btn-success {
+                    border-radius: 25px;
+                    margin-left: 0.65rem;
+                }
+
+                input {
+                    border-radius: 25px;
+                    flex: 1
+                }
+            }
+
+            .drop-email {
+                position: absolute;
+                bottom: 0;
+                font-size: 0.85rem !important;
+            }
+        }
+    }
+}
