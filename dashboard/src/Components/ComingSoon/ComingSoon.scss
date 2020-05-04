@@ -11,11 +11,34 @@
         &:first-child {
             background: red;
             background-position: center;
-            background-size: contain;
+            background-size: cover;
         }
 
         &:last-child {
             background: white;
+        }
+    }
+
+    .left-section {
+        display: flex;
+
+        .counter {
+            margin: auto;
+
+            span {
+                font-size: 4rem !important;
+            }
+        }
+
+        .days-legend {
+            display: flex;
+            font-size: 1.2rem;
+
+            justify-content: space-around;
+
+            h4 {
+                margin: 0.2rem !important;
+            }
         }
     }
 
@@ -50,6 +73,10 @@
                 margin: 0.5rem 0 !important;
             }
 
+            .subscribe {
+                font-family: monospace;
+            }
+
             .subscription-form {
                 margin-top: 3rem;
                 width: 100%;
@@ -61,7 +88,9 @@
 
                 input {
                     border-radius: 25px;
-                    flex: 1
+                    flex: 1;
+                    padding: 0 1rem;
+                    border: 1px solid lightgray;
                 }
             }
 
