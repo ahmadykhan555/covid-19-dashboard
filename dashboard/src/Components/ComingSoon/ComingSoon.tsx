@@ -4,7 +4,13 @@ import icon from "./covid.svg";
 import bg1 from "./bg-1.jpg";
 import { Button } from "react-bootstrap";
 import CountDown from "react-countdown";
+import moment from "moment";
 const ComingSoonComponent = () => {
+  const timeNow = moment();
+  const weekAhead = moment("12/05/2020");
+  const durationInMS = moment
+    .duration(weekAhead.diff(timeNow))
+    .asMilliseconds();
   return (
     <div className="comming-soon-page">
       <div
@@ -14,7 +20,7 @@ const ComingSoonComponent = () => {
         }}
       >
         <div className="counter">
-          <CountDown date={Date.now() + 604800000} />
+          <CountDown date={Date.now() + durationInMS / 32} />
           <div className="days-legend">
             <h4>Days</h4>
             <h4>Hr</h4>
