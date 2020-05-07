@@ -94,10 +94,16 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   useEffect(() => {
     // drawProvincialPolygons();
     map && !zonesReady && drawGlobalZones();
+    if (map && covidData.length) {
+      drawCircle();
+    }
   }, [map]);
 
   useEffect(() => {
     map && !zonesReady && drawGlobalZones();
+    if (map && covidData.length) {
+      drawCircle();
+    }
     refreshStatesData();
   }, [covidData]);
 
@@ -231,7 +237,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
         },
         type: "circle",
         paint: {
-          "circle-opacity": 0.75,
+          "circle-opacity": 0,
           "circle-radius": [
             "interpolate",
             ["linear"],
