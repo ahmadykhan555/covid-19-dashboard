@@ -1,51 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Main.scss";
 import MapBoxComponent from "../MapBox/MapBox";
 import * as mapboxgl from "mapbox-gl";
-
-import LocalStatsComponent from "../LocalStats/LocalStats";
-import SummaryComponent from "../SummaryComponent/SummaryComponent";
-import moment from "moment";
-import GlobalStatsComponent from "../GlobalStats/GlobalStats";
+import AllCountriesStatsComponent from "../AllCountriesStats/AllCountriesStatsComponent";
 const MainLayoutComponent: React.FC<any> = () => {
-  const [globalStats, setGlobalStats] = useState<boolean>(true);
   const [mapCenter, setMapCenter] = useState<mapboxgl.LngLat>(
     new mapboxgl.LngLat(-97, 38)
   );
 
-  const [selectedCountry, setSelectedCountry] = useState<any>("");
-  const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
-
-  useEffect(() => {
-    globalStats
-      ? setMapCenter(new mapboxgl.LngLat(-97, 38))
-      : setMapCenter(new mapboxgl.LngLat(69.3451, 30.3753));
-  }, [globalStats]);
-
   return (
     <div className="main-layout-component">
       <section className="section-left">
-        <SummaryComponent
-          switcherLabel={""}
-          switcherStateHandler={setGlobalStats}
-          switcherFlag={globalStats}
-          entityName={selectedCountry ? selectedCountry.country : ""}
-          ISOName={selectedCountry ? selectedCountry.countryInfo.iso3 : ""}
-          recovered={selectedCountry.recovered}
-          deaths={selectedCountry.deaths}
-          cases={selectedCountry.cases}
-          critical={selectedCountry.critical}
-          flagSrc={selectedCountry ? selectedCountry.countryInfo.flag : ""}
-        />
-        {globalStats ? (
-          <GlobalStatsComponent
-            mapCenterSetter={setMapCenter}
-            lastUpdatedSetter={setLastUpdated}
-            selectedCountrySetter={setSelectedCountry}
-          />
-        ) : (
-          <LocalStatsComponent />
-        )}
+        <div className="app-banner">COVID WORLD TRACKER</div>
+        <div className="stats-definitions">
+          <div className="def-cell def-cell--cases">
+            <div className="def-cell__rect"></div>
+            <h4 className="def-cell__label">Cases</h4>
+          </div>
+          <div className="def-cell def-cell--deaths">
+            <div className="def-cell__rect"></div>
+            <h4 className="def-cell__label">Deaths</h4>
+          </div>
+          <div className="def-cell def-cell--recovered">
+            <div className="def-cell__rect"></div>
+            <h4 className="def-cell__label">Recovered</h4>
+          </div>
+          <div className="def-cell def-cell--per-mil">
+            <div className="def-cell__rect"></div>
+            <h4 className="def-cell__label">Cases/Million</h4>
+          </div>
+        </div>
+        {<AllCountriesStatsComponent />}
       </section>
       <div className="section-center">
         <section className="map-container">

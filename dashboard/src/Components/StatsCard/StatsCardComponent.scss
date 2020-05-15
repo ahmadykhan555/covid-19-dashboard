@@ -1,0 +1,75 @@
+@import '../../GlobalStyles/variables.scss';
+
+.stats-card {
+    color: $defaultFontColor;
+    background: $cardBackground;
+    padding: $defaultPadding;
+    border-radius: $defaultBorderRadius;
+    margin-bottom: $defaultMargin;
+    font-family: 'Cabin';
+
+    &.card-selected {
+        box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.32);
+    }
+
+    &__info {
+        display: flex;
+        align-items: center;
+
+        .avatar {
+            height: 25px;
+            width: 35px;
+            margin-right: (0.35 * $defaultMargin);
+
+            img {
+                height: 100%;
+                width: 100%;
+            }
+        }
+
+        .label {
+            font-weight: bold;
+            flex: 1;
+            text-transform: capitalize;
+            font-size: $defaultFontSize;
+        }
+
+        .per-mil-count {
+            color: $casesPerMil;
+            font-weight: bold;
+            font-size: 0.875rem;
+        }
+    }
+
+    &__counts {
+        display: flex;
+        margin-top: $defaultMargin;
+
+        .stats-count-cell {
+            background: $body;
+            padding: 0.65rem;
+            flex: 1;
+            margin-right: (0.875 * $defaultMargin);
+            text-align: center;
+            border-radius: $defaultBorderRadius;
+            font-weight: bold;
+            line-height: 1.25rem;
+
+            &--cases {
+                color: $casesColor;
+            }
+
+            &--deaths {
+                color: $casesDeaths;
+            }
+
+            &--recovered {
+                color: $casesRecovered;
+            }
+
+            &:last-child {
+                margin-right: $zero;
+            }
+        }
+    }
+}
