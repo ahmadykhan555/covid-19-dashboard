@@ -32,10 +32,11 @@ const MainLayoutComponent: React.FC<any> = () => {
         </div>
         {<AllCountriesStatsComponent />}
       </section>
-      <div className="section-center">
+      <div className="section-right">
         <section className="map-container">
           <MapBoxComponent center={mapCenter} />
         </section>
+        <section className="graphs-overlay">Here</section>
       </div>
     </div>
   );
