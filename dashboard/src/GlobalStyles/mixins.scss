@@ -1,3 +1,13 @@
+@import './variables.scss';
+
 @mixin mQ($args...) {
     @content;
+}
+
+@mixin countBox {
+    background: $body;
+    padding: 0.65rem;
+    line-height: 1.25rem;
+    font-weight: bold;
+    border-radius: $defaultBorderRadius;
 }

@@ -1,4 +1,6 @@
 @import '../../GlobalStyles/variables.scss';
+@import '../../GlobalStyles//mixins.scss';
+
 
 .stats-card {
     color: $defaultFontColor;
@@ -35,9 +37,11 @@
         }
 
         .per-mil-count {
+            @include countBox;
             color: $casesPerMil;
             font-weight: bold;
             font-size: 0.875rem;
+
         }
     }
 
@@ -46,14 +50,10 @@
         margin-top: $defaultMargin;
 
         .stats-count-cell {
-            background: $body;
-            padding: 0.65rem;
+            @include countBox;
             flex: 1;
             margin-right: (0.875 * $defaultMargin);
             text-align: center;
-            border-radius: $defaultBorderRadius;
-            font-weight: bold;
-            line-height: 1.25rem;
 
             &--cases {
                 color: $casesColor;
