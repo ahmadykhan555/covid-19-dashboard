@@ -93,11 +93,11 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
 
   useEffect(() => {
     // drawProvincialPolygons();
-    map && !zonesReady && drawGlobalZones();
+    // map && !zonesReady && drawGlobalZones();
   }, [map]);
 
   useEffect(() => {
-    map && !zonesReady && drawGlobalZones();
+    // map && !zonesReady && drawGlobalZones();
     refreshStatesData();
   }, [covidData]);
 

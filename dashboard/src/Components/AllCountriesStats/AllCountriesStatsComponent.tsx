@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {
   getAllCountriesData,
-  getGlobalStats
+  getGlobalStats,
+  getHistoricDataForCountry,
+  getGlobalHistoricData
 } from "../../shared/covid-data-api/api";
 import "./AllCountriesStatsComponent.scss";
 import * as mapboxgl from "mapbox-gl";
@@ -10,7 +12,8 @@ import {
   AppState,
   SelectedEntity,
   StoreActionTypes,
-  GlobalData
+  GlobalData,
+  HistoricData
 } from "../../interfaces/meta";
 import { connect, ConnectedProps } from "react-redux";
 import StatsCardComponent from "../StatsCard/StatsCardComponent";
@@ -23,8 +26,11 @@ const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
   setAllData,
   allData,
   setGlobalData,
-  globalData
+  globalData,
+  setSelectedEntity,
+  setHistoricCluster
 }) => {
+  // loccal state
   let [pollCount, setpollCount] = useState<number>(0);
   useEffect(() => {
     refreshData();
@@ -36,10 +42,15 @@ const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
   const refreshData = () => {
     getGlobalStats().then((res: any) => {
       setGlobalData(res.data);
+      setSelectedEntity({
+        name: "global",
+        data: res.data
+      });
     });
     getAllCountriesData().then((data: any) => {
       setAllData(data);
     });
+    getGlobalHistoricData().then((res: any) => setHistoricCluster(res));
   };
 
   const initPolling = () => {
@@ -102,7 +113,9 @@ const mapDispatchToProps = (dispatch: any) => {
     setSelectedEntity: (payload: SelectedEntity) =>
       dispatch({ type: StoreActionTypes.SetSelectedEntity, payload }),
     setGlobalData: (payload: GlobalData) =>
-      dispatch({ type: StoreActionTypes.SetGlobalData, payload })
+      dispatch({ type: StoreActionTypes.SetGlobalData, payload }),
+    setHistoricCluster: (payload: HistoricData) =>
+      dispatch({ type: StoreActionTypes.SetHistoricData, payload })
   };
 };
 const connector = connect(

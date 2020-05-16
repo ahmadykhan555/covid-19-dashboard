@@ -4,12 +4,12 @@ import * as mapboxgl from "mapbox-gl";
 const initialState: AppState = {
   selectedEntity: {
     name: "",
-    data: null
-  },
-  historicData: {
-    cases: {},
-    deaths: {},
-    recovered: {}
+    data: null,
+    historicData: {
+      cases: {},
+      deaths: {},
+      recovered: {}
+    }
   },
   mapCenter: new mapboxgl.LngLat(95.7129, 37.0902), // defaults to US
   allData: [],
@@ -28,7 +28,19 @@ const reducer = (state = initialState, action: StoreAction) => {
         ...state,
         selectedEntity: {
           name: action.payload.name || "Global Data",
-          data: action.payload
+          data: action.payload.data,
+          historicData: !state.selectedEntity.historicData
+            ? action.payload.historicData
+            : state.selectedEntity.historicData
+        }
+      };
+
+    case StoreActionTypes.SetHistoricData:
+      return {
+        ...state,
+        selectedEntity: {
+          ...state.selectedEntity,
+          historicData: action.payload
         }
       };
     case StoreActionTypes.SetGlobalData:
