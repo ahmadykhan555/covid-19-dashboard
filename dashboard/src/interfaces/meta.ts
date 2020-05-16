@@ -15,7 +15,6 @@ export enum StoreActionTypes {
   SetAllData = "SET_ALL_DATA",
   SetSelectedEntity = "SET_SELECTED",
   SetGlobalData = "SET_GLOBAL_DATA",
-  SetHistoricData = "SET_HISTORIC",
   SetHistoricDataLoading = "HIS_DATA_LOADING"
 }
 
@@ -39,9 +38,9 @@ export interface CovidData {
   active: number;
   cases: number;
   casesPerOneMillion: number;
-  continent: string;
-  country: string;
-  countryInfo: CountryInfo;
+  continent?: string;
+  country?: string;
+  countryInfo?: CountryInfo;
   critical: number;
   deaths: number;
   deathsPerOneMillion: number;

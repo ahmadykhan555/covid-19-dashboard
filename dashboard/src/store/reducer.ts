@@ -33,15 +33,6 @@ const reducer = (state = initialState, action: StoreAction) => {
           historicData: action.payload.historicData
         }
       };
-
-    case StoreActionTypes.SetHistoricData:
-      return {
-        ...state,
-        selectedEntity: {
-          ...state.selectedEntity,
-          historicData: action.payload
-        }
-      };
     case StoreActionTypes.SetGlobalData:
       return {
         ...state,

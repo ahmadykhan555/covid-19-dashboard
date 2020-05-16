@@ -21,6 +21,7 @@ import StatsCardComponent from "../StatsCard/StatsCardComponent";
 interface GlobalStatsProps extends PropsFromRedux {}
 const POLL_INTERVAL: number = 60 * 1000 * 3;
 const GLOBAL_CARD_INDEX = 99999;
+const GLOBAL_CARD_LABEL = "global data";
 
 // component def
 const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
@@ -29,11 +30,16 @@ const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
   setGlobalData,
   globalData,
   setSelectedEntity,
-  setHistoricCluster,
-  setHistoricDataLoading
+  setHistoricDataLoading,
+  selectedEntity
 }) => {
   // loccal state
   let [pollCount, setpollCount] = useState<number>(0);
+  const [globalHistoricData, setGlobalHistoricData] = useState<HistoricData>({
+    cases: {},
+    deaths: {},
+    recovered: {}
+  });
   useEffect(() => {
     refreshData();
   }, [pollCount]);
@@ -53,13 +59,13 @@ const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
     setHistoricDataLoading(true);
     const globalHistoricData: any = await getGlobalHistoricData();
     setHistoricDataLoading(false);
+    setGlobalHistoricData(globalHistoricData);
     setGlobalData(globalStatsResponse.data);
     setSelectedEntity({
-      name: "Global Data",
+      name: GLOBAL_CARD_LABEL,
       data: globalStatsResponse.data,
       historicData: globalHistoricData
     });
-    getGlobalHistoricData().then((res: any) => setHistoricCluster(res));
   };
 
   const initPolling = () => {
@@ -69,47 +75,65 @@ const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
   };
 
   const handleCardClick = async (index: number) => {
-    const selectedCountryData = allData[index];
-    setHistoricDataLoading(true);
-    const historicData: any = await getHistoricDataForCountry(
-      selectedCountryData.country
-    );
-    setHistoricDataLoading(false);
-    setSelectedEntity({
-      name: selectedCountryData.country,
-      data: selectedCountryData,
-      historicData: historicData
-    });
+    if (index === GLOBAL_CARD_INDEX) {
+      setSelectedEntity({
+        name: GLOBAL_CARD_LABEL,
+        data: globalData as any,
+        historicData: globalHistoricData
+      });
+    } else {
+      if (allData[index] && allData[index].country) {
+        setHistoricDataLoading(true);
+        const historicData: any = await getHistoricDataForCountry(
+          allData[index].country
+        );
+        setHistoricDataLoading(false);
+        setSelectedEntity({
+          name: allData[index].country || "USA",
+          data: allData[index],
+          historicData: historicData
+        });
+      }
+    }
   };
 
   const renderCountryStatsCard = (country: CovidData, index: number) => {
-    return (
-      <StatsCardComponent
-        label={country.country}
-        imgSrc={country.countryInfo.flag}
-        casesCount={country.cases}
-        deathsCount={country.deaths}
-        recoveredCount={country.recovered}
-        perMillionCount={country.casesPerOneMillion}
-        index={index}
-        onClick={handleCardClick}
-      />
-    );
+    if (country.countryInfo) {
+      return (
+        <StatsCardComponent
+          label={country.country || ""}
+          imgSrc={country.countryInfo.flag || ""}
+          casesCount={country.cases}
+          deathsCount={country.deaths}
+          recoveredCount={country.recovered}
+          perMillionCount={country.casesPerOneMillion}
+          index={index}
+          onClick={handleCardClick}
+          selected={
+            selectedEntity ? selectedEntity.name === country.country : false
+          }
+        />
+      );
+    } else {
+      return "";
+    }
   };
 
   const renderGlobalStatsCard = () => {
     if (globalData) {
       return (
         <StatsCardComponent
-          label={"global data"}
+          label={GLOBAL_CARD_LABEL}
           imgSrc=""
           casesCount={globalData.cases}
           deathsCount={globalData.deaths}
           recoveredCount={globalData.recovered}
           perMillionCount={globalData.casesPerOneMillion}
-          selected={true}
           index={GLOBAL_CARD_INDEX}
           onClick={handleCardClick}
+          selected={
+            selectedEntity ? selectedEntity.name === GLOBAL_CARD_LABEL : false
+          }
         />
       );
     }
@@ -141,8 +165,6 @@ const mapDispatchToProps = (dispatch: any) => {
       dispatch({ type: StoreActionTypes.SetSelectedEntity, payload }),
     setGlobalData: (payload: GlobalData) =>
       dispatch({ type: StoreActionTypes.SetGlobalData, payload }),
-    setHistoricCluster: (payload: HistoricData) =>
-      dispatch({ type: StoreActionTypes.SetHistoricData, payload }),
     setHistoricDataLoading: (payload: boolean) =>
       dispatch({ type: StoreActionTypes.SetHistoricDataLoading, payload })
   };

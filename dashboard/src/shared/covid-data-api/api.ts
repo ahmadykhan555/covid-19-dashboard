@@ -48,7 +48,7 @@ export const getGlobalHistoricData = () => {
   });
 };
 
-export const getHistoricDataForCountry = (iso3Name: string) => {
+export const getHistoricDataForCountry = (iso3Name: string = "USA") => {
   return new Promise((resolve, reject) => {
     axios
       .get(
