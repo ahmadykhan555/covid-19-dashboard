@@ -291,8 +291,22 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
       {mapReady && (
         <div className="map-controls">
           <div className="zones-legend">
-            <label>Zones</label>
-            <div className="legend-block"></div>
+            <div className="zone-block">
+              <div className="zone-color zone-color--zero"></div>
+              <h4 className="zone-label">Zero</h4>
+            </div>
+            <div className="zone-block">
+              <div className="zone-color zone-color--low"></div>
+              <h4 className="zone-label">Low</h4>
+            </div>
+            <div className="zone-block">
+              <div className="zone-color zone-color--medium"></div>
+              <h4 className="zone-label">Medium</h4>
+            </div>
+            <div className="zone-block">
+              <div className="zone-color zone-color--high"></div>
+              <h4 className="zone-label">High</h4>
+            </div>
           </div>
         </div>
       )}

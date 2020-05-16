@@ -4,8 +4,8 @@
 
   .map-controls {
     position: absolute;
-    top: 0.625rem;
-    left: 0.625rem;
+    top: 1rem;
+    left: 3rem;
     width: 95%;
     height: 40px;
     display: flex;
@@ -17,22 +17,31 @@
 
     .zones-legend {
       display: flex;
-      align-items: center;
-      flex-direction: column;
+      border-radius: 10px;
 
-      label {
-        font-weight: bold;
-        font-size: 0.75rem !important;
+      .zone-color {
+        height: 10px;
+        width: 80px;
+
+        &--zero {
+          background: #FCDE9C;
+        }
+
+        &--low {
+          background: #FF9962;
+        }
+
+        &--high {
+          background: #E83D62;
+        }
+
+        &--medium {
+          background: #8F0B7D
+        }
       }
 
-      .legend-block {
-        width: 150px;
-        height: 20px;
-        background-image: linear-gradient(to right,
-            rgba(192, 57, 43, 0.4), rgba(192, 57, 43, 0.55),
-            rgba(192, 57, 43, 0.65),
-            rgba(192, 57, 43, 0.9),
-          )
+      .zone-label {
+        text-align: center;
       }
     }
   }
