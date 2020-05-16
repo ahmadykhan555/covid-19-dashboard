@@ -91,7 +91,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   }, [center]);
 
   useEffect(() => {
-    drawProvincialPolygons();
+    // drawProvincialPolygons();
     map && !zonesReady && drawGlobalZones();
   }, [map]);
 
