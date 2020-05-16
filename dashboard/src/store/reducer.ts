@@ -1,9 +1,15 @@
-import { AppState, StoreAction, StoreActionTypes } from "./../interfaces/meta";
+import {
+  AppState,
+  StoreAction,
+  StoreActionTypes,
+  GLOBAL_CARD_LABEL
+} from "./../interfaces/meta";
 import * as mapboxgl from "mapbox-gl";
+import { Glob } from "glob";
 
 const initialState: AppState = {
   selectedEntity: {
-    name: "",
+    name: GLOBAL_CARD_LABEL,
     data: null,
     historicData: {
       cases: {},
@@ -42,6 +48,17 @@ const reducer = (state = initialState, action: StoreAction) => {
       return {
         ...state,
         historicDataLoading: action.payload
+      };
+
+    case StoreActionTypes.SetMapCenter:
+      return {
+        ...state,
+        mapCenter: new mapboxgl.LngLat(action.payload.lng, action.payload.lat)
+      };
+    case StoreActionTypes.SetSelectedLabel:
+      return {
+        ...state,
+        selectedEntity: { ...state.selectedEntity, name: action.payload }
       };
   }
   return state;

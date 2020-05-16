@@ -15,7 +15,9 @@ export enum StoreActionTypes {
   SetAllData = "SET_ALL_DATA",
   SetSelectedEntity = "SET_SELECTED",
   SetGlobalData = "SET_GLOBAL_DATA",
-  SetHistoricDataLoading = "HIS_DATA_LOADING"
+  SetHistoricDataLoading = "HIS_DATA_LOADING",
+  SetMapCenter = "SET_MAP_CENTER",
+  SetSelectedLabel = "SET_SELECTED_LABEL"
 }
 
 export interface GlobalData {
@@ -71,3 +73,5 @@ export interface SelectedEntity {
   data: CovidData | null;
   historicData: HistoricData;
 }
+
+export const GLOBAL_CARD_LABEL = "global data";

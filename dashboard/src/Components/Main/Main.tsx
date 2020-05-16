@@ -1,14 +1,9 @@
 import React, { useState } from "react";
 import "./Main.scss";
 import MapBoxComponent from "../MapBox/MapBox";
-import * as mapboxgl from "mapbox-gl";
 import AllCountriesStatsComponent from "../AllCountriesStats/AllCountriesStatsComponent";
 import GraphViewComponent from "../GraphView/GraphViewComponent";
 const MainLayoutComponent: React.FC<any> = () => {
-  const [mapCenter, setMapCenter] = useState<mapboxgl.LngLat>(
-    new mapboxgl.LngLat(-97, 38)
-  );
-
   return (
     <div className="main-layout-component">
       <section className="section-left">
@@ -35,7 +30,7 @@ const MainLayoutComponent: React.FC<any> = () => {
       </section>
       <div className="section-right">
         <section className="map-container">
-          <MapBoxComponent center={mapCenter} />
+          <MapBoxComponent />
         </section>
         <section className="graphs-overlay">
           <GraphViewComponent />

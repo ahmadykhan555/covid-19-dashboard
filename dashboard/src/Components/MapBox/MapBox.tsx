@@ -12,7 +12,6 @@ import * as PolyBalochistan from "../../geojson/balochistan";
 import * as PolyFata from "../../geojson/fata";
 import * as Circle from "./circle";
 import "./MapBox.scss";
-import ReactTooltip from "react-tooltip";
 
 import * as PolyWorld from "../Main/world";
 
@@ -20,10 +19,10 @@ import {
   getAllCountriesData,
   getAllStatesData
 } from "../../shared/covid-data-api/api";
+import { AppState } from "../../interfaces/meta";
+import { connect, ConnectedProps } from "react-redux";
 
-interface MapComponentProps {
-  center: mapboxgl.LngLat;
-}
+interface MapComponentProps extends PropsFromRedux {}
 
 const provinces: Polygon[] = [
   {
@@ -324,4 +323,12 @@ type Polygon = {
 type NavigatorResponse = {
   coords: any;
 };
-export default MapBoxComponent;
+
+const mapStateToProps = (state: AppState) => {
+  return {
+    center: state.mapCenter
+  };
+};
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+export default connector(MapBoxComponent);

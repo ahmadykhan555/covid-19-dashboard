@@ -13,7 +13,8 @@ import {
   SelectedEntity,
   StoreActionTypes,
   GlobalData,
-  HistoricData
+  HistoricData,
+  GLOBAL_CARD_LABEL
 } from "../../interfaces/meta";
 import { connect, ConnectedProps } from "react-redux";
 import StatsCardComponent from "../StatsCard/StatsCardComponent";
@@ -21,7 +22,6 @@ import StatsCardComponent from "../StatsCard/StatsCardComponent";
 interface GlobalStatsProps extends PropsFromRedux {}
 const POLL_INTERVAL: number = 60 * 1000 * 3;
 const GLOBAL_CARD_INDEX = 99999;
-const GLOBAL_CARD_LABEL = "global data";
 
 // component def
 const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
@@ -31,7 +31,9 @@ const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
   globalData,
   setSelectedEntity,
   setHistoricDataLoading,
-  selectedEntity
+  selectedEntity,
+  setMapCenter,
+  setSelectedLabel
 }) => {
   // loccal state
   let [pollCount, setpollCount] = useState<number>(0);
@@ -56,16 +58,18 @@ const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
 
   const loadGlobalData = async () => {
     const globalStatsResponse = await getGlobalStats();
-    setHistoricDataLoading(true);
-    const globalHistoricData: any = await getGlobalHistoricData();
-    setHistoricDataLoading(false);
-    setGlobalHistoricData(globalHistoricData);
-    setGlobalData(globalStatsResponse.data);
-    setSelectedEntity({
-      name: GLOBAL_CARD_LABEL,
-      data: globalStatsResponse.data,
-      historicData: globalHistoricData
-    });
+    if (selectedEntity.name === GLOBAL_CARD_LABEL) {
+      setHistoricDataLoading(true);
+      const globalHistoricData: any = await getGlobalHistoricData();
+      setHistoricDataLoading(false);
+      setGlobalHistoricData(globalHistoricData);
+      setSelectedEntity({
+        name: GLOBAL_CARD_LABEL,
+        data: globalStatsResponse.data,
+        historicData: globalHistoricData
+      });
+      setGlobalData(globalStatsResponse.data);
+    }
   };
 
   const initPolling = () => {
@@ -81,8 +85,18 @@ const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
         data: globalData as any,
         historicData: globalHistoricData
       });
+      setMapCenter(new mapboxgl.LngLat(95.7129, 37.0902)); // defaults to US)
     } else {
       if (allData[index] && allData[index].country) {
+        setSelectedLabel(allData[index].country || "");
+        if (allData[index].countryInfo) {
+          setMapCenter(
+            new mapboxgl.LngLat(
+              (allData[index].countryInfo as any).long,
+              (allData[index].countryInfo as any).lat
+            )
+          );
+        }
         setHistoricDataLoading(true);
         const historicData: any = await getHistoricDataForCountry(
           allData[index].country
@@ -166,7 +180,11 @@ const mapDispatchToProps = (dispatch: any) => {
     setGlobalData: (payload: GlobalData) =>
       dispatch({ type: StoreActionTypes.SetGlobalData, payload }),
     setHistoricDataLoading: (payload: boolean) =>
-      dispatch({ type: StoreActionTypes.SetHistoricDataLoading, payload })
+      dispatch({ type: StoreActionTypes.SetHistoricDataLoading, payload }),
+    setMapCenter: (payload: mapboxgl.LngLat) =>
+      dispatch({ type: StoreActionTypes.SetMapCenter, payload }),
+    setSelectedLabel: (payload: string) =>
+      dispatch({ type: StoreActionTypes.SetSelectedLabel, payload })
   };
 };
 const connector = connect(
