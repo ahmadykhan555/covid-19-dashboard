@@ -3,7 +3,11 @@ import "./Main.scss";
 import MapBoxComponent from "../MapBox/MapBox";
 import AllCountriesStatsComponent from "../AllCountriesStats/AllCountriesStatsComponent";
 import GraphViewComponent from "../GraphView/GraphViewComponent";
-const MainLayoutComponent: React.FC<any> = () => {
+import { connect, ConnectedProps } from "react-redux";
+import { AppState } from "../../interfaces/meta";
+const MainLayoutComponent: React.FC<PropsFromRedux> = ({
+  graphViewExpanded
+}) => {
   return (
     <div className="main-layout-component">
       <section className="section-left">
@@ -32,7 +36,9 @@ const MainLayoutComponent: React.FC<any> = () => {
         <section className="map-container">
           <MapBoxComponent />
         </section>
-        <section className="graphs-overlay">
+        <section
+          className={`graphs-overlay ${graphViewExpanded ? "expanded" : ""}`}
+        >
           <GraphViewComponent />
         </section>
       </div>
@@ -40,4 +46,13 @@ const MainLayoutComponent: React.FC<any> = () => {
   );
 };
 
-export default MainLayoutComponent;
+const mapStateToProps = (state: AppState) => {
+  return {
+    graphViewExpanded: state.graphViewExpanded
+  };
+};
+
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(MainLayoutComponent);

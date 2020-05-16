@@ -4,7 +4,6 @@
 .graph-card-component {
   background: $cardBackground;
   color: $defaultFontColor;
-  height: 380px;
   padding: $defaultPadding;
   flex: 1;
 
@@ -41,7 +40,7 @@
   }
 
   .graph-container {
-    height: 200px;
+    height: 100%;
     display: flex;
 
     .spinner-grow,

@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import "./GraphViewComponent.scss";
-import arrowUp from "../../img/arrow-up.svg";
+import arrow from "../../img/arrow-up.svg";
 import GraphCardComponent from "./CardComponent/GraphCardComponent";
 import { connect, ConnectedProps } from "react-redux";
-import { AppState } from "../../interfaces/meta";
+import { AppState, StoreActionTypes } from "../../interfaces/meta";
 import { monthString } from "../../shared/data-utility/utility";
 import { Datum } from "@nivo/line";
 
 interface GraphViewProps extends PropsFromRedux {}
 
-const GraphViewComponent: React.FC<GraphViewProps> = ({ historicData }) => {
+const GraphViewComponent: React.FC<GraphViewProps> = ({
+  historicData,
+  setViewExpanded,
+  viewExpanded
+}) => {
   const sanitizeData = (label: string): Datum[] => {
     const data: Datum[] = [];
     if (!historicData) {
@@ -37,9 +41,18 @@ const GraphViewComponent: React.FC<GraphViewProps> = ({ historicData }) => {
   };
   return (
     <div className="graph-view-component">
-      <div className="graph-view-control">
-        <img src={arrowUp}></img>
-        <img src={arrowUp}></img>
+      <div
+        className="graph-view-control"
+        onClick={() => setViewExpanded(!viewExpanded)}
+      >
+        <img
+          src={arrow}
+          style={{ transform: `${viewExpanded ? "rotate(180deg)" : ""}` }}
+        ></img>
+        <img
+          src={arrow}
+          style={{ transform: `${viewExpanded ? "rotate(180deg)" : ""}` }}
+        ></img>
       </div>
       <div className="graph-view-cards">
         <GraphCardComponent
@@ -65,10 +78,24 @@ const GraphViewComponent: React.FC<GraphViewProps> = ({ historicData }) => {
 // Connect to global store
 const mapStateToProps = (state: AppState) => {
   return {
-    historicData: state.selectedEntity.historicData
+    historicData: state.selectedEntity.historicData,
+    viewExpanded: state.graphViewExpanded
+  };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    setViewExpanded: (expanded: boolean) =>
+      dispatch({
+        type: StoreActionTypes.SetGraphViewExpanded,
+        payload: expanded
+      })
   };
 };
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
-const connector = connect(mapStateToProps);
+const connector = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
 export default connector(GraphViewComponent);

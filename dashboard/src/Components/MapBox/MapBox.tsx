@@ -56,10 +56,10 @@ const provinces: Polygon[] = [
 ];
 
 enum ZoneColorMap {
-  HighZone = "#8F0B7D",
-  ModerateZone = "#E83D62",
-  LowZone = "#FCDE9C",
-  ZeroZone = "#FCDE9C"
+  HighZone = "rgba(143, 11, 125, 0.85)",
+  ModerateZone = "rgba(143, 11, 125, 0.75)",
+  LowZone = "rgba(143, 11, 125, 0.7)",
+  ZeroZone = "rgba(143, 11, 125, 0.5)"
 }
 
 const world: Polygon = {
@@ -91,12 +91,12 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   }, [center]);
 
   useEffect(() => {
-    // drawProvincialPolygons();
-    // map && !zonesReady && drawGlobalZones();
+    drawProvincialPolygons();
+    map && !zonesReady && drawGlobalZones();
   }, [map]);
 
   useEffect(() => {
-    // map && !zonesReady && drawGlobalZones();
+    map && !zonesReady && drawGlobalZones();
     refreshStatesData();
   }, [covidData]);
 
@@ -119,7 +119,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
       accessToken: environment.mapBoxAccessToken,
       container: "map-gl-container",
       center,
-      zoom: 1.5,
+      zoom: 3,
       style: MapStyles.Light,
       boxZoom: true
     });

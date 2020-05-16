@@ -4,6 +4,7 @@ export interface AppState {
   allData: CovidData[];
   globalData: GlobalData | null;
   historicDataLoading: boolean;
+  graphViewExpanded: boolean;
 }
 
 export interface StoreAction {
@@ -17,7 +18,8 @@ export enum StoreActionTypes {
   SetGlobalData = "SET_GLOBAL_DATA",
   SetHistoricDataLoading = "HIS_DATA_LOADING",
   SetMapCenter = "SET_MAP_CENTER",
-  SetSelectedLabel = "SET_SELECTED_LABEL"
+  SetSelectedLabel = "SET_SELECTED_LABEL",
+  SetGraphViewExpanded = "GRAPH_VIEW_EXPANDED"
 }
 
 export interface GlobalData {

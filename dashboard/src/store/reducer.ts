@@ -8,6 +8,11 @@ import * as mapboxgl from "mapbox-gl";
 import { Glob } from "glob";
 
 const initialState: AppState = {
+  mapCenter: new mapboxgl.LngLat(-97, 38), // defaults to US
+  allData: [],
+  globalData: null,
+  historicDataLoading: true,
+  graphViewExpanded: false,
   selectedEntity: {
     name: GLOBAL_CARD_LABEL,
     data: null,
@@ -16,11 +21,7 @@ const initialState: AppState = {
       deaths: {},
       recovered: {}
     }
-  },
-  mapCenter: new mapboxgl.LngLat(95.7129, 37.0902), // defaults to US
-  allData: [],
-  globalData: null,
-  historicDataLoading: true
+  }
 };
 const reducer = (state = initialState, action: StoreAction) => {
   switch (action.type) {
@@ -59,6 +60,12 @@ const reducer = (state = initialState, action: StoreAction) => {
       return {
         ...state,
         selectedEntity: { ...state.selectedEntity, name: action.payload }
+      };
+
+    case StoreActionTypes.SetGraphViewExpanded:
+      return {
+        ...state,
+        graphViewExpanded: action.payload
       };
   }
   return state;
