@@ -1,0 +1,46 @@
+@import "../../../GlobalStyles/variables.scss";
+@import "../../../GlobalStyles/mixins.scss";
+
+.graph-card-component {
+  background: $cardBackground;
+  color: $defaultFontColor;
+  height: 380px;
+  padding: $defaultPadding;
+  flex: 1;
+
+  &:nth-child(2) {
+    margin: 0 1rem;
+  }
+
+  .graph-card-header {
+    display: flex;
+    align-items: center;
+
+    .card-label {
+      @include countBox;
+      text-transform: capitalize;
+
+      &--cases {
+        color: $casesColor;
+      }
+
+      &--deaths {
+        color: $casesDeaths;
+      }
+
+      &--recovered {
+        color: $casesRecovered;
+      }
+    }
+
+    .since-label {
+      color: $casesColor;
+      flex: 1;
+      text-align: right;
+    }
+  }
+
+  .graph-container {
+    height: 200px;
+  }
+}

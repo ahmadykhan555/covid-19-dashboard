@@ -4,7 +4,7 @@ interface PieChartProps {
   data: any[];
 }
 const PieChartComponent: React.FC<PieChartProps> = ({ data }) => {
-  console.log("pie data", data);
+  // console.log("pie data", data);
   const getColors = (pie: any) => {
     const colors: any = {
       cases: "rgba(255,0,0,1)",
