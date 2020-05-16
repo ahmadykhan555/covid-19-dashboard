@@ -9,6 +9,8 @@ interface CardProps {
   deathsCount: number;
   recoveredCount: number;
   selected?: boolean;
+  index: number;
+  onClick: (index: number) => void;
 }
 const StatsCardComponent: React.FC<CardProps> = ({
   label,
@@ -17,26 +19,32 @@ const StatsCardComponent: React.FC<CardProps> = ({
   casesCount,
   deathsCount,
   recoveredCount,
-  selected
+  selected,
+  index,
+  onClick
 }) => {
   return (
-    <div className={`stats-card ${selected ? "card-selected" : ""}`}>
+    <div
+      className={`stats-card ${selected ? "card-selected" : ""}`}
+      onClick={() => onClick(index)}
+      key={index}
+    >
       <div className="stats-card__info">
         <div className="avatar">
           <img src={imgSrc || "https://via.placeholder.com/20"} />
         </div>
-        <h3 className="label">{label || "Label"}</h3>
-        <h3 className="per-mil-count">{perMillionCount || 12000}</h3>
+        <h3 className="label">{label}</h3>
+        <h3 className="per-mil-count">{perMillionCount}</h3>
       </div>
       <div className="stats-card__counts">
         <div className="stats-count-cell stats-count-cell--cases">
-          {formatNumber(casesCount || 12000)}
+          {formatNumber(casesCount)}
         </div>
         <div className="stats-count-cell stats-count-cell--deaths">
-          {formatNumber(deathsCount || 12000)}
+          {formatNumber(deathsCount)}
         </div>
         <div className="stats-count-cell stats-count-cell--recovered">
-          {formatNumber(recoveredCount || 12000)}
+          {formatNumber(recoveredCount)}
         </div>
       </div>
     </div>

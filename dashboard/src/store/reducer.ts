@@ -13,7 +13,8 @@ const initialState: AppState = {
   },
   mapCenter: new mapboxgl.LngLat(95.7129, 37.0902), // defaults to US
   allData: [],
-  globalData: null
+  globalData: null,
+  historicDataLoading: true
 };
 const reducer = (state = initialState, action: StoreAction) => {
   switch (action.type) {
@@ -29,9 +30,7 @@ const reducer = (state = initialState, action: StoreAction) => {
         selectedEntity: {
           name: action.payload.name || "Global Data",
           data: action.payload.data,
-          historicData: !state.selectedEntity.historicData
-            ? action.payload.historicData
-            : state.selectedEntity.historicData
+          historicData: action.payload.historicData
         }
       };
 
@@ -47,6 +46,11 @@ const reducer = (state = initialState, action: StoreAction) => {
       return {
         ...state,
         globalData: action.payload
+      };
+    case StoreActionTypes.SetHistoricDataLoading:
+      return {
+        ...state,
+        historicDataLoading: action.payload
       };
   }
   return state;

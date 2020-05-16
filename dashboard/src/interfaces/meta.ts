@@ -3,6 +3,7 @@ export interface AppState {
   mapCenter: mapboxgl.LngLat;
   allData: CovidData[];
   globalData: GlobalData | null;
+  historicDataLoading: boolean;
 }
 
 export interface StoreAction {
@@ -14,7 +15,8 @@ export enum StoreActionTypes {
   SetAllData = "SET_ALL_DATA",
   SetSelectedEntity = "SET_SELECTED",
   SetGlobalData = "SET_GLOBAL_DATA",
-  SetHistoricData = "SET_HISTORIC"
+  SetHistoricData = "SET_HISTORIC",
+  SetHistoricDataLoading = "HIS_DATA_LOADING"
 }
 
 export interface GlobalData {
@@ -68,5 +70,5 @@ export interface HistoricData {
 export interface SelectedEntity {
   name: string;
   data: CovidData | null;
-  historicData?: HistoricData;
+  historicData: HistoricData;
 }

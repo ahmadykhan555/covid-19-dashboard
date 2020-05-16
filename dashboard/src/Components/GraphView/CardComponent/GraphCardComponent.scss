@@ -42,5 +42,11 @@
 
   .graph-container {
     height: 200px;
+    display: flex;
+
+    .spinner-grow,
+    .spinner-border {
+      margin: auto;
+    }
   }
 }

@@ -1,3 +1,5 @@
+@import '../../GlobalStyles/variables.scss';
+
 .mapbox-gl-component-wrapper {
   position: relative;
   height: 100%;
@@ -19,30 +21,48 @@
       display: flex;
       border-radius: 10px;
 
-      .zone-color {
-        height: 10px;
-        width: 80px;
-
-        &--zero {
-          background: #FCDE9C;
+      .zone-block {
+        &:first-child {
+          .zone-color {
+            border-radius: 25px 0 0 25px;
+          }
         }
 
-        &--low {
-          background: #FF9962;
+        &:last-child {
+          .zone-color {
+            border-radius: 0 25px 25px 0;
+          }
         }
 
-        &--high {
-          background: #E83D62;
+        .zone-color {
+          height: 10px;
+          width: 80px;
+
+          &--zero {
+            background: #FCDE9C;
+          }
+
+          &--low {
+            background: #FF9962;
+          }
+
+          &--high {
+            background: #E83D62;
+          }
+
+          &--medium {
+            background: #8F0B7D
+          }
         }
 
-        &--medium {
-          background: #8F0B7D
+        .zone-label {
+          text-align: center;
+          color: $defaultFontColor;
+          margin-top: (0.5 * $defaultMargin) !important;
         }
+
       }
 
-      .zone-label {
-        text-align: center;
-      }
     }
   }
 }

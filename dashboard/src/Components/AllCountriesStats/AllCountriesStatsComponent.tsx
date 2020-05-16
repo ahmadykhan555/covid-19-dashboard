@@ -20,6 +20,7 @@ import StatsCardComponent from "../StatsCard/StatsCardComponent";
 
 interface GlobalStatsProps extends PropsFromRedux {}
 const POLL_INTERVAL: number = 60 * 1000 * 3;
+const GLOBAL_CARD_INDEX = 99999;
 
 // component def
 const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
@@ -28,7 +29,8 @@ const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
   setGlobalData,
   globalData,
   setSelectedEntity,
-  setHistoricCluster
+  setHistoricCluster,
+  setHistoricDataLoading
 }) => {
   // loccal state
   let [pollCount, setpollCount] = useState<number>(0);
@@ -40,15 +42,22 @@ const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
   }, []);
 
   const refreshData = () => {
-    getGlobalStats().then((res: any) => {
-      setGlobalData(res.data);
-      setSelectedEntity({
-        name: "global",
-        data: res.data
-      });
-    });
+    loadGlobalData();
     getAllCountriesData().then((data: any) => {
       setAllData(data);
+    });
+  };
+
+  const loadGlobalData = async () => {
+    const globalStatsResponse = await getGlobalStats();
+    setHistoricDataLoading(true);
+    const globalHistoricData: any = await getGlobalHistoricData();
+    setHistoricDataLoading(false);
+    setGlobalData(globalStatsResponse.data);
+    setSelectedEntity({
+      name: "Global Data",
+      data: globalStatsResponse.data,
+      historicData: globalHistoricData
     });
     getGlobalHistoricData().then((res: any) => setHistoricCluster(res));
   };
@@ -57,6 +66,20 @@ const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
     setInterval(() => {
       setpollCount(++pollCount);
     }, POLL_INTERVAL);
+  };
+
+  const handleCardClick = async (index: number) => {
+    const selectedCountryData = allData[index];
+    setHistoricDataLoading(true);
+    const historicData: any = await getHistoricDataForCountry(
+      selectedCountryData.country
+    );
+    setHistoricDataLoading(false);
+    setSelectedEntity({
+      name: selectedCountryData.country,
+      data: selectedCountryData,
+      historicData: historicData
+    });
   };
 
   const renderCountryStatsCard = (country: CovidData, index: number) => {
@@ -68,6 +91,8 @@ const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
         deathsCount={country.deaths}
         recoveredCount={country.recovered}
         perMillionCount={country.casesPerOneMillion}
+        index={index}
+        onClick={handleCardClick}
       />
     );
   };
@@ -76,13 +101,15 @@ const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
     if (globalData) {
       return (
         <StatsCardComponent
-          label={"global"}
+          label={"global data"}
           imgSrc=""
           casesCount={globalData.cases}
           deathsCount={globalData.deaths}
           recoveredCount={globalData.recovered}
           perMillionCount={globalData.casesPerOneMillion}
           selected={true}
+          index={GLOBAL_CARD_INDEX}
+          onClick={handleCardClick}
         />
       );
     }
@@ -115,7 +142,9 @@ const mapDispatchToProps = (dispatch: any) => {
     setGlobalData: (payload: GlobalData) =>
       dispatch({ type: StoreActionTypes.SetGlobalData, payload }),
     setHistoricCluster: (payload: HistoricData) =>
-      dispatch({ type: StoreActionTypes.SetHistoricData, payload })
+      dispatch({ type: StoreActionTypes.SetHistoricData, payload }),
+    setHistoricDataLoading: (payload: boolean) =>
+      dispatch({ type: StoreActionTypes.SetHistoricDataLoading, payload })
   };
 };
 const connector = connect(
