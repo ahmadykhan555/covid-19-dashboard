@@ -24,7 +24,7 @@ const GraphicalDetailViewComponent: React.FC<GraphicalDetailViewProps> = ({
       <Modal.Body>
         <div className="modal-body-cs">
           <div className="slot-1 slot">
-            <BarGraphComponent data={data.barData} />
+            {/* <BarGraphComponent data={data.barData} /> */}
           </div>
           <div className="slot-2 slot">
             <PieChartComponent data={data.pieData} />

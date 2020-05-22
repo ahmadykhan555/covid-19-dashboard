@@ -1,13 +1,14 @@
 import axios from "axios";
 import moment from "moment";
+const daysSince = moment().diff(moment("12/01/2019"), "days");
 const BASEURL = "https://corona.lmao.ninja/v2/";
 const ENDPOINTS = {
   AllCountries: "countries",
   SelectedCountry: "countries",
   AllStates: "states",
   GlobalStats: "all",
-  HistoricGlobal: "historical/all?lastdays=90",
-  HistoricalForCountry: "historical/%iso%?lastdays=90"
+  HistoricGlobal: `historical/all?lastdays=${Math.floor(daysSince)}`,
+  HistoricalForCountry: `historical/%iso%?lastdays=${Math.floor(daysSince)}`
 };
 
 export const getAllCountriesData = () => {

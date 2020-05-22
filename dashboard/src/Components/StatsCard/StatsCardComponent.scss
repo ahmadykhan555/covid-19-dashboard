@@ -28,6 +28,10 @@
             width: 35px;
             margin-right: (0.35 * $defaultMargin);
 
+            &.avatar-globe {
+                height: 35px !important;
+            }
+
             img {
                 height: 100%;
                 width: 100%;

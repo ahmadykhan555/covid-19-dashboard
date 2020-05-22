@@ -6,6 +6,7 @@ import {
   getGlobalHistoricData
 } from "../../shared/covid-data-api/api";
 import "./AllCountriesStatsComponent.scss";
+import globeAvatar from "../../img/globel.png";
 import * as mapboxgl from "mapbox-gl";
 import {
   CovidData,
@@ -138,7 +139,7 @@ const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
       return (
         <StatsCardComponent
           label={GLOBAL_CARD_LABEL}
-          imgSrc=""
+          imgSrc={globeAvatar}
           casesCount={globalData.cases}
           deathsCount={globalData.deaths}
           recoveredCount={globalData.recovered}
