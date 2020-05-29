@@ -43,13 +43,13 @@ const StatsCardComponent: React.FC<CardProps> = ({
       </div>
       <div className="stats-card__counts">
         <div className="stats-count-cell stats-count-cell--cases">
-          {formatNumber(casesCount)}
+          {casesCount}
         </div>
         <div className="stats-count-cell stats-count-cell--deaths">
-          {formatNumber(deathsCount)}
+          {deathsCount}
         </div>
         <div className="stats-count-cell stats-count-cell--recovered">
-          {formatNumber(recoveredCount)}
+          {recoveredCount}
         </div>
       </div>
     </div>

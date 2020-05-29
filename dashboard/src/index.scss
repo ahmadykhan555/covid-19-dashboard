@@ -1,3 +1,5 @@
+@import '../src/GlobalStyles/mixins.scss';
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -10,6 +12,14 @@ body {
   ::-webkit-scrollbar {
     display: none;
     width: 0;
+  }
+
+  @include mQ($widthLaptop) {
+    font-size: (0.75 * $defaultFontSize) !important;
+  }
+
+  @include mQ($widthTablet) {
+    font-size: (0.7 * $defaultFontSize) !important;
   }
 }
 
