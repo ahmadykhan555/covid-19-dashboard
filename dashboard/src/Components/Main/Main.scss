@@ -114,21 +114,23 @@
       left: 0;
       width: 100%;
       transition: 0.5s ease-in-out;
-      overflow-y: scroll;
 
       @include mQ($width4k) {
         height: 45vh;
       }
 
       @include mQ($widthLaptop) {
-        height: 5vh;
+        height: 350px;
       }
 
       &.expanded {
         height: 75vh;
 
-        @include mQ($widthLaptop) {
-          height: 100vh;
+        @include mQ($widthTablet) {
+          .graph-view-component {
+            background-image: linear-gradient($body, $bodyLt) !important;
+            background: transparent;
+          }
         }
       }
     }
