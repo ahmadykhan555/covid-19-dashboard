@@ -1,6 +1,7 @@
 import React from "react";
 import "./StatsCardComponent.scss";
 import { formatNumber } from "../../shared/data-utility/utility";
+import { GLOBAL_CARD_LABEL } from "../../interfaces/meta";
 interface CardProps {
   label: string;
   imgSrc: string;
@@ -30,7 +31,11 @@ const StatsCardComponent: React.FC<CardProps> = ({
       key={index}
     >
       <div className="stats-card__info">
-        <div className="avatar">
+        <div
+          className={`avatar ${
+            label === GLOBAL_CARD_LABEL ? "avatar-globe" : ""
+          }`}
+        >
           <img src={imgSrc || "https://via.placeholder.com/20"} />
         </div>
         <h3 className="label">{label}</h3>
@@ -38,13 +43,13 @@ const StatsCardComponent: React.FC<CardProps> = ({
       </div>
       <div className="stats-card__counts">
         <div className="stats-count-cell stats-count-cell--cases">
-          {formatNumber(casesCount)}
+          {casesCount}
         </div>
         <div className="stats-count-cell stats-count-cell--deaths">
-          {formatNumber(deathsCount)}
+          {deathsCount}
         </div>
         <div className="stats-count-cell stats-count-cell--recovered">
-          {formatNumber(recoveredCount)}
+          {recoveredCount}
         </div>
       </div>
     </div>

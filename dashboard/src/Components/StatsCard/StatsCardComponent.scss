@@ -5,14 +5,22 @@
 .stats-card {
     color: $defaultFontColor;
     background: $cardBackground;
-    padding: $defaultPadding;
+    padding: (0.75 * $defaultPadding);
     border-radius: $defaultBorderRadius;
     margin: 1rem;
     font-family: 'Cabin';
     box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1);
+    height: 100px;
+    min-width: 350px;
+
+    @include mQ($widthTablet) {
+        margin: (0.5 * $defaultPadding)
+    }
 
     &:hover {
         cursor: pointer;
+        box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.32);
+
     }
 
     &.card-selected {
@@ -27,6 +35,10 @@
             height: 25px;
             width: 35px;
             margin-right: (0.35 * $defaultMargin);
+
+            &.avatar-globe {
+                height: 35px !important;
+            }
 
             img {
                 height: 100%;
@@ -52,7 +64,7 @@
 
     &__counts {
         display: flex;
-        margin-top: $defaultMargin;
+        margin-top: (0.75 *$defaultMargin);
 
         .stats-count-cell {
             @include countBox;

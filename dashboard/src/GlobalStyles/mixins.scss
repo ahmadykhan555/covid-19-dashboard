@@ -1,12 +1,26 @@
 @import './variables.scss';
 
 @mixin mQ($args...) {
-    @content;
+    @if length($args)==1 {
+        @media screen and (max-width: nth($args, 1)) {
+            @content
+        }
+    }
+
+    ;
+
+    @if length($args)==2 {
+        @media screen and (min-width: nth($args, 1)) and (max-width: nth($args, 2)) {
+            @content
+        }
+    }
+
+    ;
 }
 
 @mixin countBox {
     background: $body;
-    padding: 0.65rem;
+    padding: 0.35rem;
     line-height: 1.25rem;
     font-weight: bold;
     border-radius: $defaultBorderRadius;

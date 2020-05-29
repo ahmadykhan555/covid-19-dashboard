@@ -1,4 +1,5 @@
 @import '../../GlobalStyles/variables.scss';
+@import '../../GlobalStyles/mixins.scss';
 
 .main-layout-component {
   height: 100vh;
@@ -81,6 +82,12 @@
     display: flex;
     flex-direction: column;
     max-height: 100%;
+    max-width: 550px;
+
+    @include mQ($widthLaptop) {
+      width: calc(50% - 1rem);
+      max-width: 400px;
+    }
   }
 
   .section-right {
@@ -93,6 +100,10 @@
 
     .map-container {
       height: 70vh;
+
+      @include mQ($widthLaptop) {
+        height: 100vh;
+      }
     }
 
     .graphs-overlay {
@@ -104,8 +115,23 @@
       width: 100%;
       transition: 0.5s ease-in-out;
 
+      @include mQ($width4k) {
+        height: 45vh;
+      }
+
+      @include mQ($widthLaptop) {
+        height: 350px;
+      }
+
       &.expanded {
-        height: 50vh;
+        height: 75vh;
+
+        @include mQ($widthTablet) {
+          .graph-view-component {
+            background-image: linear-gradient($body, $bodyLt) !important;
+            background: transparent;
+          }
+        }
       }
     }
   }
