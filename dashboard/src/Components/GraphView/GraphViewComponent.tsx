@@ -26,7 +26,6 @@ const GraphViewComponent: React.FC<GraphViewProps> = ({
   setMobileView,
   showModal,
   setShowModal
-
 }) => {
   const sanitizeData = (label: string): Datum[] => {
     const data: Datum[] = [];
@@ -76,91 +75,76 @@ const GraphViewComponent: React.FC<GraphViewProps> = ({
 
     // return barData;
   };
-  return (
-    (isMobileView) ? (
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton closeLabel={"dismiss"}>
-          Worldwide Spread
-        </Modal.Header>
-        <Modal.Body>
-          <div className="graph-view-component">
-            <div
-              className="graph-view-control"
-              onClick={() => setViewExpanded(!viewExpanded)}
-            >
-              <img
-                src={arrow}
-                style={{ transform: `${viewExpanded ? "rotate(180deg)" : ""}` }}
-              ></img>
-              <img
-                src={arrow}
-                style={{ transform: `${viewExpanded ? "rotate(180deg)" : ""}` }}
-              ></img>
+  return isMobileView ? (
+    <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <Modal.Header closeButton closeLabel={"dismiss"}>
+        Worldwide Spread
+      </Modal.Header>
+      <Modal.Body>
+        <div className="graph-view-component graph-view-component--mobile-view">
+          <div className="graph-view-cards">
+            <div className="graphs-by-category">
+              <GraphCardComponent
+                cardLabel="cases"
+                sinceLabel="+236 since yesterday"
+                graphData={sanitizeData("cases")}
+              />
+              <GraphCardComponent
+                cardLabel="recovered"
+                sinceLabel="+236 since yesterday"
+                graphData={sanitizeData("recovered")}
+              />
+              <GraphCardComponent
+                cardLabel="deaths"
+                sinceLabel="+236 since yesterday"
+                graphData={sanitizeData("deaths")}
+              />
             </div>
-            <div className="graph-view-cards">
-              <div className="graphs-by-category">
-                <GraphCardComponent
-                  cardLabel="cases"
-                  sinceLabel="+236 since yesterday"
-                  graphData={sanitizeData("cases")}
-                />
-                <GraphCardComponent
-                  cardLabel="recovered"
-                  sinceLabel="+236 since yesterday"
-                  graphData={sanitizeData("recovered")}
-                />
-                <GraphCardComponent
-                  cardLabel="deaths"
-                  sinceLabel="+236 since yesterday"
-                  graphData={sanitizeData("deaths")}
-                />
-              </div>
-              <div className="comparison-graph">
-                <BarGraphComponent data={sanitizeForBar()} />
-              </div>
+            <div className="comparison-graph">
+              <BarGraphComponent data={sanitizeForBar()} />
             </div>
           </div>
-        </Modal.Body>
-      </Modal>
-    ) : (
-      <div className="graph-view-component">
-        <div
-          className="graph-view-control"
-          onClick={() => setViewExpanded(!viewExpanded)}
-        >
-          <img
-            src={arrow}
-            style={{ transform: `${viewExpanded ? "rotate(180deg)" : ""}` }}
-          ></img>
-          <img
-            src={arrow}
-            style={{ transform: `${viewExpanded ? "rotate(180deg)" : ""}` }}
-          ></img>
         </div>
-        <div className="graph-view-cards">
-          <div className="graphs-by-category">
-            <GraphCardComponent
-              cardLabel="cases"
-              sinceLabel="+236 since yesterday"
-              graphData={sanitizeData("cases")}
-            />
-            <GraphCardComponent
-              cardLabel="recovered"
-              sinceLabel="+236 since yesterday"
-              graphData={sanitizeData("recovered")}
-            />
-            <GraphCardComponent
-              cardLabel="deaths"
-              sinceLabel="+236 since yesterday"
-              graphData={sanitizeData("deaths")}
-            />
-          </div>
-          <div className="comparison-graph">
-            <BarGraphComponent data={sanitizeForBar()} />
-          </div>
+      </Modal.Body>
+    </Modal>
+  ) : (
+    <div className="graph-view-component">
+      <div
+        className="graph-view-control"
+        onClick={() => setViewExpanded(!viewExpanded)}
+      >
+        <img
+          src={arrow}
+          style={{ transform: `${viewExpanded ? "rotate(180deg)" : ""}` }}
+        ></img>
+        <img
+          src={arrow}
+          style={{ transform: `${viewExpanded ? "rotate(180deg)" : ""}` }}
+        ></img>
+      </div>
+      <div className="graph-view-cards">
+        <div className="graphs-by-category">
+          <GraphCardComponent
+            cardLabel="cases"
+            sinceLabel="+236 since yesterday"
+            graphData={sanitizeData("cases")}
+          />
+          <GraphCardComponent
+            cardLabel="recovered"
+            sinceLabel="+236 since yesterday"
+            graphData={sanitizeData("recovered")}
+          />
+          <GraphCardComponent
+            cardLabel="deaths"
+            sinceLabel="+236 since yesterday"
+            graphData={sanitizeData("deaths")}
+          />
+        </div>
+        <div className="comparison-graph">
+          <BarGraphComponent data={sanitizeForBar()} />
         </div>
       </div>
-    )
+    </div>
   );
 };
 
@@ -182,15 +166,15 @@ const mapDispatchToProps = (dispatch: any) => {
         payload: expanded
       }),
     setMobileView: (expanded: boolean) =>
-    dispatch({
-      type: StoreActionTypes.SetMobileView,
-      payload: expanded
-    }),
+      dispatch({
+        type: StoreActionTypes.SetMobileView,
+        payload: expanded
+      }),
     setShowModal: (expanded: boolean) =>
-    dispatch({
-      type: StoreActionTypes.SetShowModal,
-      payload: expanded
-    })
+      dispatch({
+        type: StoreActionTypes.SetShowModal,
+        payload: expanded
+      })
   };
 };
 

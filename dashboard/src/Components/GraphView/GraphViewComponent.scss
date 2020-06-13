@@ -1,6 +1,12 @@
 @import '../../GlobalStyles//variables.scss';
 @import '../../GlobalStyles//mixins.scss';
 
+@include mQ($widthMobileSm) {
+    .modal-body {
+        padding: 0.25rem
+    }
+}
+
 .graph-view-component {
     height: 100%;
     width: 100%;
@@ -9,13 +15,16 @@
     padding: 2rem 1rem 1rem;
     display: flex;
 
+    &--mobile-view {
+        padding: 0.5rem;
+    }
+
     @include mQ($widthTablet) {
         background: $body;
     }
 
-    @include mQ($widthMobileLg) {
-        // display: none;
-        width: calc(100% - 1rem);
+    @include mQ($widthMobileSm) {
+        padding: 0;
     }
 
     .graph-view-control {
