@@ -3,6 +3,7 @@ import "./Main.scss";
 import MapBoxComponent from "../MapBox/MapBox";
 import AllCountriesStatsComponent from "../AllCountriesStats/AllCountriesStatsComponent";
 import GraphViewComponent from "../GraphView/GraphViewComponent";
+import GraphicalDetailViewComponent from '../GraphicalDetailView/GraphicalDetailView';
 import { connect, ConnectedProps } from "react-redux";
 import { AppState } from "../../interfaces/meta";
 const MainLayoutComponent: React.FC<PropsFromRedux> = ({
@@ -39,7 +40,7 @@ const MainLayoutComponent: React.FC<PropsFromRedux> = ({
         <section
           className={`graphs-overlay ${graphViewExpanded ? "expanded" : ""}`}
         >
-          <GraphViewComponent />
+          <GraphViewComponent/>
         </section>
       </div>
     </div>

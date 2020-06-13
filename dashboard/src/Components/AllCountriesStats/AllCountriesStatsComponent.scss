@@ -1,6 +1,13 @@
+@import '../../GlobalStyles/variables.scss';
+@import '../../GlobalStyles//mixins.scss';
+
 .global-stats-component {
     overflow-y: scroll;
     flex: 1;
+
+    @include mQ($widthMobileLg) {
+        overflow-y: unset !important;
+    }
 
     .country-stats-li {
         display: flex;
