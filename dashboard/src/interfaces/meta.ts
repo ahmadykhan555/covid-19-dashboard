@@ -5,6 +5,8 @@ export interface AppState {
   globalData: GlobalData | null;
   historicDataLoading: boolean;
   graphViewExpanded: boolean;
+  isMobileView: boolean
+  showModal: boolean
 }
 
 export interface StoreAction {
@@ -19,7 +21,9 @@ export enum StoreActionTypes {
   SetHistoricDataLoading = "HIS_DATA_LOADING",
   SetMapCenter = "SET_MAP_CENTER",
   SetSelectedLabel = "SET_SELECTED_LABEL",
-  SetGraphViewExpanded = "GRAPH_VIEW_EXPANDED"
+  SetGraphViewExpanded = "GRAPH_VIEW_EXPANDED",
+  SetMobileView = "IS_MOBILE_VIEW",
+  SetShowModal = "SET_SHOW_MODAL"
 }
 
 export interface GlobalData {

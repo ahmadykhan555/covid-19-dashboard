@@ -34,7 +34,8 @@ const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
   setHistoricDataLoading,
   selectedEntity,
   setMapCenter,
-  setSelectedLabel
+  setSelectedLabel,
+  setShowModal
 }) => {
   // loccal state
   let [pollCount, setpollCount] = useState<number>(0);
@@ -110,6 +111,7 @@ const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
         });
       }
     }
+    setShowModal(true);
   };
 
   const renderCountryStatsCard = (country: CovidData, index: number) => {
@@ -185,7 +187,12 @@ const mapDispatchToProps = (dispatch: any) => {
     setMapCenter: (payload: mapboxgl.LngLat) =>
       dispatch({ type: StoreActionTypes.SetMapCenter, payload }),
     setSelectedLabel: (payload: string) =>
-      dispatch({ type: StoreActionTypes.SetSelectedLabel, payload })
+      dispatch({ type: StoreActionTypes.SetSelectedLabel, payload }),
+    setShowModal: (expanded: boolean) =>
+    dispatch({
+      type: StoreActionTypes.SetShowModal,
+      payload: expanded
+    })
   };
 };
 const connector = connect(

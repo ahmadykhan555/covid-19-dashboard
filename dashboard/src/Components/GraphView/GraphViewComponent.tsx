@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./GraphViewComponent.scss";
 import arrow from "../../img/arrow-up.svg";
 import GraphCardComponent from "./CardComponent/GraphCardComponent";
@@ -11,13 +11,22 @@ import {
 import { monthString } from "../../shared/data-utility/utility";
 import { Datum } from "@nivo/line";
 import BarGraphComponent from "../BarGraph/BarGraph";
+import { Modal } from "react-bootstrap";
 
 interface GraphViewProps extends PropsFromRedux {}
+// interface GraphViewProps {
+//   onHideHandler: () => void;
+// }
 
 const GraphViewComponent: React.FC<GraphViewProps> = ({
   historicData,
   setViewExpanded,
-  viewExpanded
+  viewExpanded,
+  isMobileView,
+  setMobileView,
+  showModal,
+  setShowModal
+
 }) => {
   const sanitizeData = (label: string): Datum[] => {
     const data: Datum[] = [];
@@ -68,43 +77,90 @@ const GraphViewComponent: React.FC<GraphViewProps> = ({
     // return barData;
   };
   return (
-    <div className="graph-view-component">
-      <div
-        className="graph-view-control"
-        onClick={() => setViewExpanded(!viewExpanded)}
-      >
-        <img
-          src={arrow}
-          style={{ transform: `${viewExpanded ? "rotate(180deg)" : ""}` }}
-        ></img>
-        <img
-          src={arrow}
-          style={{ transform: `${viewExpanded ? "rotate(180deg)" : ""}` }}
-        ></img>
-      </div>
-      <div className="graph-view-cards">
-        <div className="graphs-by-category">
-          <GraphCardComponent
-            cardLabel="cases"
-            sinceLabel="+236 since yesterday"
-            graphData={sanitizeData("cases")}
-          />
-          <GraphCardComponent
-            cardLabel="recovered"
-            sinceLabel="+236 since yesterday"
-            graphData={sanitizeData("recovered")}
-          />
-          <GraphCardComponent
-            cardLabel="deaths"
-            sinceLabel="+236 since yesterday"
-            graphData={sanitizeData("deaths")}
-          />
+    (isMobileView) ? (
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton closeLabel={"dismiss"}>
+          Worldwide Spread
+        </Modal.Header>
+        <Modal.Body>
+          <div className="graph-view-component">
+            <div
+              className="graph-view-control"
+              onClick={() => setViewExpanded(!viewExpanded)}
+            >
+              <img
+                src={arrow}
+                style={{ transform: `${viewExpanded ? "rotate(180deg)" : ""}` }}
+              ></img>
+              <img
+                src={arrow}
+                style={{ transform: `${viewExpanded ? "rotate(180deg)" : ""}` }}
+              ></img>
+            </div>
+            <div className="graph-view-cards">
+              <div className="graphs-by-category">
+                <GraphCardComponent
+                  cardLabel="cases"
+                  sinceLabel="+236 since yesterday"
+                  graphData={sanitizeData("cases")}
+                />
+                <GraphCardComponent
+                  cardLabel="recovered"
+                  sinceLabel="+236 since yesterday"
+                  graphData={sanitizeData("recovered")}
+                />
+                <GraphCardComponent
+                  cardLabel="deaths"
+                  sinceLabel="+236 since yesterday"
+                  graphData={sanitizeData("deaths")}
+                />
+              </div>
+              <div className="comparison-graph">
+                <BarGraphComponent data={sanitizeForBar()} />
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+    ) : (
+      <div className="graph-view-component">
+        <div
+          className="graph-view-control"
+          onClick={() => setViewExpanded(!viewExpanded)}
+        >
+          <img
+            src={arrow}
+            style={{ transform: `${viewExpanded ? "rotate(180deg)" : ""}` }}
+          ></img>
+          <img
+            src={arrow}
+            style={{ transform: `${viewExpanded ? "rotate(180deg)" : ""}` }}
+          ></img>
         </div>
-        <div className="comparison-graph">
-          <BarGraphComponent data={sanitizeForBar()} />
+        <div className="graph-view-cards">
+          <div className="graphs-by-category">
+            <GraphCardComponent
+              cardLabel="cases"
+              sinceLabel="+236 since yesterday"
+              graphData={sanitizeData("cases")}
+            />
+            <GraphCardComponent
+              cardLabel="recovered"
+              sinceLabel="+236 since yesterday"
+              graphData={sanitizeData("recovered")}
+            />
+            <GraphCardComponent
+              cardLabel="deaths"
+              sinceLabel="+236 since yesterday"
+              graphData={sanitizeData("deaths")}
+            />
+          </div>
+          <div className="comparison-graph">
+            <BarGraphComponent data={sanitizeForBar()} />
+          </div>
         </div>
       </div>
-    </div>
+    )
   );
 };
 
@@ -112,7 +168,9 @@ const GraphViewComponent: React.FC<GraphViewProps> = ({
 const mapStateToProps = (state: AppState) => {
   return {
     historicData: state.selectedEntity.historicData,
-    viewExpanded: state.graphViewExpanded
+    viewExpanded: state.graphViewExpanded,
+    isMobileView: state.isMobileView,
+    showModal: state.showModal
   };
 };
 
@@ -122,7 +180,17 @@ const mapDispatchToProps = (dispatch: any) => {
       dispatch({
         type: StoreActionTypes.SetGraphViewExpanded,
         payload: expanded
-      })
+      }),
+    setMobileView: (expanded: boolean) =>
+    dispatch({
+      type: StoreActionTypes.SetMobileView,
+      payload: expanded
+    }),
+    setShowModal: (expanded: boolean) =>
+    dispatch({
+      type: StoreActionTypes.SetShowModal,
+      payload: expanded
+    })
   };
 };
 

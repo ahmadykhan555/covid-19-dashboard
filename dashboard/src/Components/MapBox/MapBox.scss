@@ -1,8 +1,13 @@
 @import '../../GlobalStyles/variables.scss';
+@import '../../GlobalStyles/mixins.scss';
 
 .mapbox-gl-component-wrapper {
   position: relative;
   height: 100%;
+
+  @include mQ($widthMobileLg) {
+    display: none;
+  }
 
   .map-controls {
     position: absolute;

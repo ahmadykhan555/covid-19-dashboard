@@ -13,6 +13,11 @@
         background: $body;
     }
 
+    @include mQ($widthMobileLg) {
+        // display: none;
+        width: calc(100% - 1rem);
+    }
+
     .graph-view-control {
         position: absolute;
         left: 50%;

@@ -17,6 +17,22 @@
         margin: (0.5 * $defaultPadding)
     }
 
+    @include mQ(($widthTablet)-1) {
+        margin-left: (-0.5 * $defaultPadding);
+        margin-right: (-0.5 * $defaultPadding);
+        min-width: unset !important;
+    }
+
+    @include mQ($widthMobileLg) {
+        margin-left: ($defaultPadding);
+        margin-right: ($defaultPadding);
+    }
+
+    @include mQ($widthMobileMd) {
+        margin-left: (0.5 * $defaultPadding);
+        margin-right: (1 * $defaultPadding);
+    }
+
     &:hover {
         cursor: pointer;
         box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.32);
