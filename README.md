@@ -5,11 +5,11 @@
 
 - Tablet
 
-![localhost_3000_(iPad) (2)](https://user-images.githubusercontent.com/41294736/83286933-37e6f400-a1fa-11ea-98ea-f1296890693e.png)
+<img src="https://user-images.githubusercontent.com/41294736/83286933-37e6f400-a1fa-11ea-98ea-f1296890693e.png" height="800"/>
 
 - Mobile 
 
-![localhost_3000_(iPhone 6_7_8) (1)](https://user-images.githubusercontent.com/41294736/84602176-d92ea500-ae9e-11ea-8cef-4df12adff382.png)
+<img src="https://user-images.githubusercontent.com/41294736/84602176-d92ea500-ae9e-11ea-8cef-4df12adff382.png" height="550"/>
 
 
 # Third party resources in use: 
