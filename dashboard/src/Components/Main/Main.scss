@@ -15,15 +15,19 @@
   .app-banner {
     padding: 1.125rem 3.18rem;
     background: $cardBackground;
-    color: $defaultFontColor;
-    text-align: center;
-    font-weight: 900;
-    font-size: 1.5rem;
-    font-family: 'Oswald';
-    border-radius: $defaultBorderRadius;
+    display: flex;
     height: 4.5rem;
-    box-sizing: border-box;
-    margin: 1rem 1rem 0;
+    border-radius: $defaultBorderRadius;
+    text-align: center;
+    color: $defaultFontColor;
+
+    h1 {
+      font-weight: 900;
+      font-size: 1.5rem;
+      font-family: 'Oswald';
+      box-sizing: border-box;
+      margin: auto !important;
+    }
 
     @include mQ($widthMobileMd) {
       margin: 0;

@@ -14,7 +14,9 @@ const MainLayoutComponent: React.FC<PropsFromRedux> = ({
     <div className="main-layout-component">
       <section className="section-left">
         <div className="header-sec-left">
-          <div className="app-banner">COVID WORLD TRACKER</div>
+          <div className="app-banner">
+            <h1>COVID WORLD TRACKER</h1>{" "}
+          </div>
           <div className="stats-definitions">
             <div className="def-cell def-cell--cases">
               <div className="def-cell__rect"></div>
