@@ -12,7 +12,6 @@ interface GraphCardProps extends PropsFromRedux {
 }
 const GraphCardComponent: React.FC<GraphCardProps> = ({
   cardLabel,
-  sinceLabel,
   graphData,
   loading
 }) => {
@@ -26,7 +25,6 @@ const GraphCardComponent: React.FC<GraphCardProps> = ({
     <div className="graph-card-component">
       <div className="graph-card-header">
         <h4 className={`card-label card-label--${cardLabel}`}>{cardLabel}</h4>
-        <h4 className="since-label">{sinceLabel}</h4>
       </div>
       <div className="graph-container">
         {loading ? showLoader() : showGraph()}

@@ -113,7 +113,7 @@
       width: calc(100%);
       max-width: unset !important;
     }
-    
+
     @include mQ($widthMobileMd) {
       width: calc(100%);
       max-width: unset !important;
@@ -155,6 +155,10 @@
 
       @include mQ($widthLaptop) {
         height: 350px;
+      }
+
+      @include mQ($widthMobileLg) {
+        height: 0;
       }
 
       &.expanded {

@@ -36,6 +36,7 @@ const StatsCardComponent: React.FC<CardProps> = ({
             label === GLOBAL_CARD_LABEL ? "avatar-globe" : ""
           }`}
         >
+          {label !== GLOBAL_CARD_LABEL && <span>#{index + 1}</span>}
           <img src={imgSrc || "https://via.placeholder.com/20"} />
         </div>
         <h3 className="label">{label}</h3>
