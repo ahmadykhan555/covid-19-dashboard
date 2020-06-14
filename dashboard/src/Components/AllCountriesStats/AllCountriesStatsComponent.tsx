@@ -81,6 +81,8 @@ const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
   };
 
   const handleCardClick = async (index: number) => {
+    setShowModal(true);
+
     if (index === GLOBAL_CARD_INDEX) {
       setSelectedEntity({
         name: GLOBAL_CARD_LABEL,
@@ -111,7 +113,6 @@ const AllCountriesStatsComponent: React.FC<GlobalStatsProps> = ({
         });
       }
     }
-    setShowModal(true);
   };
 
   const renderCountryStatsCard = (country: CovidData, index: number) => {
