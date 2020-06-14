@@ -21,7 +21,7 @@ import { connect, ConnectedProps } from "react-redux";
 import StatsCardComponent from "../StatsCard/StatsCardComponent";
 
 interface GlobalStatsProps extends PropsFromRedux {}
-const POLL_INTERVAL: number = 60 * 1000 * 3;
+const POLL_INTERVAL: number = 60 * 1000 * 5;
 const GLOBAL_CARD_INDEX = 99999;
 
 // component def
@@ -189,10 +189,10 @@ const mapDispatchToProps = (dispatch: any) => {
     setSelectedLabel: (payload: string) =>
       dispatch({ type: StoreActionTypes.SetSelectedLabel, payload }),
     setShowModal: (expanded: boolean) =>
-    dispatch({
-      type: StoreActionTypes.SetShowModal,
-      payload: expanded
-    })
+      dispatch({
+        type: StoreActionTypes.SetShowModal,
+        payload: expanded
+      })
   };
 };
 const connector = connect(
