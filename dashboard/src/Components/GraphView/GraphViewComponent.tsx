@@ -1,29 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./GraphViewComponent.scss";
 import arrow from "../../img/arrow-up.svg";
 import GraphCardComponent from "./CardComponent/GraphCardComponent";
 import { connect, ConnectedProps } from "react-redux";
-import {
-  AppState,
-  StoreActionTypes,
-  HistoricData
-} from "../../interfaces/meta";
+import { AppState, StoreActionTypes } from "../../interfaces/meta";
 import { monthString } from "../../shared/data-utility/utility";
 import { Datum } from "@nivo/line";
 import BarGraphComponent from "../BarGraph/BarGraph";
 import { Modal } from "react-bootstrap";
 
 interface GraphViewProps extends PropsFromRedux {}
-// interface GraphViewProps {
-//   onHideHandler: () => void;
-// }
 
 const GraphViewComponent: React.FC<GraphViewProps> = ({
   historicData,
   setViewExpanded,
   viewExpanded,
   isMobileView,
-  setMobileView,
+  selectedEntity,
   showModal,
   setShowModal
 }) => {
@@ -78,7 +71,7 @@ const GraphViewComponent: React.FC<GraphViewProps> = ({
   return isMobileView ? (
     <Modal show={showModal} onHide={() => setShowModal(false)}>
       <Modal.Header closeButton closeLabel={"dismiss"}>
-        Worldwide Spread
+        {selectedEntity.name}
       </Modal.Header>
       <Modal.Body>
         <div className="graph-view-component graph-view-component--mobile-view">
@@ -151,6 +144,7 @@ const GraphViewComponent: React.FC<GraphViewProps> = ({
 // Connect to global store
 const mapStateToProps = (state: AppState) => {
   return {
+    selectedEntity: state.selectedEntity,
     historicData: state.selectedEntity.historicData,
     viewExpanded: state.graphViewExpanded,
     isMobileView: state.isMobileView,
