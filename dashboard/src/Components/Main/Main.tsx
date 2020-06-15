@@ -3,19 +3,38 @@ import "./Main.scss";
 import MapBoxComponent from "../MapBox/MapBox";
 import AllCountriesStatsComponent from "../AllCountriesStats/AllCountriesStatsComponent";
 import GraphViewComponent from "../GraphView/GraphViewComponent";
-import GraphicalDetailViewComponent from "../GraphicalDetailView/GraphicalDetailView";
 import { connect, ConnectedProps } from "react-redux";
-import { AppState } from "../../interfaces/meta";
+import { AppState, StoreActionTypes } from "../../interfaces/meta";
+import { GiHamburgerMenu } from "react-icons/all";
+import SideMenu from "../SideMenu/SideMenu";
 const MainLayoutComponent: React.FC<PropsFromRedux> = ({
   graphViewExpanded,
-  isMobile
+  isMobile,
+  menuExpanded,
+  setMenuExpanded
 }) => {
   return (
     <div className="main-layout-component">
+      {menuExpanded && <SideMenu />}
       <section className="section-left">
         <div className="header-sec-left">
           <div className="app-banner">
-            <h1>COVID WORLD TRACKER</h1>{" "}
+            {isMobile && (
+              <GiHamburgerMenu
+                onClick={() => setMenuExpanded(!menuExpanded)}
+                style={{
+                  position: "absolute",
+                  left: "1rem",
+                  fontSize: "1rem"
+                }}
+              />
+            )}
+            <h1>COVID WORLD TRACKER</h1>
+          </div>
+          <div className="useful-links" style={{ display: "none" }}>
+            <a href="https://www.covidplasma.pk" target="_blank">
+              Donate Plasma
+            </a>
           </div>
           <div className="stats-definitions">
             <div className="def-cell def-cell--cases">
@@ -57,11 +76,22 @@ const MainLayoutComponent: React.FC<PropsFromRedux> = ({
 const mapStateToProps = (state: AppState) => {
   return {
     graphViewExpanded: state.graphViewExpanded,
-    isMobile: state.isMobileView
+    isMobile: state.isMobileView,
+    menuExpanded: state.menuExpanded
   };
 };
 
-const connector = connect(mapStateToProps);
+const mapDispatchToProps = (dispatch: Function) => {
+  return {
+    setMenuExpanded: (payload: boolean) =>
+      dispatch({ type: StoreActionTypes.SetMenuExpanded, payload })
+  };
+};
+
+const connector = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 export default connector(MainLayoutComponent);

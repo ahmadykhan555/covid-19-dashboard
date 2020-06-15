@@ -22,8 +22,9 @@ const initialState: AppState = {
       recovered: {}
     }
   },
-  isMobileView: (window.innerWidth < 600) ? true : false,
-  showModal: false
+  isMobileView: window.innerWidth < 600 ? true : false,
+  showModal: false,
+  menuExpanded: false
 };
 const reducer = (state = initialState, action: StoreAction) => {
   switch (action.type) {
@@ -70,14 +71,19 @@ const reducer = (state = initialState, action: StoreAction) => {
         graphViewExpanded: action.payload
       };
     case StoreActionTypes.SetMobileView:
-    return {
-      ...state,
-      isMobileView: action.payload
-    };
+      return {
+        ...state,
+        isMobileView: action.payload
+      };
     case StoreActionTypes.SetShowModal:
       return {
         ...state,
         showModal: action.payload
+      };
+    case StoreActionTypes.SetMenuExpanded:
+      return {
+        ...state,
+        menuExpanded: action.payload
       };
   }
   return state;

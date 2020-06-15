@@ -1,0 +1,50 @@
+@import '../../GlobalStyles/variables.scss';
+@import '../../GlobalStyles/mixins.scss';
+
+.side-menu-component {
+    text-align: center;
+    height: 100%;
+    padding: 3rem 1rem 2rem;
+    display: flex;
+    color: $defaultFontColor;
+    flex-direction: column;
+    position: relative;
+    background: #ffffff;
+
+    img {
+        height: 50px
+    }
+
+    .actions {
+        @include countBox;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        font-weight: 900;
+    }
+
+    .useful-links {
+        display: flex;
+        flex-direction: column;
+        margin-top: 3rem;
+        font-size: $defaultFontSize;
+
+        flex: 1;
+
+        a {
+            text-decoration: none;
+            text-align: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid lightgray;
+
+            color: inherit;
+        }
+    }
+
+    .footer {
+        a {
+            text-decoration: none;
+        }
+    }
+}
