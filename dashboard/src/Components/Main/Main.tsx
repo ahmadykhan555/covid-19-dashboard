@@ -16,47 +16,49 @@ const MainLayoutComponent: React.FC<PropsFromRedux> = ({
   return (
     <div className="main-layout-component">
       {menuExpanded && <SideMenu />}
-      <section className="section-left">
-        <div className="header-sec-left">
-          <div className="app-banner">
-            {isMobile && (
-              <GiHamburgerMenu
-                onClick={() => setMenuExpanded(!menuExpanded)}
-                style={{
-                  position: "absolute",
-                  left: "1rem",
-                  fontSize: "1rem"
-                }}
-              />
-            )}
-            <h1>COVID WORLD TRACKER</h1>
+      {!menuExpanded && (
+        <section className="section-left">
+          <div className="header-sec-left">
+            <div className="app-banner">
+              {isMobile && (
+                <GiHamburgerMenu
+                  onClick={() => setMenuExpanded(!menuExpanded)}
+                  style={{
+                    position: "absolute",
+                    left: "1rem",
+                    fontSize: "1rem"
+                  }}
+                />
+              )}
+              <h1>COVID WORLD TRACKER</h1>
+            </div>
+            <div className="useful-links" style={{ display: "none" }}>
+              <a href="https://www.covidplasma.pk" target="_blank">
+                Donate Plasma
+              </a>
+            </div>
+            <div className="stats-definitions">
+              <div className="def-cell def-cell--cases">
+                <div className="def-cell__rect"></div>
+                <h4 className="def-cell__label">Cases</h4>
+              </div>
+              <div className="def-cell def-cell--deaths">
+                <div className="def-cell__rect"></div>
+                <h4 className="def-cell__label">Deaths</h4>
+              </div>
+              <div className="def-cell def-cell--recovered">
+                <div className="def-cell__rect"></div>
+                <h4 className="def-cell__label">Recovered</h4>
+              </div>
+              <div className="def-cell def-cell--per-mil">
+                <div className="def-cell__rect"></div>
+                <h4 className="def-cell__label">Cases/Million</h4>
+              </div>
+            </div>
           </div>
-          <div className="useful-links" style={{ display: "none" }}>
-            <a href="https://www.covidplasma.pk" target="_blank">
-              Donate Plasma
-            </a>
-          </div>
-          <div className="stats-definitions">
-            <div className="def-cell def-cell--cases">
-              <div className="def-cell__rect"></div>
-              <h4 className="def-cell__label">Cases</h4>
-            </div>
-            <div className="def-cell def-cell--deaths">
-              <div className="def-cell__rect"></div>
-              <h4 className="def-cell__label">Deaths</h4>
-            </div>
-            <div className="def-cell def-cell--recovered">
-              <div className="def-cell__rect"></div>
-              <h4 className="def-cell__label">Recovered</h4>
-            </div>
-            <div className="def-cell def-cell--per-mil">
-              <div className="def-cell__rect"></div>
-              <h4 className="def-cell__label">Cases/Million</h4>
-            </div>
-          </div>
-        </div>
-        {<AllCountriesStatsComponent />}
-      </section>
+          {<AllCountriesStatsComponent />}
+        </section>
+      )}
       <div className="section-right">
         {!isMobile && (
           <section className="map-container">
