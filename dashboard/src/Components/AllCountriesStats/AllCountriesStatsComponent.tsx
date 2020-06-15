@@ -6,7 +6,7 @@ import {
   getGlobalHistoricData
 } from "../../shared/covid-data-api/api";
 import "./AllCountriesStatsComponent.scss";
-import globeAvatar from "../../img/globel.png";
+import globeAvatar from "../../img/earth.png";
 import * as mapboxgl from "mapbox-gl";
 import {
   CovidData,
