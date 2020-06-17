@@ -5,7 +5,7 @@ import AllCountriesStatsComponent from "../AllCountriesStats/AllCountriesStatsCo
 import GraphViewComponent from "../GraphView/GraphViewComponent";
 import { connect, ConnectedProps } from "react-redux";
 import { AppState, StoreActionTypes } from "../../interfaces/meta";
-import { GiHamburgerMenu } from "react-icons/all";
+import { GiHamburgerMenu, MdLocalHospital } from "react-icons/all";
 import SideMenu from "../SideMenu/SideMenu";
 const MainLayoutComponent: React.FC<PropsFromRedux> = ({
   graphViewExpanded,
@@ -32,11 +32,24 @@ const MainLayoutComponent: React.FC<PropsFromRedux> = ({
               )}
               <h1>COVID WORLD TRACKER</h1>
             </div>
-            <div className="useful-links" style={{ display: "none" }}>
-              <a href="https://www.covidplasma.pk" target="_blank">
-                Donate Plasma
-              </a>
-            </div>
+            {!isMobile && (
+              <div
+                className="useful-links"
+                style={{ marginTop: "1rem", display: "flex" }}
+              >
+                <a
+                  className="link-donation"
+                  href="https://www.covidplasma.pk"
+                  target="_blank"
+                  style={{ fontSize: "0.875rem", color: "black" }}
+                >
+                  <span>Plasma Donation</span>
+                  <MdLocalHospital
+                    style={{ marginLeft: "0.5rem", fontSize: "1.25rem" }}
+                  />
+                </a>
+              </div>
+            )}
             <div className="stats-definitions">
               <div className="def-cell def-cell--cases">
                 <div className="def-cell__rect"></div>

@@ -39,6 +39,16 @@
     }
   }
 
+  .header-sec-left {
+    display: flex;
+    flex-direction: column;
+
+    .useful-links {
+      margin: 1rem auto 0;
+      font-weight: bold;
+    }
+  }
+
   .stats-definitions {
     display: flex;
     margin: 1rem 0;
