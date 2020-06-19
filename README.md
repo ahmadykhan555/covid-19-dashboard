@@ -5,7 +5,7 @@
 
 - Tablet
 
-<img src="https://user-images.githubusercontent.com/41294736/84602649-7b03c100-aea2-11ea-820f-15465bc37890.png" height="800"/>
+<img src="https://user-images.githubusercontent.com/41294736/84602649-7b03c100-aea2-11ea-820f-15465bc37890.png" height="650"/>
 
 - Mobile 
 
