@@ -5,7 +5,8 @@
     background: #1c1e21;
     height: fit-content;
     min-height: 100vh;
-    padding: (1.5 * $defaultFontSize);
+    padding: 3rem 6.5rem;
+
 
     .stories-wrapper-heading {
         padding: 1.125rem 3.18rem;
@@ -13,7 +14,6 @@
         text-align: center;
         color: white;
         font-weight: 900;
-        font-size: 1.5rem;
         font-family: 'Oswald';
         box-sizing: border-box;
         text-transform: uppercase;
@@ -27,6 +27,30 @@
             padding: 0;
         }
     }
+}
 
+@include mQ($widthMobileLg) {
+    .suceess-stories-component {
+        font-size: 1.5rem;
+        padding: 1.5rem;
+    }
+}
 
+@include mQ($widthTablet) {
+    .suceess-stories-component {
+        padding: 2.5rem 3rem;
+
+        .stories-wrapper-heading {
+            font-size: 1.875rem;
+        }
+    }
+}
+
+@include mQ($widthLaptop) {
+    .suceess-stories-component {
+
+        .stories-wrapper-heading {
+            font-size: 2.5rem;
+        }
+    }
 }

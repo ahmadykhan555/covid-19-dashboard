@@ -8,7 +8,7 @@ const StoryCardComponent: React.FC<any> = () => {
     <div className="story-card-component">
       <div className="story-info">
         <div className="story-like-action">
-          <AiTwotoneLike />
+          <AiTwotoneLike /> <span className="up-vote-count">100</span>
         </div>
         <div className="story-avatar">
           <img src={placeholder} />
