@@ -18,7 +18,7 @@ const GraphViewComponent: React.FC<GraphViewProps> = ({
   isMobileView,
   selectedEntity,
   showModal,
-  setShowModal
+  setShowModal, loading
 }) => {
   const sanitizeData = (label: string): Datum[] => {
     const data: Datum[] = [];
@@ -71,7 +71,10 @@ const GraphViewComponent: React.FC<GraphViewProps> = ({
   return isMobileView ? (
     <Modal show={showModal} onHide={() => setShowModal(false)}>
       <Modal.Header closeButton closeLabel={"dismiss"}>
-        {selectedEntity.name}
+        <div className="country-header" style={{display: 'flex', alignItems: 'center'}}>
+          {!loading && <img src={selectedEntity?.data?.countryInfo?.flag} style={{height: '25px', width: '35px', marginRight: '10px'}} />}
+          <span>{selectedEntity.name}</span>
+        </div>
       </Modal.Header>
       <Modal.Body>
         <div className="graph-view-component graph-view-component--mobile-view">
@@ -148,7 +151,8 @@ const mapStateToProps = (state: AppState) => {
     historicData: state.selectedEntity.historicData,
     viewExpanded: state.graphViewExpanded,
     isMobileView: state.isMobileView,
-    showModal: state.showModal
+    showModal: state.showModal,
+    loading: state.historicDataLoading
   };
 };
 
