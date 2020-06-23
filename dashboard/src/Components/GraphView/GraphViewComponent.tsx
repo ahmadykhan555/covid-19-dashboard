@@ -68,11 +68,18 @@ const GraphViewComponent: React.FC<GraphViewProps> = ({
 
     // return barData;
   };
+
+  const flagUrl = (): string => {
+    if(selectedEntity && selectedEntity.data && selectedEntity.data.countryInfo) {
+      return selectedEntity.data.countryInfo.flag;
+    }
+    return ''
+  }
   return isMobileView ? (
     <Modal show={showModal} onHide={() => setShowModal(false)}>
       <Modal.Header closeButton closeLabel={"dismiss"}>
         <div className="country-header" style={{display: 'flex', alignItems: 'center'}}>
-          {!loading && <img src={selectedEntity?.data?.countryInfo?.flag} style={{height: '25px', width: '35px', marginRight: '10px'}} />}
+          {!loading && <img src={flagUrl()} style={{height: '25px', width: '35px', marginRight: '10px'}} />}
           <span>{selectedEntity.name}</span>
         </div>
       </Modal.Header>
