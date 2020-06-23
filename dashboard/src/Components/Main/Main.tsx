@@ -7,6 +7,7 @@ import { connect, ConnectedProps } from "react-redux";
 import { AppState, StoreActionTypes } from "../../interfaces/meta";
 import { GiHamburgerMenu, MdLocalHospital } from "react-icons/all";
 import SideMenu from "../SideMenu/SideMenu";
+import SuccessStories from "../SuccessStories/SuccessStories";
 const MainLayoutComponent: React.FC<PropsFromRedux> = ({
   graphViewExpanded,
   isMobile,
@@ -96,12 +97,13 @@ const MainLayoutComponent: React.FC<PropsFromRedux> = ({
 
   return (
     <div className="main-layout-component">
-      {menuExpanded && sideMenuMobile()}
+      {/* {menuExpanded && sideMenuMobile()}
       <section className="section-left">{!menuExpanded && listView()}</section>
       <div className="section-right">
         {!isMobile && mapView()}
         {graphView()}
-      </div>
+      </div> */}
+      <SuccessStories />
     </div>
   );
 };

@@ -1,0 +1,60 @@
+@import '../../../../GlobalStyles/variables.scss';
+@import '../../../../GlobalStyles/mixins.scss';
+
+.story-card-component {
+    padding: 1.5rem;
+    background: #222427;
+    border-radius: 8px;
+    $fontSize: (0.85 * $defaultFontSize);
+    margin-bottom: $defaultMargin;
+
+    &:first-child {
+        margin-top: 1rem;
+    }
+
+    &:last-child {
+        margin-bottom: $zero;
+    }
+
+    .story-info {
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin-bottom: $defaultMargin;
+
+        .story-like-action {
+            position: absolute;
+            right: 0;
+            font-size: 1.35rem;
+            top: 0;
+            transform: translateY(-5px);
+        }
+
+        .story-avatar {
+            margin-right: 0.8rem;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .story-author {
+            font-size: ($fontSize + 2px)
+        }
+
+        .story-timestamp {
+            font-size: (0.65 * $defaultFontSize);
+            margin-top: (0.2 * $defaultMargin) !important;
+            opacity: 0.75;
+        }
+    }
+
+    .story {
+        font-size: $fontSize;
+        opacity: 0.9;
+    }
+}

@@ -1,0 +1,32 @@
+@import '../../GlobalStyles/variables.scss';
+@import '../../GlobalStyles/mixins.scss';
+
+.suceess-stories-component {
+    background: #1c1e21;
+    height: fit-content;
+    min-height: 100vh;
+    padding: (1.5 * $defaultFontSize);
+
+    .stories-wrapper-heading {
+        padding: 1.125rem 3.18rem;
+        background: inherit;
+        text-align: center;
+        color: white;
+        font-weight: 900;
+        font-size: 1.5rem;
+        font-family: 'Oswald';
+        box-sizing: border-box;
+        text-transform: uppercase;
+        margin-bottom: (1.5 * $defaultMargin) !important;
+
+        @include mQ($widthMobileMd) {
+            margin: 0;
+        }
+
+        @include mQ($widthTablet) {
+            padding: 0;
+        }
+    }
+
+
+}

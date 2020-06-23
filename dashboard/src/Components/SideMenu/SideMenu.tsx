@@ -1,13 +1,6 @@
 import React from "react";
 import "./SideMenu.scss";
-import icon from "./covid.svg";
-import {
-  AiOutlineClose,
-  IoMdMedical,
-  FaBriefcaseMedical,
-  MdLocalHospital,
-  IoMdMedal
-} from "react-icons/all";
+import { AiOutlineClose, MdLocalHospital, FaMedal } from "react-icons/all";
 import { connect, ConnectedProps } from "react-redux";
 import { StoreActionTypes } from "../../interfaces/meta";
 
@@ -31,6 +24,10 @@ const SideMenu: React.FC<PropsFromRedux> = ({ setMenuExpanded }) => {
           <MdLocalHospital
             style={{ marginLeft: "0.5rem", fontSize: "1.25rem" }}
           />
+        </a>
+        <a href="https://covidplasma.pk" target="_blank">
+          <span>Covid Success Stories</span>
+          <FaMedal style={{ marginLeft: "0.5rem", fontSize: "1.25rem" }} />
         </a>
       </div>
       <div className="footer">
