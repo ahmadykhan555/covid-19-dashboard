@@ -1,7 +1,16 @@
 # covid-19-dashboard
-![Screenshot 2020-05-16 at 10 03 11 AM](https://user-images.githubusercontent.com/41294736/82111151-7f7e7200-975c-11ea-90d7-8dcf3969606b.png)
+- Desktop 
 
-![localhost_3000_(iPad) (2)](https://user-images.githubusercontent.com/41294736/83286933-37e6f400-a1fa-11ea-98ea-f1296890693e.png)
+<img src="https://user-images.githubusercontent.com/41294736/84602650-7d661b00-aea2-11ea-9ce4-889a16b52e7e.png"/>
+
+- Tablet
+
+<img src="https://user-images.githubusercontent.com/41294736/84602649-7b03c100-aea2-11ea-820f-15465bc37890.png" height="650"/>
+
+- Mobile 
+
+<img src="https://user-images.githubusercontent.com/41294736/84602176-d92ea500-ae9e-11ea-8cef-4df12adff382.png" height="550"/>
+
 
 # Third party resources in use: 
 React Icons Pack: https://react-icons.netlify.com/ <br>
