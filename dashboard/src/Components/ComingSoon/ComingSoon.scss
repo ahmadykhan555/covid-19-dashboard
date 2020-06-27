@@ -21,6 +21,16 @@
 
     .left-section {
         display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: calc(100vh - 76px);
+
+        .stay-tuned {
+            font-family: monospace;
+            font-size: 1.2rem !important;
+            text-transform: uppercase;
+            font-weight: 900
+        }
 
         .counter {
             margin: auto;
@@ -38,66 +48,6 @@
 
             h4 {
                 margin: 0.2rem !important;
-            }
-        }
-    }
-
-    .right-section {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        .img-header {
-            height: 60px;
-            width: 60px;
-            margin: 8rem 0;
-        }
-
-        .content-wrapper {
-            margin: auto;
-            display: flex;
-            flex: 1;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-
-            .stay-tuned {
-                font-family: monospace;
-                font-size: 1.2rem !important;
-                text-transform: uppercase;
-            }
-
-            .launching-soon {
-                font-size: 3rem !important;
-                font-weight: 900;
-                margin: 0.5rem 0 !important;
-            }
-
-            .subscribe {
-                font-family: monospace;
-            }
-
-            .subscription-form {
-                margin-top: 3rem;
-                width: 100%;
-
-                .btn-success {
-                    border-radius: 25px;
-                    margin-left: 0.65rem;
-                }
-
-                input {
-                    border-radius: 25px;
-                    flex: 1;
-                    padding: 0 1rem;
-                    border: 1px solid lightgray;
-                }
-            }
-
-            .drop-email {
-                position: absolute;
-                bottom: 0;
-                font-size: 0.85rem !important;
             }
         }
     }

@@ -1,6 +1,7 @@
 import React from "react";
 import "./SuccessStories.scss";
 import StoryCardComponent from "./components/StoryCardComponent/StoryCardComponent";
+import ComingSoonComponent from "../ComingSoon/ComingSoon";
 
 const sampleData = {
   uuid: "1bef058f-f834-456a-bf3c-6257a4037d49",
@@ -19,10 +20,15 @@ const SuccessStories: React.FC<any> = () => {
   return (
     <div className="suceess-stories-component">
       <h1 className="stories-wrapper-heading">Covid Success Stories</h1>
-      <StoryCardComponent />
-      <StoryCardComponent />
-      <StoryCardComponent />
-      <StoryCardComponent />
+      {true && <ComingSoonComponent />}
+      {false && (
+        <>
+          <StoryCardComponent />
+          <StoryCardComponent />
+          <StoryCardComponent />
+          <StoryCardComponent />{" "}
+        </>
+      )}
     </div>
   );
 };

@@ -5,11 +5,12 @@
     background: inherit;
     height: fit-content;
     min-height: 100vh;
-    padding: 3rem 6.5rem;
+    // padding: 3rem 6.5rem;
+    overflow: hidden;
 
 
     .stories-wrapper-heading {
-        padding: 1.125rem 3.18rem;
+        // padding: 1.125rem 3.18rem;
         background: inherit;
         text-align: center;
         color: $defaultFontColor;
@@ -17,7 +18,7 @@
         font-family: 'Oswald';
         box-sizing: border-box;
         text-transform: uppercase;
-        margin-bottom: (1.5 * $defaultMargin) !important;
+        padding: (1.5 * $defaultMargin) 2rem !important;
 
         @include mQ($widthMobileMd) {
             margin: 0;
@@ -31,17 +32,17 @@
 
 @include mQ($widthMobileLg) {
     .suceess-stories-component {
-        font-size: 1.5rem;
-        padding: 1.5rem !important;
+        font-size: 1.5rem !important;
+        // padding: 1.5rem !important;
     }
 }
 
 @include mQ($widthTablet) {
     .suceess-stories-component {
-        padding: 2.5rem 3rem;
+        // padding: 2.5rem 3rem;
 
         .stories-wrapper-heading {
-            font-size: 1.875rem;
+            // font-size: 1.875rem;
         }
     }
 }
@@ -50,7 +51,7 @@
     .suceess-stories-component {
 
         .stories-wrapper-heading {
-            font-size: 2.5rem;
+            // font-size: 2.5rem;
         }
     }
 }
