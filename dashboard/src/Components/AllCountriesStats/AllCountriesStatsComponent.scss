@@ -5,10 +5,6 @@
     overflow-y: scroll;
     flex: 1;
 
-    @include mQ($widthMobileLg) {
-        overflow-y: unset !important;
-    }
-
     .country-stats-li {
         display: flex;
         padding: 1.5rem 1.5rem;
