@@ -101,9 +101,7 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
   }, [covidData]);
 
   const refreshCountriesData = () => {
-    console.time("api");
     getAllCountriesData().then((data: any) => {
-      console.timeEnd("api");
       if (data) {
         setCovidData(data);
       }
@@ -140,7 +138,6 @@ const MapBoxComponent: React.FC<MapComponentProps> = ({ center }) => {
 
   const drawGlobalZones = () => {
     if (covidData.length) {
-      console.time("Rendering Zones");
       PolyWorld.default.forEach(countryPolygon => {
         const correspondingData = covidData.find(
           ctry =>
