@@ -2,7 +2,7 @@
 @import '../../GlobalStyles/mixins.scss';
 
 .suceess-stories-component {
-    background: #1c1e21;
+    background: inherit;
     height: fit-content;
     min-height: 100vh;
     padding: 3rem 6.5rem;
@@ -12,7 +12,7 @@
         padding: 1.125rem 3.18rem;
         background: inherit;
         text-align: center;
-        color: white;
+        color: $defaultFontColor;
         font-weight: 900;
         font-family: 'Oswald';
         box-sizing: border-box;
@@ -32,7 +32,7 @@
 @include mQ($widthMobileLg) {
     .suceess-stories-component {
         font-size: 1.5rem;
-        padding: 1.5rem;
+        padding: 1.5rem !important;
     }
 }
 

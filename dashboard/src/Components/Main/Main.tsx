@@ -64,7 +64,7 @@ const MainLayoutComponent: React.FC<PropsFromRedux> = ({
             </div>
             <div className="def-cell def-cell--per-mil">
               <div className="def-cell__rect"></div>
-              <h4 className="def-cell__label">Cases/Million</h4>
+              <h4 className="def-cell__label">Case Fatality Rate</h4>
             </div>
           </div>
         </div>
@@ -93,7 +93,6 @@ const MainLayoutComponent: React.FC<PropsFromRedux> = ({
 
   return (
     <div className="main-layout-component">
-      {menuExpanded && sideMenuMobile()}
       <section className="section-left">{!menuExpanded && listView()}</section>
       <div className="section-right">
         {!isMobile && mapView()}

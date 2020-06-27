@@ -2,7 +2,7 @@
 @import '../../../../GlobalStyles/mixins.scss';
 
 .story-card-component {
-    background: #222427;
+    background: $cardBackground;
     border-radius: 8px;
     margin-bottom: $defaultMargin;
     padding: 1.5rem;

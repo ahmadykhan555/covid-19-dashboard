@@ -40,7 +40,14 @@ const StatsCardComponent: React.FC<CardProps> = ({
           <img src={imgSrc || "https://via.placeholder.com/20"} />
         </div>
         <h3 className="label">{label}</h3>
-        <h3 className="per-mil-count">{perMillionCount}</h3>
+        <h3 className="per-mil-count">
+          {deathsCount === 0 && casesCount === 0
+            ? 0
+            : deathsCount === 0
+            ? 0
+            : ((deathsCount / casesCount) * 100).toFixed(2)}
+          %
+        </h3>
       </div>
       <div className="stats-card__counts">
         <div className="stats-count-cell stats-count-cell--cases">
