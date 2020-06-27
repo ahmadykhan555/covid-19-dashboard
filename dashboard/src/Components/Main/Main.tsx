@@ -7,7 +7,8 @@ import { connect, ConnectedProps } from "react-redux";
 import { AppState, StoreActionTypes } from "../../interfaces/meta";
 import { GiHamburgerMenu, MdLocalHospital } from "react-icons/all";
 import SideMenu from "../SideMenu/SideMenu";
-import SuccessStories from "../SuccessStories/SuccessStories";
+import { Link } from "react-router-dom";
+import { Routes } from "../../App";
 const MainLayoutComponent: React.FC<PropsFromRedux> = ({
   graphViewExpanded,
   isMobile,
@@ -24,14 +25,9 @@ const MainLayoutComponent: React.FC<PropsFromRedux> = ({
         <div className="header-sec-left">
           <div className="app-banner">
             {isMobile && (
-              <GiHamburgerMenu
-                onClick={() => setMenuExpanded(!menuExpanded)}
-                style={{
-                  position: "absolute",
-                  left: "1rem",
-                  fontSize: "1rem"
-                }}
-              />
+              <Link to={Routes.MobileMenu} className="side-menu-link">
+                <GiHamburgerMenu />
+              </Link>
             )}
             <h1>COVID WORLD TRACKER</h1>
           </div>
@@ -97,13 +93,12 @@ const MainLayoutComponent: React.FC<PropsFromRedux> = ({
 
   return (
     <div className="main-layout-component">
-      {/* {menuExpanded && sideMenuMobile()}
+      {menuExpanded && sideMenuMobile()}
       <section className="section-left">{!menuExpanded && listView()}</section>
       <div className="section-right">
         {!isMobile && mapView()}
         {graphView()}
-      </div> */}
-      <SuccessStories />
+      </div>
     </div>
   );
 };

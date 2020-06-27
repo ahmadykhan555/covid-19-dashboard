@@ -30,6 +30,11 @@
       margin: auto !important;
     }
 
+    .side-menu-link {
+      margin: auto 0 auto 10px !important;
+      font-size: 0.875rem
+    }
+
     @include mQ($widthMobileMd) {
       margin: 0;
     }
