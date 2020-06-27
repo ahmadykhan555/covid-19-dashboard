@@ -16,12 +16,16 @@
     }
 
     .actions {
-        @include countBox;
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        font-size: 1.5rem;
-        font-weight: 900;
+
+        &--close {
+            @include countBox;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: $defaultFontColor
+        }
     }
 
     .useful-links {

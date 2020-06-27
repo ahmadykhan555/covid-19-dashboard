@@ -3,17 +3,16 @@ import "./SideMenu.scss";
 import { AiOutlineClose, MdLocalHospital, FaMedal } from "react-icons/all";
 import { connect, ConnectedProps } from "react-redux";
 import { StoreActionTypes } from "../../interfaces/meta";
+import { Link } from "react-router-dom";
+import { Routes } from "../../App";
 
 const SideMenu: React.FC<PropsFromRedux> = ({ setMenuExpanded }) => {
   return (
     <div className="side-menu-component">
-      <div
-        className="actions"
-        onClick={() => {
-          setMenuExpanded(false);
-        }}
-      >
-        <AiOutlineClose />
+      <div className="actions">
+        <Link className="actions--close" to={Routes.Landing}>
+          <AiOutlineClose />
+        </Link>
       </div>
       <div className="app-banner">
         <h1>COVID WORLD TRACKER</h1>
@@ -25,10 +24,10 @@ const SideMenu: React.FC<PropsFromRedux> = ({ setMenuExpanded }) => {
             style={{ marginLeft: "0.5rem", fontSize: "1.25rem" }}
           />
         </a>
-        <a href="https://covidplasma.pk" target="_blank">
+        <Link to={Routes.SuccessStories}>
           <span>Covid Success Stories</span>
           <FaMedal style={{ marginLeft: "0.5rem", fontSize: "1.25rem" }} />
-        </a>
+        </Link>
       </div>
       <div className="footer">
         Developed By{" "}
