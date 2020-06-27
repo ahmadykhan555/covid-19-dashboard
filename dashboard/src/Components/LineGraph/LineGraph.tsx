@@ -19,6 +19,9 @@ const LineGraphComponent: React.FC<LineGraphProps> = ({ lineFor, data }) => {
     }
     return color;
   };
+  if (lineFor === "cases") {
+    console.log(lineFor, data);
+  }
   return (
     <div
       className="line-graph-component"

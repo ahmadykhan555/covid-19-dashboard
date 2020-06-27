@@ -8,6 +8,7 @@ import { monthString } from "../../shared/data-utility/utility";
 import { Datum } from "@nivo/line";
 import BarGraphComponent from "../BarGraph/BarGraph";
 import { Modal } from "react-bootstrap";
+import moment from "moment";
 
 interface GraphViewProps extends PropsFromRedux {}
 
@@ -18,30 +19,27 @@ const GraphViewComponent: React.FC<GraphViewProps> = ({
   isMobileView,
   selectedEntity,
   showModal,
-  setShowModal, loading
+  setShowModal,
+  loading
 }) => {
   const sanitizeData = (label: string): Datum[] => {
-    const data: Datum[] = [];
+    let data: Datum[] = [];
     if (!historicData) {
       return data;
     }
-    if (label === "cases") {
-      for (let month in historicData.cases) {
-        const max = ((historicData.cases as any)[month] as any).pop();
-        data.push({ x: monthString(Number(month)), y: max });
+    if ((historicData.json as any)[label]) {
+      const categoryData: any = (historicData.json as any)[label];
+      const skipDays = 5;
+      for (let date in categoryData) {
+        const counts = categoryData[date];
+        data.push({ x: moment(date).format("DD/MM"), y: counts });
       }
-    }
-    if (label === "deaths") {
-      for (let month in historicData.deaths) {
-        const max = ((historicData.deaths as any)[month] as any).pop();
-        data.push({ x: monthString(Number(month)), y: max });
+      const temp = [];
+      for (let i = 0; i < data.length; i++) {
+        temp.push(data[i]);
+        i = i + skipDays;
       }
-    }
-    if (label === "recovered") {
-      for (let month in historicData.recovered) {
-        const max = ((historicData.recovered as any)[month] as any).pop();
-        data.push({ x: monthString(Number(month)), y: max });
-      }
+      data = temp;
     }
     return data;
   };
@@ -60,8 +58,10 @@ const GraphViewComponent: React.FC<GraphViewProps> = ({
     };
     for (let key in historicData) {
       for (let month in (historicData as any)[key]) {
-        initMonthRecord(month);
-        data[month][key] = (historicData as any)[key][month].pop();
+        if (key !== "json") {
+          initMonthRecord(month);
+          data[month][key] = (historicData as any)[key][month].pop();
+        }
       }
     }
     return data;
@@ -70,16 +70,28 @@ const GraphViewComponent: React.FC<GraphViewProps> = ({
   };
 
   const flagUrl = (): string => {
-    if(selectedEntity && selectedEntity.data && selectedEntity.data.countryInfo) {
+    if (
+      selectedEntity &&
+      selectedEntity.data &&
+      selectedEntity.data.countryInfo
+    ) {
       return selectedEntity.data.countryInfo.flag;
     }
-    return ''
-  }
+    return "";
+  };
   return isMobileView ? (
     <Modal show={showModal} onHide={() => setShowModal(false)}>
       <Modal.Header closeButton closeLabel={"dismiss"}>
-        <div className="country-header" style={{display: 'flex', alignItems: 'center'}}>
-          {!loading && <img src={flagUrl()} style={{height: '25px', width: '35px', marginRight: '10px'}} />}
+        <div
+          className="country-header"
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          {!loading && (
+            <img
+              src={flagUrl()}
+              style={{ height: "25px", width: "35px", marginRight: "10px" }}
+            />
+          )}
           <span>{selectedEntity.name}</span>
         </div>
       </Modal.Header>

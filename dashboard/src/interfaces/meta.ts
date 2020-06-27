@@ -74,6 +74,7 @@ export interface HistoricData {
   cases: object;
   deaths: object;
   recovered: object;
+  json?: object;
 }
 
 export interface SelectedEntity {

@@ -1,6 +1,6 @@
 import axios from "axios";
 import moment from "moment";
-const daysSince = moment().diff(moment("12/01/2019"), "days");
+const daysSince = 45;
 const BASEURL = "https://corona.lmao.ninja/v2/";
 const ENDPOINTS = {
   AllCountries: "countries",
@@ -73,10 +73,10 @@ const clusterHistoricData = (data: any) => {
   const dataCluster = {
     cases: {},
     deaths: {},
-    recovered: {}
+    recovered: {},
+    json: {}
   };
   // each is an object containing {date: count};
-  console.time("begin cluster");
   for (let date in cases) {
     const month = moment(date).month();
     if (!(dataCluster.cases as any)[`${month}`]) {
@@ -101,6 +101,8 @@ const clusterHistoricData = (data: any) => {
       (dataCluster.recovered as any)[`${month}`].push(recovered[date]);
     }
   }
+  dataCluster.json = { ...data };
+  debugger;
   return dataCluster;
 };
 

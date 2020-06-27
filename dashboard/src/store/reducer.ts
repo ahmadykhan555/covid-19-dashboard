@@ -19,7 +19,8 @@ const initialState: AppState = {
     historicData: {
       cases: {},
       deaths: {},
-      recovered: {}
+      recovered: {},
+      json: {}
     }
   },
   isMobileView: window.innerWidth < 600 ? true : false,
