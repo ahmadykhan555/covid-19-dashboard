@@ -1,4 +1,4 @@
-# Covid World Tracker
+# Covid World Tracker ![Hits](https://views.whatilearened.today/views/github/ahmadykhan555/covid-19-dashboard.svg)
 A pet project to help combat covid-19. This tracker consists of a dashboard with live stats and data visualisations in the form of color coded map (according to infection rate) and advanced charts to visualize spread trajectory. We've also partnered with a plasma donation [platform](https://covidplasma.pk)
 ### Desktop 
 
