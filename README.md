@@ -13,7 +13,7 @@
 
 
 ### Third party resources in use: 
-Data Api: https://corona.lmao.ninja/v2/
+Data Api: https://corona.lmao.ninja/v2/ <br>
 React Icons Pack: https://react-icons.netlify.com/ <br>
 React Bootstrap: https://react-bootstrap.github.io/ <br>
 MapBox-Gl: https://docs.mapbox.com/mapbox-gl-js/ <br>
