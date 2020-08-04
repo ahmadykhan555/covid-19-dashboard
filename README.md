@@ -21,4 +21,4 @@ React Bootstrap: https://react-bootstrap.github.io/ <br>
 MapBox-Gl: https://docs.mapbox.com/mapbox-gl-js/ <br>
 
 ### Code Usage & Contributions:
-If anyone intends to use this code or wants to contribute feel free to fork and give the due credit. This is almost 1.5 months worth of hardwork and due credits will do the justice to it. Cheer Happy Coding! 
+If anyone intends to use this code or wants to contribute feel free to fork and give the due credit. This is almost 1.5 months worth of hardwork and due credits will do the justice to it. Cheers Happy Coding! 
